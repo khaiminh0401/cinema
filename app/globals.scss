@@ -1,0 +1,13 @@
+@import url("../node_modules/bootstrap/dist/css/bootstrap.min.css");
+
+.bg{
+    &-opacity{
+        background:transparent;
+        position: absolute;
+        left: 0;
+        right: 0;
+        z-index: 999999;
+        // border-bottom: 1px solid #fff;
+        color: white;
+    }
+}
