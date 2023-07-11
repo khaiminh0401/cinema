@@ -1,5 +1,7 @@
 interface CardProps{
     title:String,
     src:any,
-    year:number
+    year:number,
+    time: String,
+    id: number
 }

@@ -1,12 +1,15 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const Card = ({...props}:CardProps) => {
     return (
-        <div className="card mx-2" style={{height:"324px"}}>
+        <div className="card mx-3" style={{height:"270px",borderRadius:"0"}}>
             <Image className="img-fluid mx-auto" src={props.src} height={"100"} width={"100"} alt="Title" />
             <div className="card-body">
-                <h4 className="card-title">{props.title}</h4>
-                <p className="card-text">{props.year}</p>
+                <h6 className="card-text text-center"><a href={`/movie/${props.id}`}>{props.title}</a></h6>
+            </div>
+            <div className="card-footer">
+                <p className="card-text">{props.year} <span className="float-end"><i className="bi bi-clock-fill"></i> {props.time}</span></p>
             </div>
         </div>
 
