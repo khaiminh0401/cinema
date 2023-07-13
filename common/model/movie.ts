@@ -2,10 +2,10 @@ interface movie {
 	id: number,
 	name: string,
 	year_of_manufacture: number,
-	image: String,
+	image: string,
 	director: string,
 	national: String,
 	time: String,
 	describe:String,
-	trailer:String
+	trailer:string
 }
