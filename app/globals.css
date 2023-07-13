@@ -1,1 +1,1 @@
-@import"../node_modules/bootstrap/dist/css/bootstrap.min.css";.bg-opacity{background:rgba(0,0,0,0);position:absolute;left:0;right:0;z-index:999999;color:#fff}
+@import"../node_modules/bootstrap/dist/css/bootstrap.min.css";@import"https://fonts.googleapis.com/css?family=Muli&display=swap";.bg-opacity{background:rgba(0,0,0,0);position:absolute;left:0;right:0;z-index:999999;color:#fff}body{font-family:Muli,sans-serif !important}
