@@ -1,8 +1,6 @@
-import $ from 'jquery';
 import { fetchAPI } from "./axios";
-import { log } from 'console';
-const findByKey = (inputs: object) => {
-    return fetchAPI.get("/customer/login", { params: { ...inputs } }).then(response => response.data as customer);
+const findByKey = async (inputs: object) => {
+    return ((await fetchAPI.get("/customer/login", { params: { ...inputs } })).data as customer);
 }
 export const customerAPI = {
     findByKey
