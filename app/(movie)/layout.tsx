@@ -1,6 +1,6 @@
 import './../globals.css';
 import { Inter } from 'next/font/google'
-import Navbar from '@/components/Navbar';
+import {Navbar} from '@/components/Navbar';
 const inter = Inter({ subsets: ['latin'] })
 import Footer from '@/components/Footer';
 export const metadata = {
@@ -20,7 +20,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"/>
-        <Navbar />
+        <Navbar.Default />
         {children}
         <Footer />
       </body>
