@@ -39,7 +39,28 @@ export default async function Movie({ params }: any) {
             <a className="nav-link" href="#">Đánh giá</a>
           </li>
         </ul>
-
+        <section className="my-5">
+          <form action="">
+            <div className="mb-3 d-flex w-50">
+              <input type="date" className='form-control mx-2' />
+              <select name="" id="" className='form-select'>
+                <option value="">--chọn chi nhánh--</option>
+              </select>
+            </div>
+          </form>
+          <table className='w-50 my-5'>
+            <tbody>
+              <tr>
+                <td className='text-center' colSpan={2}>Tân Bình</td>
+                <td colSpan={3}><button className='btn btn-primary mx-auto'>16:00:00</button></td>
+              </tr>
+              <tr>
+                <td className='text-center' colSpan={2}>Bình Thạnh</td>
+                <td colSpan={3}><button className='btn btn-primary mx-auto'>21:00:00</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
       </div>
     </div>
   );
