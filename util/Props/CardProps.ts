@@ -1,7 +1,5 @@
 interface CardProps{
-    title:String,
-    src:any,
-    year:number,
-    time: String,
-    id: number
+    id: string,
+    className: string,
+    data:movie
 }
