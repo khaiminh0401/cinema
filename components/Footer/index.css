@@ -1,0 +1,124 @@
+.footer {
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+}
+
+.footer .group-wrapper {
+    border: 0px none;
+    height: 193px;
+    overflow-x: hidden;
+    position: relative;
+    width: 1753px;
+}
+
+.footer .group {
+    height: 193px;
+    width: 1763px;
+}
+
+.footer .img {
+    height: 77px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 166px;
+}
+
+.footer .gi-i-thi-u-v-ch-ng-t {
+    color: transparent;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 24px;
+    font-weight: 400;
+    left: 360px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 0;
+    width: 218px;
+}
+
+.footer .text-wrapper {
+    color: #aa1e21;
+}
+
+.footer .span {
+    color: #ffffff;
+    font-size: 20px;
+}
+
+.footer .h-tr-g-p-sale {
+    color: transparent;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 24px;
+    font-weight: 400;
+    left: 747px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 0;
+    width: 168px;
+}
+
+.footer .t-mua-theo-d-i-b-n {
+    color: transparent;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 24px;
+    font-weight: 400;
+    left: 1008px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 0;
+    width: 745px;
+}
+
+.footer .overlap-group {
+    background-color: #ffffff;
+    border: 1px solid;
+    border-color: #000000;
+    border-radius: 40px;
+    height: 60px;
+    left: 1008px;
+    position: absolute;
+    top: 59px;
+    width: 711px;
+}
+
+.footer .div {
+    color: #aa1e21;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 54px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 14px;
+    width: 119px;
+}
+
+.footer .overlap {
+    background-color: #aa1e21;
+    border-radius: 40px;
+    height: 60px;
+    left: 1008px;
+    position: absolute;
+    top: 133px;
+    width: 711px;
+}
+
+.footer .text-wrapper-2 {
+    color: #ffffff;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 20px;
+    font-weight: 400;
+    left: 306px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 15px;
+    width: 87px;
+}

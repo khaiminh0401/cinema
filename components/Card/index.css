@@ -1,0 +1,79 @@
+.card {
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.card .group-wrapper {
+    border: 0px none;
+    height: 922px;
+    width: 557px;
+}
+
+.card .group {
+    height: 922px;
+    width: 559px;
+}
+
+.card .image {
+    height: 796px;
+
+    width: 557px;
+}
+
+.card .text-wrapper {
+    color: #ffffff;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 32px;
+    font-weight: 400;
+    left: 2px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 832px;
+    width: 555px;
+}
+
+.card .div {
+    height: 26px;
+    left: 32px;
+    position: absolute;
+    top: 896px;
+    width: 488px;
+}
+
+.card .star {
+    height: 23px;
+    left: 462px;
+    position: absolute;
+    top: 0;
+    width: 24px;
+}
+
+.card .text-wrapper-2 {
+    color: #ffffff;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 24px;
+    font-weight: 400;
+    left: 27px;
+    letter-spacing: 0;
+    line-height: normal;
+    position: absolute;
+    top: 0;
+    white-space: nowrap;
+    width: 108px;
+}
+
+.card .layer {
+    height: 24px;
+    left: 422px;
+    position: absolute;
+    top: 1px;
+    width: 30px;
+}
+
+.card .img {
+    height: 22px;
+    width: 22px;
+}
