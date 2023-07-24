@@ -2,7 +2,7 @@ export interface InputProps {
     type: string,
     className?: string,
     id?: string,
-    name: string,
+    name?: string,
     placeholder?: string,
     value?: string,
     defaultValue?: string,
@@ -11,5 +11,5 @@ export interface InputProps {
     max?: number,
     width?: number,
     onClick?: () => void,
-    onChange?: (event : any) => void
+    onChange?: (event: any) => void
 }

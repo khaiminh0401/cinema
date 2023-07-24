@@ -7,7 +7,7 @@ import Carousel from "@/components/Carousel";
 import { GetStaticPaths, GetStaticProps } from "next";
 import axios from "axios";
 
-const Home = async() => {
+const Home = async () => {
   const data = await movieAPI.findAll();
   return (
     <>
