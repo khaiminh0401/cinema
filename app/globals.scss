@@ -2,17 +2,14 @@
 @import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
 
 .bg{
-    &-opacity{
-        background:transparent;
-        position: absolute;
-        left: 0;
-        right: 0;
-        z-index: 999999;
-        // border-bottom: 1px solid #fff;
-        color: white;
+    &-main{
+        background-color: #1D212B;
+        padding: 0;
+
     }
 }
 
-body {
-    font-family: Muli, sans-serif !important;
+
+body{
+    color: white;
 }
