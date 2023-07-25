@@ -7,27 +7,34 @@ import Link from "next/link";
 import Button from "@/components/Button/page";
 import { movieTypeAPI } from "@/util/API/MovieType";
 import { movieAPI } from "@/util/API/Movie";
+import "./index.css";
 
 const Home = () => {
+  const typesOfMovies = [
+    {
+      id:0,
+      name:"Phim sắp chiếu"
+    },
+    {
+      id:1,
+      name:"Phim đang chiếu"
+    },
+    {
+      id:2,
+      name:"Phim đã chiếu"
+    }
+  ]
   useEffect(() => {
     const movie = async () => {
       const movie = await movieAPI.findAll()
       setData(movie)
     }
-
-    const typesOfMovies = async () => {
-      const movieType = await movieTypeAPI.findAll()
-      setTypesOfMovies(movieType)
-    }
-
     movie()
-    typesOfMovies()
   }, [])
 
   const [data, setData] = useState<movie[]>();
-  const [typesOfMovies, setTypesOfMovies] = useState<movieType[]>();
 
-  
+
   return (
     <>
       <div className="lll">
@@ -82,7 +89,7 @@ const Home = () => {
         </div>
       </div>
       <div className="container">
-        {/* <div className="box">
+        <div className="box">
           <div className="group-wrapper">
             <div className="group">
               <div className="overlap-group">
@@ -102,11 +109,10 @@ const Home = () => {
                     )
                   })}
                 </div>
-                <img className="vector" alt="Vector" src="vector-1.svg" />
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
         <div className="row mt-3">
           {data?.map((movie: movie) => { return <Card id={`card_${movie.id}`} className="col-6 col-md-3 p-4" key={movie.id} data={movie} />; })}
         </div>
