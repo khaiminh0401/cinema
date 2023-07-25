@@ -1,19 +1,27 @@
 "use client"
 import "./index.css";
 import Card from '@components/Card';
-import { movieAPI } from "@/util/API/Movie";
 import Carousel from "@components/Carousel";
-import React, { useEffect } from "react";
-import $ from "jquery";
+import { movieAPI } from "@/util/API/Movie";
+import React, { use, useEffect, useState } from "react";
+import dynamic from 'next/dynamic';
+
 
 const Home = async () => {
+  useEffect(() => {
+    const movie = async () => {
+      const movie = await movieAPI.findAll();
+      setData(movie);
+    }
+    movie();
+  }, [])
 
-  // const [status,setType] = useState(0);
+  const [data, setData] = useState<movie[]>();
 
-  const data = await movieAPI.findAll();
   const type = ["PHIM SẮP CHIẾU", "PHIM ĐANG CHIẾU", "SUẤT CHIẾU ĐẶC BIỆT"];
 
 
+  
   return (
     <>
       <div className="layer">
@@ -40,6 +48,7 @@ const Home = async () => {
                       {" "}
                       <br />
                     </span>
+
                     <span className="span">Quốc gia:</span>
                     <span className="text-wrapper-3">&nbsp;</span>
                     <span className="span">&nbsp;</span>
@@ -90,7 +99,7 @@ const Home = async () => {
             <div className="group">
               <div className="overlap-group">
                 <div className="div type">
-                  {type.map((s, i) => { return <div key={i} className={`text-wrapper ${i == 2 ? 'text-danger' : ''}`} id={`type_${i}`} >{s}</div>; })}
+                  {type.map((s, i) => { return <div key={i} className={`text-wrapper ${i == 1 ? 'text-danger' : ''}`} id={`type_${i}`} >{s}</div> })}
                 </div>
                 <img className="vector" alt="Vector" src="vector-1.svg" />
               </div>
@@ -99,7 +108,6 @@ const Home = async () => {
         </div>
         <div className="row w-100 mt-3">
           {data?.map((movie: movie) => { return <Card id={`card_${movie.id}`} className="col-4" key={movie.id} data={movie} />; })}
-
         </div>
       </div>
     </>
