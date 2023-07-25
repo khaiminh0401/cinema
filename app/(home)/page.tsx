@@ -7,16 +7,18 @@ import React, { use, useEffect, useState } from "react";
 import dynamic from 'next/dynamic';
 
 
-const Home = async () => {
+const Home = () => {
+  const [data, setData] = useState<movie[]>();
+
   useEffect(() => {
     const movie = async () => {
       const movie = await movieAPI.findAll();
+      console.log(movie);
       setData(movie);
     }
     movie();
   }, [])
 
-  const [data, setData] = useState<movie[]>();
 
   const type = ["PHIM SẮP CHIẾU", "PHIM ĐANG CHIẾU", "SUẤT CHIẾU ĐẶC BIỆT"];
 
