@@ -184,20 +184,6 @@ body {
     display: inline-block;
 }
 
-.form-container .right-content .social-links li a {
-    color: #fff;
-    background-color: #F16262;
-    font-size: 12px;
-    padding: 9px 12px;
-    border-radius: 5px;
-    display: block;
-    transition: all 0.3s ease 0s;
-}
-
-.form-container .right-content .social-links li:nth-child(2) a {
-    background-color: #3B5897;
-}
-
 .form-container .right-content .social-links li a i {
     margin-right: 10px;
 }

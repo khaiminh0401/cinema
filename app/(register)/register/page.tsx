@@ -3,6 +3,7 @@ import { use, useEffect, useState } from 'react';
 import { customerAPI } from "@/util/API/Customer";
 import './index.css';
 import Input from "@/components/Input/page";
+import Link from 'next/link';
 const Register = () => {
     const [inputs, setInputs] = useState({});
 
@@ -61,7 +62,8 @@ const Register = () => {
                                     {/* <a className="forgot">Forgot Password</a> */}
                                 </form>
                                 <div className='row'>
-                                    <span className="signup-link col-12 fs-7 fw-bolder">Đã có tài khoản? Đăng nhập <a   >tại đây</a></span>
+                                    <span className="signup-link col-12 fs-7 fw-bolder">Đã có tài khoản? Đăng nhập <Link href="/login">
+                                        tại đây</Link></span>
                                 </div>
                             </div>
                         </div>

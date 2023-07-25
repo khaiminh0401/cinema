@@ -1,18 +1,31 @@
-"use client"
-import "./index.css";
+'use client'
+
+import React, { useState, useEffect } from "react";
 import Card from '@components/Card';
 import { movieAPI } from "@/util/API/Movie";
 import Carousel from "@components/Carousel";
-import React, { useEffect } from "react";
-import $ from "jquery";
+import Link from "next/link";
+import Button from "@/components/Button/page";
+import { movieTypeAPI } from "@/util/API/MovieType";
 
-const Home = async () => {
+const Home = () => {
+  useEffect(() => {
+    const movie = async () => {
+      const movie = await movieAPI.findAll()
+      setData(movie)
+    }
 
-  // const [status,setType] = useState(0);
+    const typesOfMovies = async () => {
+      const movieType = await movieTypeAPI.findAll()
+      setTypesOfMovies(movieType)
+    }
 
-  const data = await movieAPI.findAll();
-  const type = ["PHIM SẮP CHIẾU", "PHIM ĐANG CHIẾU", "SUẤT CHIẾU ĐẶC BIỆT"];
+    movie()
+    typesOfMovies()
+  }, [])
 
+  const [data, setData] = useState<movie[]>();
+  const [typesOfMovies, setTypesOfMovies] = useState<movieType[]>();
 
   return (
     <>
@@ -40,6 +53,7 @@ const Home = async () => {
                       {" "}
                       <br />
                     </span>
+
                     <span className="span">Quốc gia:</span>
                     <span className="text-wrapper-3">&nbsp;</span>
                     <span className="span">&nbsp;</span>
@@ -90,7 +104,20 @@ const Home = async () => {
             <div className="group">
               <div className="overlap-group">
                 <div className="div type">
-                  {type.map((s, i) => { return <div key={i} className={`text-wrapper ${i == 2 ? 'text-danger' : ''}`} id={`type_${i}`} >{s}</div>; })}
+                  {typesOfMovies?.map((movieType, i) => {
+                    return (
+                      <Link
+                        key={i}
+                        className={`text-wrapper ${i == 1 ? 'text-danger' : ''}`} id={`type_${i}`}
+                        href={{
+                          pathname: "",
+                          query: { id: `${movieType.id}` },
+                        }}
+                      >
+                        {movieType.name}
+                      </Link>
+                    )
+                  })}
                 </div>
                 <img className="vector" alt="Vector" src="vector-1.svg" />
               </div>
@@ -99,7 +126,6 @@ const Home = async () => {
         </div>
         <div className="row w-100 mt-3">
           {data?.map((movie: movie) => { return <Card id={`card_${movie.id}`} className="col-4" key={movie.id} data={movie} />; })}
-
         </div>
       </div>
     </>
