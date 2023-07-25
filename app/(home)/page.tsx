@@ -24,7 +24,15 @@ const Home = () => {
       name:"Phim đã chiếu"
     }
   ]
-  useEffect(() => {
+  useEffect(() => {    
+    $("#next").click(()=>{
+      let list = $(".main");
+      $("#slide").append(list[0]);
+    })
+    $("#prev").click(()=>{
+      let list = $(".main");
+      $("#slide").prepend(list[list.length-1]);
+    })
     const movie = async () => {
       const movie = await movieAPI.findAll()
       setData(movie)

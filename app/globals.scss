@@ -1,6 +1,5 @@
 @import url("../node_modules/bootstrap/dist/css/bootstrap.min.css");
-@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
 .bg{
     &-main{
         background-color: #1D212B;
@@ -11,5 +10,6 @@
 
 
 body{
+    font-family: 'Noto Sans', sans-serif;
     color: white;
 }
