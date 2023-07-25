@@ -5,12 +5,21 @@ import Carousel from "@components/Carousel";
 import { movieAPI } from "@/util/API/Movie";
 import React, { use, useEffect, useState } from "react";
 import dynamic from 'next/dynamic';
+import $ from "jquery";
 
 
 const Home = () => {
   const [data, setData] = useState<movie[]>();
-
-  useEffect(() => {
+  const [index,setIndex] = useState(0);
+  useEffect(() => {    
+    $("#next").click(()=>{
+      let list = $(".main");
+      $("#slide").append(list[0]);
+    })
+    $("#prev").click(()=>{
+      let list = $(".main");
+      $("#slide").prepend(list[list.length-1]);
+    })
     const movie = async () => {
       const movie = await movieAPI.findAll();
       console.log(movie);
