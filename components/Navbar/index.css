@@ -1,144 +1,17 @@
-.navbar {
-    background-color: transparent;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    z-index: 9999;
-    padding: 0;
+.logo{
+    width: 150px;
 }
 
-.navbar .group-wrapper {
-    border: 0px none;
-    height: 153px;
-    position: relative;
-    width: 100%;
+.nav-link{
+    font-size: 18px;
+    color: white;
 }
 
-.navbar .group {
-    background-color: #110f0f;
-    height: 153px;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
+.nav-link:hover{
+    color: red;
+    /* background-color: antiquewhite; */
 }
-
-.navbar .navbar {
-    height: 53px;
-    right: 5%;
-    position: absolute;
-    top: 57px;
-    width: 996px;
-}
-
-.navbar .layer {
-    height: 33px;
-    left: 781px;
-    position: absolute;
-    top: 13px;
-    width: 33px;
-}
-
-.navbar .text-wrapper {
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent;
-    background: linear-gradient(180deg, rgb(239, 105, 59) 0%, rgb(238, 41, 95) 100%);
-    background-clip: text;
-    color: transparent;
-    font-family: "Inter-Medium", Helvetica;
-    font-size: 22px;
-    font-weight: 500;
-    left: 0;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    text-fill-color: transparent;
-    top: 13px;
-    white-space: nowrap;
-    width: 108px;
-}
-
-.navbar .div {
-    color: #ffffff;
-    font-family: "Inter-Medium", Helvetica;
-    font-size: 22px;
-    font-weight: 500;
-    left: 171px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 13px;
-    white-space: nowrap;
-    width: 56px;
-}
-
-.navbar .text-wrapper-2 {
-    color: #ffffff;
-    font-family: "Inter-Medium", Helvetica;
-    font-size: 22px;
-    font-weight: 500;
-    left: 286px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 13px;
-    white-space: nowrap;
-    width: 56px;
-}
-
-.navbar .text-wrapper-3 {
-    color: #ffffff;
-    font-family: "Inter-Medium", Helvetica;
-    font-size: 22px;
-    font-weight: 500;
-    left: 396px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 13px;
-    white-space: nowrap;
-    width: 71px;
-}
-
-.navbar .text-wrapper-4 {
-    color: #ffffff;
-    font-family: "Inter-Medium", Helvetica;
-    font-size: 22px;
-    font-weight: 500;
-    left: 522px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 13px;
-    white-space: nowrap;
-    width: 73px;
-}
-
-.navbar .text-wrapper-5 {
-    color: #ffffff;
-    font-family: "Inter-Medium", Helvetica;
-    font-size: 22px;
-    font-weight: 500;
-    left: 650px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 13px;
-    white-space: nowrap;
-    width: 108px;
-}
-
-.navbar .overlap-group-wrapper {
-    height: 53px;
-    left: 830px;
-    position: absolute;
-    top: 0;
-    width: 156px;
-    cursor: pointer;
-}
-
-.navbar .overlap-group {
+ .overlap-group {
     background-image: url("./../../public/assert/home/Vector.svg");
     background-size: 100% 100%;
     height: 53px;
@@ -149,10 +22,9 @@
     align-items: center;
 }
 
-.navbar .text-wrapper-6 {
-    color: #ffffff;
+.text-wrapper-6 {
     font-family: "Inter-Medium", Helvetica;
-    font-size: 22px;
+    font-size: 18px;
     font-weight: 500;
     letter-spacing: 0;
     line-height: normal;
@@ -161,10 +33,6 @@
     text-align: center;
 }
 
-.navbar .img {
-    height: 77px;
-    left: 65px;
-    position: absolute;
-    top: 46px;
-    width: 166px;
+.navbar{
+    background-color: black;
 }
