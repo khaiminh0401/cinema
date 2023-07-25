@@ -20,7 +20,7 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
-        <div className="container-fluid bg-main">
+        <div className="container-fluid bg-dark">
           <Navbar.Default />
           {children}
           <Footer />
