@@ -1,79 +1,52 @@
-.card {
-    background-color: transparent;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+.imgMovie{
+    width: 290px;
+    height: 400px;
+} 
+
+.text-wrapper{
+    font-size: 16px;
 }
 
-.card .group-wrapper {
-    border: 0px none;
-    height: 922px;
-    width: 557px;
+.card{
+    border: none;
+    background-color: rgb(33,37,41);
 }
 
-.card .group {
-    height: 922px;
-    width: 559px;
+.card-header{
+    border: none;
+    position: relative;
+	overflow: hidden;
+	transition: all 0.3s ease-out;
+	background:radial-gradient(#111 50%, #000 100%);
 }
 
-.card .image {
-    height: 796px;
-
-    width: 557px;
+.card-header .imgMovie{
+	transform: scale(1.3);
+	transition: all 0.3s ease-out;
+}
+.card-header:hover .imgMovie{
+	transform: scale(1.1) translateY(-10px); 
+	opacity: 0.3
 }
 
-.card .text-wrapper {
-    color: #ffffff;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 32px;
-    font-weight: 400;
-    left: 2px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 832px;
-    width: 555px;
+.description{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	padding: 100px;
+	width: 100%;
+	text-align: center;
+	color: #fff;
+	font-size: 35px;
 }
 
-.card .div {
-    height: 26px;
-    left: 32px;
-    position: absolute;
-    top: 896px;
-    width: 488px;
+ .description .icon{
+	transform: translateY(30px);
+	opacity: 0;
+	transition: all 0.3s ease-out 0.2s;
 }
 
-.card .star {
-    height: 23px;
-    left: 462px;
-    position: absolute;
-    top: 0;
-    width: 24px;
-}
-
-.card .text-wrapper-2 {
-    color: #ffffff;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 24px;
-    font-weight: 400;
-    left: 27px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 0;
-    white-space: nowrap;
-    width: 108px;
-}
-
-.card .layer {
-    height: 24px;
-    left: 422px;
-    position: absolute;
-    top: 1px;
-    width: 30px;
-}
-
-.card .img {
-    height: 22px;
-    width: 22px;
+.card-header:hover .description .icon{
+	opacity: 1;
+	transform: translateY(0px);
 }

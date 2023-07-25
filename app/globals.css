@@ -1,1 +1,10 @@
-@import"../node_modules/bootstrap/dist/css/bootstrap.min.css";.bg-main{background-color:#1d212b;padding:0}body{color:#fff}
+@import"../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
+.bg-main {
+    background-color: #1d212b;
+    padding: 0
+}
+
+body {
+    color: #fff
+}
