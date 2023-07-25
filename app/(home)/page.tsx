@@ -1,27 +1,31 @@
-"use client"
-import "./index.css";
+'use client'
+
+import React, { useState, useEffect } from "react";
 import Card from '@components/Card';
 import Carousel from "@components/Carousel";
+import Link from "next/link";
+import Button from "@/components/Button/page";
+import { movieTypeAPI } from "@/util/API/MovieType";
 import { movieAPI } from "@/util/API/Movie";
-import React, { use, useEffect, useState } from "react";
-import dynamic from 'next/dynamic';
-
 
 const Home = () => {
-  const [data, setData] = useState<movie[]>();
-
   useEffect(() => {
     const movie = async () => {
-      const movie = await movieAPI.findAll();
-      console.log(movie);
-      setData(movie);
+      const movie = await movieAPI.findAll()
+      setData(movie)
     }
-    movie();
+
+    const typesOfMovies = async () => {
+      const movieType = await movieTypeAPI.findAll()
+      setTypesOfMovies(movieType)
+    }
+
+    movie()
+    typesOfMovies()
   }, [])
 
-
-  const type = ["PHIM SẮP CHIẾU", "PHIM ĐANG CHIẾU", "SUẤT CHIẾU ĐẶC BIỆT"];
-
+  const [data, setData] = useState<movie[]>();
+  const [typesOfMovies, setTypesOfMovies] = useState<movieType[]>();
 
   
   return (
@@ -83,7 +87,20 @@ const Home = () => {
             <div className="group">
               <div className="overlap-group">
                 <div className="div type">
-                  {type.map((s, i) => { return <div key={i} className={`text-wrapper ${i == 1 ? 'text-danger' : ''}`} id={`type_${i}`} >{s}</div> })}
+                  {typesOfMovies?.map((movieType, i) => {
+                    return (
+                      <Link
+                        key={i}
+                        className={`text-wrapper ${i == 1 ? 'text-danger' : ''}`} id={`type_${i}`}
+                        href={{
+                          pathname: "",
+                          query: { id: `${movieType.id}` },
+                        }}
+                      >
+                        {movieType.name}
+                      </Link>
+                    )
+                  })}
                 </div>
                 <img className="vector" alt="Vector" src="vector-1.svg" />
               </div>

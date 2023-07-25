@@ -9,7 +9,7 @@ const Specical = () => {
                 <a className="nav-link fw-bold">Lịch chiếu</a>
                 <a className="nav-link fw-bold">Liên hệ</a>
                 <a className="nav-link fw-bold">Về chúng tôi</a>
-                <button className="btn btn-danger">Đăng nhập</button>
+                <button className="btn btn-danger"><a href="http://localhost:3000/login">Đăng nhập</a></button>
             </section>
         </nav>
     );
