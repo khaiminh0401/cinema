@@ -7,6 +7,7 @@ import Link from "next/link";
 import Button from "@/components/Button/page";
 import { movieTypeAPI } from "@/util/API/MovieType";
 import { movieAPI } from "@/util/API/Movie";
+import $ from "jquery"
 import "./index.css";
 
 const Home = () => {
