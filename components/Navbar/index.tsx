@@ -17,27 +17,47 @@ const Specical = () => {
 
 const Default = () => {
     return (
-        <div className="navbar">
-            <div className="group-wrapper">
-                <div className="group">
-                    <div className="navbar">
-                        <i className="bi bi-search layer"></i>
-                        <div className="text-wrapper">Trang chủ</div>
-                        <div className="div">Phim</div>
-                        <div className="text-wrapper-2">Rạp </div>
-                        <div className="text-wrapper-3">Ưu đãi</div>
-                        <div className="text-wrapper-4">Hỗ trợ</div>
-                        <div className="text-wrapper-5">Giới thiệu</div>
-                        <div className="overlap-group-wrapper">
-                            <div className="overlap-group">
-                                <div className="text-wrapper-6">Đăng nhập</div>
-                            </div>
+        <nav className="navbar navbar-expand-lg navbar-light">
+            <div className="container">
+                <a className="navbar-brand" href="#"><img className="logo" alt="Group" src="/assert/img/logo.png" /></a>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon" />
+                </button>
+                <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul className="navbar-nav ms-auto mt-1 mb-lg-0 ">
+                        <li className="nav-item">
+                            <a className="nav-link " aria-current="page" href="#">Trang chủ</a>
+                        </li>
+                        <li className="nav-item">
+                            <a className="nav-link mx-2" href="#">Phim</a>
+                        </li>
+                        <li className="nav-item ">
+                            <a className="nav-link mx-2" href="#">Rạp</a>
+                        </li>
+                        <li className="nav-item ">
+                            <a className="nav-link mx-2" href="#">Ưu đãi</a>
+                        </li>
+                        <li className="nav-item ">
+                            <a className="nav-link mx-2" href="#">Hỗ trợ</a>
+                        </li>
+                        <li className="nav-item ">
+                            <a className="nav-link mx-2" href="#">Giới thiệu</a>
+                        </li>
+                        <i className="bi bi-search nav-link mx-2"></i>
+                        <i className="bi bi-basket2-fill nav-link mx-2"></i>
+                    </ul>
+                    <div className="overlap-group-wrapper ms-5">
+                        <div className="overlap-group">
+                            <div className="text-wrapper-6 text-light">Đăng nhập</div>
                         </div>
                     </div>
-                    <img className="img" alt="Group" src="/assert/img/logo.png" />
                 </div>
             </div>
-        </div>
+        </nav>
+
+
+
+
     );
 }
 
