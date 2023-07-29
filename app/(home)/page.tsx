@@ -34,11 +34,11 @@ const Home = () => {
       let list = $(".main");
       $("#slide").prepend(list[list.length-1]);
     })
-    const movie = async () => {
+    const init = async () => {
       const movie = await movieAPI.findAll()
       setData(movie)
     }
-    movie()
+    init()
   }, [])
 
   const [data, setData] = useState<movie[]>();
