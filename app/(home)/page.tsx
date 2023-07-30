@@ -2,50 +2,58 @@
 
 import React, { useState, useEffect } from "react";
 import Card from '@components/Card';
-import Carousel from "@components/Carousel";
 import Link from "next/link";
-import Button from "@/components/Button/page";
-import { movieTypeAPI } from "@/util/API/MovieType";
 import { movieAPI } from "@/util/API/Movie";
-import $ from "jquery"
+import $, { param } from "jquery";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import "./index.css";
+import { useCookies } from "react-cookie";
+import { CookiesProvider } from 'react-cookie';
+
 
 const Home = () => {
   const typesOfMovies = [
     {
-      id:0,
-      name:"Phim sắp chiếu"
+      id: 0,
+      name: "Phim sắp chiếu"
     },
     {
-      id:1,
-      name:"Phim đang chiếu"
+      id: 1,
+      name: "Phim đang chiếu"
     },
     {
-      id:2,
-      name:"Phim đã chiếu"
+      id: 2,
+      name: "Phim đã chiếu"
     }
   ]
-  useEffect(() => {    
-    $("#next").click(()=>{
-      let list = $(".main");
-      $("#slide").append(list[0]);
-    })
-    $("#prev").click(()=>{
-      let list = $(".main");
-      $("#slide").prepend(list[list.length-1]);
-    })
+  const [data, setData] = useState<movie[]>();
+  const [cookie,setCookie] = useCookies(["statusId"]);
+  const handleCookie = (value:string) =>{
+    setCookie("statusId",value);
+  }
+  useEffect(() => {
+
+    if(cookie.statusId == undefined){
+      handleCookie('1');
+    }
     const init = async () => {
-      const movie = await movieAPI.findAll()
+      $("#next").click(() => {
+        let list = $(".main");
+        $("#slide").append(list[0]);
+      })
+      $("#prev").click(() => {
+        let list = $(".main");
+        $("#slide").prepend(list[list.length - 1]);
+      })
+      const movie = await movieAPI.findByStatus(cookie.statusId);
       setData(movie)
     }
     init()
-  }, [])
-
-  const [data, setData] = useState<movie[]>();
-
-
+  }, [cookie.statusId])
+  
+  
   return (
-    <>
+    <CookiesProvider>
       <div className="lll">
         <div id="slide">
           <div className="main" style={{ backgroundImage: "url('/assert/home/monPhai.jpg')" }}>
@@ -93,8 +101,8 @@ const Home = () => {
           </div>
         </div>
         <div className="buttons">
-          <button id="prev"><i className="fa-solid fa-angle-left" /></button>
-          <button id="next"><i className="fa-solid fa-angle-right" /></button>
+          <button id="prev"><FaAngleLeft/></button>
+          <button id="next"><FaAngleRight/></button>
         </div>
       </div>
       <div className="container">
@@ -107,11 +115,11 @@ const Home = () => {
                     return (
                       <Link
                         key={i}
-                        className={`text-wrapper ${i == 1 ? 'text-danger' : ''}`} id={`type_${i}`}
+                        className={`text-wrapper ${movieType.id == parseInt(cookie.statusId) ? "text-danger" : 'text-decoration-none'}`} id={`type_${i}`}
                         href={{
                           pathname: "",
-                          query: { id: `${movieType.id}` },
                         }}
+                        onClick={()=>handleCookie(movieType.id+"")}
                       >
                         {movieType.name}
                       </Link>
@@ -127,7 +135,7 @@ const Home = () => {
         </div>
       </div>
 
-    </>
+    </CookiesProvider>
   )
 }
 
