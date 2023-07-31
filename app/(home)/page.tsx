@@ -4,18 +4,13 @@ import React, { useState, useEffect } from "react";
 import Card from '@components/Card';
 import Link from "next/link";
 import { movieAPI } from "@/util/API/Movie";
-import $ from "jquery"
+import $, { param } from "jquery";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import "./index.css";
-import { useSearchParams } from "next/navigation";
-import { useCookies } from 'react-cookie';
+import { useCookies } from "react-cookie";
+import { CookiesProvider } from 'react-cookie';
 
 const Home = () => {
-  const [data, setData] = useState<movie[]>();
-  const [isSelected, setIsSelected] = useState(false)
-  const searchParams = useSearchParams()
-  let statusId = searchParams.get("statusId")
-  const [cookies, setCookie] = useCookies(['statusId']);
-
   const statusOfMovie = [
     {
       id: 0,
@@ -27,91 +22,74 @@ const Home = () => {
     }
   ]
 
+  const [data, setData] = useState<movie[]>();
+  const [moviesNowShowing, setMoviesNowShowing] = useState<movie[]>();
+  const [cookie, setCookie] = useCookies(["statusId"]);
+  const handleCookie = (event: any, value: string) => {
+    setCookie("statusId", value);
+    event.preventDefault();
+  }
+
   useEffect(() => {
-    $("#next").click(() => {
-      let list = $(".main");
-      $("#slide").append(list[0]);
-    });
+    if (cookie.statusId == undefined) {
+      handleCookie('', '1');
+    }
+    const init = async () => {
+      $("#next").click(() => {
+        let list = $(".main");
+        $("#slide").append(list[0]);
+      })
+      $("#prev").click(() => {
+        let list = $(".main");
+        $("#slide").prepend(list[list.length - 1]);
+      })
+      const movie = await movieAPI.findByStatus(cookie.statusId);
+      setData(movie);
 
-    $("#prev").click(() => {
-      let list = $(".main");
-      $("#slide").prepend(list[list.length - 1]);
-    });
+      const mv = await movieAPI.findMoviesNowShowing();
+      setMoviesNowShowing(mv);
+    }
 
-    const fetchMovies = async () => {
-      if (statusId === null) statusId = "0"
-
-      const movies = await movieAPI.findByStatus(statusId)
-      setData(movies)
-    };
-
-    fetchMovies();
-  }, [statusId]);
-
-
-  const handleSetCookie = (event: any) => {
-    let id: string = event.target.id
-    const cookieValue = id.replace("type_", "");
-    const options = { path: '/' };
-
-    setCookie('statusId', cookieValue, options);
-  };
-
-  const textColor = isSelected ? "text-danger" : "text-white"
+    init()
+  }, [cookie.statusId])
 
   return (
-    <>
-      <div className="lll">
-        <div id="slide">
-          <div className="main" style={{ backgroundImage: "url('/assert/home/monPhai.jpg')" }}>
-            <div className="content">
-              <div className="name">Phố đêm</div>
-              <div className="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
-              <button className="text-dark">See more</button>
+    <CookiesProvider>
+      {/* Slide show hiện khi có phim đang chiếu trong ngày */}
+      {(moviesNowShowing?.length == 0) ? <></> :
+        <>
+          <div className="lll">
+            <div id="slide">
+              {moviesNowShowing?.map((m, i) => {
+                return (
+                  <div key={m.id} className="main" style={{ backgroundImage: `url('/assert/home/${m.poster}')` }}>
+                    <div className="content">
+                      <div className="name h2">{m.name}</div>
+                      <div className="des mb-4">{m.describe}</div>
+                      <Link
+                        key={m.id}
+                        className={`text-wrapper text-decoration-none text-light fw-bold`} id={`nowShowing_${i}`}
+                        href={{
+                          pathname: ``,
+                          query: ``
+                        }}
+                      >
+                        Xem thêm
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          </div>
 
-          <div className="main" style={{ backgroundImage: "url('/assert/home/nguocDong.jpg')" }}>
-            <div className="content">
-              <div className="name">Quái vật sông MeKong</div>
-              <div className="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
-              <button className="text-dark">See more</button>
-            </div>
+            {(moviesNowShowing?.length == 1) ? <></> : <div className="buttons">
+              <button id="prev"><FaAngleLeft size={40} /></button>
+              <button id="next"><FaAngleRight size={40} /></button>
+            </div>}
           </div>
-          <div className="main" style={{ backgroundImage: "url('/assert/home/monPhai.jpg')" }}>
-            <div className="content">
-              <div className="name">Phố đêm</div>
-              <div className="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
-              <button className="text-dark">See more</button>
-            </div>
-          </div>
-          <div className="main" style={{ backgroundImage: "url('/assert/home/gioihan.png')" }}>
-            <div className="content">
-              <div className="name">Quái vật sông mekong</div>
-              <div className="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
-              <button className="text-dark">See more</button>
-            </div>
-          </div>
-          <div className="main" style={{ backgroundImage: "url('/assert/home/kisa.jpg')" }}>
-            <div className="content">
-              <div className="name">Phố đêm</div>
-              <div className="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
-              <button className="text-dark">See more</button>
-            </div>
-          </div>
-          <div className="main" style={{ backgroundImage: "url('/assert/home/Rectangle.png')" }}>
-            <div className="content">
-              <div className="name">Phố đêm</div>
-              <div className="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
-              <button className="text-dark">See more</button>
-            </div>
-          </div>
-        </div>
-        <div className="buttons">
-          <button id="prev"><i className="fa-solid fa-angle-left" /></button>
-          <button id="next"><i className="fa-solid fa-angle-right" /></button>
-        </div>
-      </div>
+        </>
+      }
+
       <div className="container mt-5">
         <div className="box">
           <div className="group-wrapper">
@@ -119,18 +97,18 @@ const Home = () => {
               <div className="overlap-group">
                 <div className="div type">
                   <div className="d-flex justify-content-center text-center">
-                    {statusOfMovie?.map((s, i) => {
+                    {statusOfMovie?.map((status, i) => {
                       return (
                         <Link
                           key={i}
-                          className={`text-wrapper ${textColor} text-decoration-none`} id={`type_${i}`}
+                          className={`text-wrapper ${status.id == parseInt(cookie.statusId) ? "text-danger" : 'text-white'} text-decoration-none`} id={`type_${i}`}
                           href={{
-                            pathname: ``,
-                            query: { statusId: `${s.id}` },
                           }}
-                          onClick={handleSetCookie}
+                          onClick={(event) => {
+                            handleCookie(event, status.id + "");
+                          }}
                         >
-                          {s.name}
+                          {status.name}
                         </Link>
                       )
                     })}
@@ -140,12 +118,11 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="row mt-3">
+        <div className="row mt-3" id="movie">
           {data?.map((movie: movie) => { return <Card id={`card_${movie.id}`} className="col-6 col-md-3 p-4" key={movie.id} data={movie} />; })}
         </div>
       </div>
-
-    </>
+    </CookiesProvider>
   )
 }
 

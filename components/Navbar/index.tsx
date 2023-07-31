@@ -48,7 +48,7 @@ const Default = () => {
                     </ul>
                     <div className="overlap-group-wrapper ms-5">
                         <div className="overlap-group">
-                            <div className="text-wrapper-6 text-light">Đăng nhập</div>
+                            <a href="/login" className="text-wrapper-6 text-decoration-none text-light">Đăng nhập</a>
                         </div>
                     </div>
                 </div>
