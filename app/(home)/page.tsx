@@ -96,7 +96,7 @@ const Home = () => {
             <div className="group">
               <div className="overlap-group">
                 <div className="div type">
-                  <div className="d-flex justify-content-center text-center">
+                  <div className="d-flex flex-row-reverse justify-content-center text-center">
                     {statusOfMovie?.map((status, i) => {
                       return (
                         <Link
