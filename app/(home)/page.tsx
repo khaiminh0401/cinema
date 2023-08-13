@@ -55,7 +55,7 @@ const Home = () => {
 
     init()
   }, [cookie.statusId])
-  
+
   return (
     <CookiesProvider>
       {/* Slide show hiện khi có phim đang chiếu trong ngày */}
@@ -85,10 +85,10 @@ const Home = () => {
               })}
             </div>
 
-            {(moviesNowShowing?.length == 1) ? <></> : <div className="buttons">
+            <div className="buttons">
               <button id="prev"><FaAngleLeft size={40} /></button>
               <button id="next"><FaAngleRight size={40} /></button>
-            </div>}
+            </div>
           </div>
         </>
       }

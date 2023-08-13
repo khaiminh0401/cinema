@@ -25,7 +25,7 @@ const Card = ({ ...props }: CardProps) => {
                 </div>
             </div>
 
-            <Link href={"/movie/"+props.data.id} className="text-wrapper pt-3 text-light ">{props.data.name}</Link>
+            <Link href={"/movie-details?id="+props.data.id} className="text-wrapper pt-3 text-light ">{props.data.name}</Link>
             <p><span className="me-2 text-light"><i className="bi bi-clock"></i> 120 phút</span>
                 <span className="me-2  text-light"><i className="bi bi-calendar-minus"></i> 28/07/2023</span>
                 <span className="text-danger"><i className="bi bi-star-fill "></i> 8.3/10</span></p>

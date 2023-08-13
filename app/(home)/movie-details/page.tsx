@@ -12,6 +12,7 @@ import "./index.css";
 import dynamic from 'next/dynamic'
 import { movieDetailPageAPI } from '@/util/API/MovieDetailPage';
 import { movieAPI } from '@/util/API/Movie';
+import Image from 'next/image';
 
 const DynamicHeader = dynamic(() => import('react-multi-carousel'), {
     ssr: false
@@ -105,7 +106,7 @@ const MovieDetails = () => {
                 <div className="row">
                     <div className="col-md-8 bg-dark text-white p-4">
                         <div className="d-flex">
-                            <img src={`./assert/img/movie/${movieDetailPage?.poster}`} className="mr-3" style={{ width: 250 }} alt="Movie Poster" />
+                            {movieDetailPage && <Image src={`/assert/img/movie/${movieDetailPage?.poster}`} className="mr-3" width={250} height={250} alt="Movie Poster" />}
                             <div className="ms-4 flex-grow-1">
                                 <h2 className="mb-3">{movieDetailPage?.name}</h2>
                                 <p><strong>Thể loại:</strong> {movieDetailPage?.movieTypeName}</p>
@@ -131,7 +132,7 @@ const MovieDetails = () => {
                         </div>
                         <div className="mb-4">
                             <h3 className="text-white">PHIM ĐANG CHIẾU</h3>
-                            <img src={`./assert/home/${movieDetailPage?.poster}`} className="w-100" alt="Now Showing" />
+                            <Image src={`/assert/home/${movieDetailPage?.poster}`} className="w-100" width={"0"} height={"0"} alt="Now Showing" />
                             <h3 className="text-white mt-2"> {movieDetailPage?.name}</h3>
                         </div>
                     </div>
@@ -231,10 +232,10 @@ const MovieDetails = () => {
                                                     query: { id: mv.id }
                                                 }}
                                             >
-                                                <img
-                                                    src={`./assert/img/movie/${mv.poster}`}
+                                                <Image
+                                                    src={`/assert/img/movie/${mv.poster}`}
                                                     alt={`aga`}
-                                                    style={{ width: '250px', height: '350px' }}
+                                                   width={'250'} height= {'350'}
                                                 />
                                             </Link>
                                     </div>
