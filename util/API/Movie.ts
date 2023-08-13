@@ -8,9 +8,13 @@ const findById = async (id: String) => {
 const findByStatus = async (status: String) => {
     return (await fetchAPI.get(`/movie?status=${status}`)).data as movie[];
 }
+const findMoviesNowShowing = async () => {
+    return (await fetchAPI.get(`/movie/nowshowing`)).data as movie[];
+}
 
 export const movieAPI = {
     findAll,
     findById,
-    findByStatus
+    findByStatus,
+    findMoviesNowShowing,
 }

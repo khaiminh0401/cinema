@@ -10,9 +10,8 @@ import "./index.css";
 import { useCookies } from "react-cookie";
 import { CookiesProvider } from 'react-cookie';
 
-
 const Home = () => {
-  const typesOfMovies = [
+  const statusOfMovie = [
     {
       id: 0,
       name: "Phim sắp chiếu"
@@ -20,21 +19,22 @@ const Home = () => {
     {
       id: 1,
       name: "Phim đang chiếu"
-    },
-    {
-      id: 2,
-      name: "Phim đã chiếu"
     }
   ]
-  const [data, setData] = useState<movie[]>();
-  const [cookie,setCookie] = useCookies(["statusId"]);
-  const handleCookie = (value:string) =>{
-    setCookie("statusId",value);
-  }
-  useEffect(() => {
 
-    if(cookie.statusId == undefined){
-      handleCookie('1');
+
+  const [data, setData] = useState<movie[]>();
+  const [moviesNowShowing, setMoviesNowShowing] = useState<movie[]>();
+  const [cookie, setCookie] = useCookies(["statusId"]);
+  const handleCookie = (event: any, value: string) => {
+    setCookie("statusId", value);
+    event.preventDefault();
+  }
+
+
+  useEffect(() => {
+    if (cookie.statusId == undefined) {
+      handleCookie('', '1');
     }
     const init = async () => {
       $("#next").click(() => {
@@ -46,95 +46,96 @@ const Home = () => {
         $("#slide").prepend(list[list.length - 1]);
       })
       const movie = await movieAPI.findByStatus(cookie.statusId);
-      setData(movie)
+      setData(movie);
+
+      // Đang test nên để findAll, vì findMoviesNowShowing không có data trong database
+      const mv = await movieAPI.findAll();
+      setMoviesNowShowing(mv);
     }
+
     init()
   }, [cookie.statusId])
   
   return (
     <CookiesProvider>
-      <div className="lll">
-        <div id="slide">
-          <div className="main" style={{ backgroundImage: "url('/assert/home/monPhai.jpg')" }}>
-            <div className="content">
-              <div className="name">Phố đêm</div>
-              <div className="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
-              <button className="text-dark">See more</button>
+      {/* Slide show hiện khi có phim đang chiếu trong ngày */}
+      {(moviesNowShowing?.length == 0) ? <></> :
+        <>
+          <div className="lll">
+            <div id="slide">
+              {moviesNowShowing?.map((m, i) => {
+                return (
+                  <div key={m.id} className="main" style={{ backgroundImage: `url('/assert/home/${m.poster}')` }}>
+                    <div className="content">
+                      <div className="name h2">{m.name}</div>
+                      <div className="des mb-4">{m.describe}</div>
+                      <Link
+                        key={m.id}
+                        className={`text-wrapper text-decoration-none text-light fw-bold`} id={`nowShowing_${i}`}
+                        href={{
+                          pathname: `/movie-details`,
+                          query: { id: m.id }
+                        }}
+                      >
+                        Xem thêm
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          </div>
 
-          <div className="main" style={{ backgroundImage: "url('/assert/home/nguocDong.jpg')" }}>
-            <div className="content">
-              <div className="name">Quái vật sông MeKong</div>
-              <div className="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
-              <button className="text-dark">See more</button>
-            </div>
+            {(moviesNowShowing?.length == 1) ? <></> : <div className="buttons">
+              <button id="prev"><FaAngleLeft size={40} /></button>
+              <button id="next"><FaAngleRight size={40} /></button>
+            </div>}
           </div>
-          <div className="main" style={{ backgroundImage: "url('/assert/home/monPhai.jpg')" }}>
-            <div className="content">
-              <div className="name">Phố đêm</div>
-              <div className="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
-              <button className="text-dark">See more</button>
-            </div>
-          </div>
-          <div className="main" style={{ backgroundImage: "url('/assert/home/gioihan.png')" }}>
-            <div className="content">
-              <div className="name">Quái vật sông mekong</div>
-              <div className="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
-              <button className="text-dark">See more</button>
-            </div>
-          </div>
-          <div className="main" style={{ backgroundImage: "url('/assert/home/kisa.jpg')" }}>
-            <div className="content">
-              <div className="name">Phố đêm</div>
-              <div className="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
-              <button className="text-dark">See more</button>
-            </div>
-          </div>
-          <div className="main" style={{ backgroundImage: "url('/assert/home/Rectangle.png')" }}>
-            <div className="content">
-              <div className="name">Phố đêm</div>
-              <div className="des">Tinh ru anh di chay pho, chua kip chay pho thi anhchay mat tieu</div>
-              <button className="text-dark">See more</button>
-            </div>
-          </div>
-        </div>
-        <div className="buttons">
-          <button id="prev"><FaAngleLeft/></button>
-          <button id="next"><FaAngleRight/></button>
-        </div>
-      </div>
-      <div className="container">
+        </>
+      }
+
+      <div className="container mt-5">
         <div className="box">
           <div className="group-wrapper">
             <div className="group">
               <div className="overlap-group">
                 <div className="div type">
-                  {typesOfMovies?.map((movieType, i) => {
-                    console.log(`type:[${movieType.id},${cookie.statusId}]`)
-                    return (
-                      <Link
-                        key={i}
-                        className={`text-wrapper ${cookie.statusId !=undefined && movieType.id == parseInt(cookie.statusId) ? "text-danger" : "text-decoration-none"}`} id={`type_${i}`}
-                        href={{
-                          pathname: "",
-                        }}
-                        onClick={()=>handleCookie(movieType.id+"")}
-                      >
-                        {movieType.name}
-                      </Link>
-                    )
-                  })}
+                  <div className="d-flex flex-row-reverse justify-content-center text-center">
+                    {statusOfMovie?.map((status, i) => {
+                      return (
+                        <Link
+                          key={i}
+                          className={`text-wrapper ${status.id == parseInt(cookie.statusId) ? "text-danger" : 'text-white'} text-decoration-none`} id={`type_${i}`}
+                          href={{
+                          }}
+                          onClick={(event) => {
+                            handleCookie(event, status.id + "");
+                          }}
+                        >
+                          {status.name}
+                        </Link>
+                      )
+                    })}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div className="row mt-3">
-          {data?.map((movie: movie) => { return <Card id={`card_${movie.id}`} className="col-6 col-md-3 p-4" key={movie.id} data={movie} />; })}
+        <div className="row mt-3" id="movie">
+          {data?.map((movie: movie, index) => {
+            return <Link
+              key={movie.id}
+              className={`text-wrapper text-decoration-none col-6 col-md-3 p-4`} id={`${index}`}
+              href={{
+                pathname: `/movie-details`,
+                query: { id: movie.id }
+              }}
+            >
+              <Card id={`card_${movie.id}`} className="" key={movie.id} data={movie} />
+            </Link>
+          })}
         </div>
       </div>
-
     </CookiesProvider>
   )
 }
