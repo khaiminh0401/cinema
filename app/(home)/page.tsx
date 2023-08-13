@@ -28,7 +28,7 @@ const Home = () => {
   const [cookie, setCookie] = useCookies(["statusId"]);
   const handleCookie = (event: any, value: string) => {
     setCookie("statusId", value);
-    event.preventDefault();
+    // event.preventDefault();
   }
 
 
