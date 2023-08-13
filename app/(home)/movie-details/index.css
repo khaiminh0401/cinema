@@ -1,0 +1,33 @@
+.list-group-color {
+    background-color: black !important;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 4fr 1fr 9fr;
+    grid-row: 2;
+    gap: 10px;
+    padding: 10px;
+
+    grid-template-areas: 
+    "card type1 showtime"
+    "card type2 showtime";
+    column-gap: 20px;
+}
+
+.item1 {
+    grid-area: card;
+}
+
+.item2 {
+    grid-area: type1;
+    /* margin: 0px !important; */
+}
+
+.item3 {
+    grid-area: type2;
+}
+
+.item4 {
+    grid-area: showtime;
+}
