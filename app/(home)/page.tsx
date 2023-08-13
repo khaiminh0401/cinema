@@ -51,7 +51,6 @@ const Home = () => {
     init()
   }, [cookie.statusId])
   
-  
   return (
     <CookiesProvider>
       <div className="lll">
@@ -112,10 +111,11 @@ const Home = () => {
               <div className="overlap-group">
                 <div className="div type">
                   {typesOfMovies?.map((movieType, i) => {
+                    console.log(`type:[${movieType.id},${cookie.statusId}]`)
                     return (
                       <Link
                         key={i}
-                        className={`text-wrapper ${movieType.id == parseInt(cookie.statusId) ? "text-danger" : 'text-decoration-none'}`} id={`type_${i}`}
+                        className={`text-wrapper ${cookie.statusId !=undefined && movieType.id == parseInt(cookie.statusId) ? "text-danger" : "text-decoration-none"}`} id={`type_${i}`}
                         href={{
                           pathname: "",
                         }}
