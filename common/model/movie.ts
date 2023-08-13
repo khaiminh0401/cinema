@@ -3,7 +3,8 @@ interface movie {
 	name: string,
 	yearofmanufacture: number,
 	poster: string,
-	time: String,
-	describe:String,
-	trailer:string
+	time: string,
+	describe: string,
+	trailer: string,
+	status: string,
 }

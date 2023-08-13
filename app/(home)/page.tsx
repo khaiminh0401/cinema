@@ -22,13 +22,15 @@ const Home = () => {
     }
   ]
 
+
   const [data, setData] = useState<movie[]>();
   const [moviesNowShowing, setMoviesNowShowing] = useState<movie[]>();
   const [cookie, setCookie] = useCookies(["statusId"]);
   const handleCookie = (event: any, value: string) => {
     setCookie("statusId", value);
-    event.preventDefault();
+    // event.preventDefault();
   }
+
 
   useEffect(() => {
     if (cookie.statusId == undefined) {
@@ -46,7 +48,8 @@ const Home = () => {
       const movie = await movieAPI.findByStatus(cookie.statusId);
       setData(movie);
 
-      const mv = await movieAPI.findMoviesNowShowing();
+      // Đang test nên để findAll, vì findMoviesNowShowing không có data trong database
+      const mv = await movieAPI.findAll();
       setMoviesNowShowing(mv);
     }
 
@@ -70,8 +73,8 @@ const Home = () => {
                         key={m.id}
                         className={`text-wrapper text-decoration-none text-light fw-bold`} id={`nowShowing_${i}`}
                         href={{
-                          pathname: ``,
-                          query: ``
+                          pathname: `/movie-details`,
+                          query: { id: m.id }
                         }}
                       >
                         Xem thêm
@@ -82,10 +85,10 @@ const Home = () => {
               })}
             </div>
 
-            {(moviesNowShowing?.length == 1) ? <></> : <div className="buttons">
+            <div className="buttons">
               <button id="prev"><FaAngleLeft size={40} /></button>
               <button id="next"><FaAngleRight size={40} /></button>
-            </div>}
+            </div>
           </div>
         </>
       }
@@ -96,7 +99,7 @@ const Home = () => {
             <div className="group">
               <div className="overlap-group">
                 <div className="div type">
-                  <div className="d-flex justify-content-center text-center">
+                  <div className="d-flex flex-row-reverse justify-content-center text-center">
                     {statusOfMovie?.map((status, i) => {
                       return (
                         <Link
@@ -119,7 +122,18 @@ const Home = () => {
           </div>
         </div>
         <div className="row mt-3" id="movie">
-          {data?.map((movie: movie) => { return <Card id={`card_${movie.id}`} className="col-6 col-md-3 p-4" key={movie.id} data={movie} />; })}
+          {data?.map((movie: movie, index) => {
+            return <Link
+              key={movie.id}
+              className={`text-wrapper text-decoration-none col-6 col-md-3 p-4`} id={`${index}`}
+              href={{
+                pathname: `/movie-details`,
+                query: { id: movie.id }
+              }}
+            >
+              <Card id={`card_${movie.id}`} className="" key={movie.id} data={movie} />
+            </Link>
+          })}
         </div>
       </div>
     </CookiesProvider>
