@@ -1,5 +1,10 @@
 import Image from "next/image";
 import "./index.css";
+import { signOut } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { authconfig } from "@/lib/auth";
+import { SignOutButton } from "../authButtons";
+
 const Specical = () => {
     return (
         <nav className="navbar bg-opacity justify-content-around">
@@ -15,7 +20,8 @@ const Specical = () => {
     );
 }
 
-const Default = () => {
+const Default = async () => {
+    const session = await getServerSession(authconfig);
     return (
         <nav className="navbar navbar-expand-lg navbar-light">
             <div className="container">
@@ -47,9 +53,16 @@ const Default = () => {
                         <i className="bi bi-basket2-fill nav-link mx-2"></i>
                     </ul>
                     <div className="overlap-group-wrapper ms-5">
-                        <div className="overlap-group">
-                            <a href="/login" className="text-wrapper-6 text-decoration-none text-light">Đăng nhập</a>
-                        </div>
+                        {session?.user ? (<>
+                            <p>{session.user.name}</p> 
+                            <SignOutButton />
+                        </>) :
+                            (<>
+                                <div className="overlap-group">
+                                    <a href="/login" className="text-wrapper-6 text-decoration-none text-light">Đăng nhập</a>
+                                </div>
+                            </>)
+                        }
                     </div>
                 </div>
             </div>

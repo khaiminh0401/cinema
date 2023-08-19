@@ -1,26 +1,12 @@
-'use client'
-import { use, useEffect, useState } from 'react';
-import { customerAPI } from "@/util/API/Customer";
+import { FacebookSignInButton, GoogleSignInButton } from '@/components/authButtons';
 import './index.css';
-import Input from "@/components/Input/page";
-const login = () => {
-    const [inputs, setInputs] = useState({});
-
-
-    // const handleSubmit = async (event: any) => {
-    //     event.preventDefault();
-    //     console.log(inputs);
-    //     const data = await customerAPI.findByKey(inputs);
-    //     console.log(data);
-    //     if (data != null) {
-    //         window.location.href = "http://localhost:3000";
-    //     }
-    // };
-    // const handleChange = (event: any) => {
-    //     const name = event.target.name;
-    //     const value = event.target.value;
-    //     setInputs(values => ({ ...values, [name]: value }))
-    // };
+import { getServerSession } from 'next-auth';
+import { LoginIsRequiredServer, authconfig } from '@/lib/auth';
+import { redirect } from 'next/navigation';
+const Login = async () => {
+    const session = await getServerSession(authconfig);
+    if(session) return redirect("/");
+    
     return (
         <div className="form-bg">
             <div className="container">
@@ -47,14 +33,13 @@ const login = () => {
                                     </div>
                                     <a className="forgot">Forgot Password</a>
                                 </form>
-                                <div className='row'>
-                                    <ul className="social-links col-8">
-                                        <div className='row'>
-                                            <li className="fab fa-google col-5"><a href=''  > Login with Google</a></li>
-                                            <li className="fab fa-facebook-f col-5"><a href=''  > Login with Facebook</a></li>
-                                        </div>
-                                    </ul>
-                                    <span className="signup-link col-4 fs-7 fw-bolder">Don't have an account? Sign up <a>here</a></span>
+                                <span className="signup-link col-4 fs-7 fw-bolder">Không có tài khoản? đăng kí <a>ở đây</a></span>
+                                <div className='signup-link fw-bolder'>hoặc</div>
+                                <div className='row text-center'>
+                                    <div className='row'>
+                                        <GoogleSignInButton />
+                                        <FacebookSignInButton />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -64,4 +49,4 @@ const login = () => {
         </div >
     );
 }
-export default login;
+export default Login;
