@@ -12,7 +12,7 @@ const Register = () => {
             <div className="container">
                 <div className="row">
                     <div className="">
-                        <div className="form-container row">
+                        <div className=" form-container row ">
                             <div className="left-content d-none d-lg-block col-auto col-lg-4 me-3">
                             </div>
                             <div className="right-content col-12 col-lg-7 rounded p-4">

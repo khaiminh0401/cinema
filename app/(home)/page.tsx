@@ -84,7 +84,6 @@ const Home = () => {
                 );
               })}
             </div>
-
             <div className="buttons">
               <button id="prev"><FaAngleLeft size={40} /></button>
               <button id="next"><FaAngleRight size={40} /></button>
@@ -129,8 +128,7 @@ const Home = () => {
               href={{
                 pathname: `/movie-details`,
                 query: { id: movie.id }
-              }}
-            >
+              }}>
               <Card id={`card_${movie.id}`} className="" key={movie.id} data={movie} />
             </Link>
           })}

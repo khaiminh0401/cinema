@@ -16,7 +16,7 @@ export default async function Movie({ params }: any) {
           <table>
             <tbody>
               <tr>
-                <td><i className="bi bi-calendar"></i> Năm sản xuất: {movie.year_of_manufacture}</td>
+                <td><i className="bi bi-calendar"></i> Năm sản xuất: {movie.yearofmanufacture}</td>
                 <td width={100}></td>
                 <td><i className="bi bi-briefcase"></i> Đạo diễn: {movie.director}</td>
               </tr>
