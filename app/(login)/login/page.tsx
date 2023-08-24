@@ -1,11 +1,11 @@
+'use client'
 import { FacebookSignInButton, GoogleSignInButton } from '@/components/authButtons';
 import './index.css';
-import { getServerSession } from 'next-auth';
-import { LoginIsRequiredServer, authconfig } from '@/lib/auth';
 import { redirect } from 'next/navigation';
-const Login = async () => {
-    const session = await getServerSession(authconfig);
-    if(session) return redirect("/");
+import { useSession } from 'next-auth/react';
+const Login = () => {
+    const session = useSession();
+    if(session.data) return redirect("/");
     
     return (
         <div className="form-bg">
