@@ -3,7 +3,7 @@ import "./index.css"
 import Image from "next/image"
 import googleLogo from "@/public/assert/img/provider/google.png"
 import facebookLogo from "@/public/assert/img/provider/facebook.png"
-import { signIn, signOut,SignOutResponse } from "next-auth/react"
+import { signIn, signOut } from "next-auth/react"
 
 export function GoogleSignInButton() {
     const handleClick = () => {
