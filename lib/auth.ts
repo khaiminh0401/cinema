@@ -18,12 +18,12 @@ export const authconfig: NextAuthOptions = {
                 if (!credentials || !credentials.email || !credentials.password) {
                     return null
                 }
-                const cus = await customerAPI.findByKey({ email: credentials.email, password: credentials.password })
+                const cus = await customerAPI.Login({ email: credentials.email, password: credentials.password })
                 if (cus) {
                     const user: User = {
                         id: cus.id,
                         email: cus.email,
-                        image: '',
+                        image: "https://png.pngtree.com/png-clipart/20200701/original/pngtree-black-default-avatar-png-image_5407174.jpg",
                         name: cus.name,
                     }
                     return user

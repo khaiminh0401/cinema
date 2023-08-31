@@ -4,16 +4,11 @@ const findAll = async () => {
     return (await fetchAPI.get("/customer/getAll")).data as customer[];
 }
 
-const findByKey = async (inputs: Object) => {
-    const res = await fetchAPI.post("/customer/login", inputs, {
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    })
-    return res.data;
+const Login = async (inputs: Object) => {
+    return (await fetchAPI.post("/customer/login", inputs)).data;
 }
 export const customerAPI = {
     findAll,
-    findByKey
+    Login
 }
 

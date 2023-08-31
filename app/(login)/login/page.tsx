@@ -52,9 +52,9 @@ const Login = () => {
                                     <div className="input-wrap">
                                         <input type="password" className="input-field" {...register('password', { required: true })} placeholder='Mật khẩu' />
                                     </div>
-                                    {show ? (<>
+                                    {show && (<>
                                         <p className='text'>Tài khoản và mật khẩu không đúng</p>
-                                    </>) : ''}
+                                    </>)}
                                     <input type="submit" value="Đăng nhập" className='sign-btn' />
                                 </div>
                                 <hr />
@@ -74,51 +74,6 @@ const Login = () => {
                     </div>
                 </div>
             </main>
-            {/* <div className="form-bg">
-                <div className="container">
-                    <div className="row">
-                        <div className="">
-                            <div className="form-container row ">
-                                <div className="left-content  col-4 col-sm-4 col-lg-4">
-                                </div>
-                                <div className="right-content  col-8 col-sm-8 col-lg-7">
-                                    <form className="form-horizontal" onSubmit={handleSubmit(onSubmit)}>
-                                        <h3 className="form-title">Login</h3>
-                                        <div className="form-group">
-                                                
-                                            <input type="email" className="form-control" {...register('email', { required: true })} />
-                                        </div>
-                                        <div className="form-group">
-                                            <label>Password</label>
-                                            <input type="password" className="form-control"  {...register('password', { required: true })} />
-                                        </div>
-                                        <button className="btn signin" >Login</button>
-
-                                        <div className="remember-me">
-                                            <input type="checkbox" className="checkbox" />
-                                            <span className="check-label">Remember Me</span>
-                                        </div>
-                                        <a className="forgot">Forgot Password</a>
-                                    </form>
-                                    {show ? (<>
-                                        <p> Tài khoản hoặc mật khẩu không đúng</p>
-                                        <p> Nếu chưa có tài khoản vui lòng đăng kí bên dưới</p>
-
-                                    </>) : ''}
-                                    <span className="signup-link col-4 fs-7 fw-bolder">Không có tài khoản? đăng kí <a>ở đây</a></span>
-                                    <div className='signup-link fw-bolder'>hoặc</div>
-                                    <div className='row text-center'>
-                                        <div className='row'>
-                                            <GoogleSignInButton />
-                                            <FacebookSignInButton />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div >
-            </div > */}
         </>
     );
 }
