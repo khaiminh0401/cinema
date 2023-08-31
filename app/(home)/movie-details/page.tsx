@@ -8,7 +8,7 @@ import "react-multi-carousel/lib/styles.css";
 import 'bootstrap/dist/css/bootstrap.css';
 import Link from "next/link";
 import "./index.css";
-import Weekly from "@/components/showDate";
+import Showtime from "@/components/showDate";
 import dynamic from 'next/dynamic'
 import { movieDetailPageAPI } from '@/util/API/MovieDetailPage';
 import { movieAPI } from '@/util/API/Movie';
@@ -124,8 +124,8 @@ const MovieDetails = () => {
                 <div className="row px-3 mb-5">
                     <div className="col-md-18 bg-dark text-white">
                         <h4 className="text-center border-2 border-bottom border-danger py-2">VUI LÒNG CHỌN THÔNG TIN VÉ</h4>
-                        <Weekly/>
-                        <div className="grid-container mt-3 border-1 border-bottom border-light border-opacity-25">
+                        <Showtime movieId={movieId} />
+                        {/* <div className="grid-container mt-3 border-1 border-bottom border-light border-opacity-25">
                             <div className="item1">
                                 <div className="card bg-transparent text-white border-0">
                                     <div className="card-body">
@@ -162,7 +162,7 @@ const MovieDetails = () => {
                             <div className="item4">
                                 <button type="button" className="btn btn-dark">Secondary</button>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
@@ -184,20 +184,20 @@ const MovieDetails = () => {
                             {moviesNowShowing && moviesNowShowing.length > 0 ? (
                                 moviesNowShowing.map((mv, index) => (
                                     <div key={index} style={{ textAlign: 'center' }}>
-                                            <Link
-                                                key={mv.id}
-                                                className={`text-wrapper text-decoration-none text-light fw-bold`} id={`nowShowing_${index}`}
-                                                href={{
-                                                    pathname: ``,
-                                                    query: { id: mv.id }
-                                                }}
-                                            >
-                                                <Image
-                                                    src={`/assert/img/movie/${mv.poster}`}
-                                                    alt={`aga`}
-                                                   width={'250'} height= {'350'}
-                                                />
-                                            </Link>
+                                        <Link
+                                            key={mv.id}
+                                            className={`text-wrapper text-decoration-none text-light fw-bold`} id={`nowShowing_${index}`}
+                                            href={{
+                                                pathname: ``,
+                                                query: { id: mv.id }
+                                            }}
+                                        >
+                                            <Image
+                                                src={`/assert/img/movie/${mv.poster}`}
+                                                alt={`aga`}
+                                                width={'250'} height={'350'}
+                                            />
+                                        </Link>
                                     </div>
                                 ))
                             ) : (
