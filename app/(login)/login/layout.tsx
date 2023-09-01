@@ -1,4 +1,5 @@
 'use client'
+import '../../globals.css';
 import { SessionProvider } from "next-auth/react"
 import '../../globals.css';
 export const metadata = {
@@ -15,9 +16,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <SessionProvider session={session}>
-        <body>{children}</body>
-      </SessionProvider>
+      <body>
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+        <SessionProvider session={session}>
+          {children}
+        </SessionProvider>
+      </body>
     </html>
   )
 }

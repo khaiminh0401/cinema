@@ -3,7 +3,7 @@ import './../globals.css';
 import { SessionProvider } from "next-auth/react"
 // const inter = Inter({ subsets: ['latin'] })
 import Footer from '@/components/Footer';
-import Navbar from '@/components/Navbar';
+import {Navbar} from '@/components/Navbar';
 
 export const metadata = {
   title: 'Zuhot',
@@ -26,7 +26,7 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
         <div className="container-fluid bg-dark">
           <SessionProvider session={session}>
-            <Navbar />
+            <Navbar.Default />
             {children}
             <Footer />
           </SessionProvider>

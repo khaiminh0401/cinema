@@ -1,11 +1,27 @@
 'use client'
 import Image from "next/image";
 import "./index.css";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { SignOutButton } from "../authButtons";
+import Link from "next/link";
+
+const Specical = () => {
+    return (
+        <nav className="navbar bg-opacity justify-content-around">
+            <Image src="/assert/img/logo.png" width={"150"} height={"50"} alt="" />
+            <section className="d-flex justify-content-between align-items-center w-50">
+                <a className="nav-link fw-bold">Phim</a>
+                <a className="nav-link fw-bold">Lịch chiếu</a>
+                <a className="nav-link fw-bold">Liên hệ</a>
+                <a className="nav-link fw-bold">Về chúng tôi</a>
+                <button className="btn btn-danger"><a href="http://localhost:3000/login">Đăng nhập</a></button>
+            </section>
+        </nav>
+    );
+}
 
 
-const Navbar = () => {
+const Default = () => {
     const { data: session } = useSession();
     const userImage = session?.user?.image ? (
         <Image
@@ -56,7 +72,7 @@ const Navbar = () => {
                         </>) :
                             (<>
                                 <div className="overlap-group">
-                                    <a href="/login" className="text-wrapper-6 text-decoration-none text-light">Đăng nhập</a>
+                                    <Link href="/login" className="text-wrapper-6 text-decoration-none text-light">Đăng nhập</Link>
                                 </div>
                             </>)
                         }
@@ -72,4 +88,7 @@ const Navbar = () => {
 }
 
 
-export default Navbar;
+export const Navbar = {
+    Specical,
+    Default
+};

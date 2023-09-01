@@ -1,8 +1,5 @@
 'use client'
 import "./index.css"
-import Image from "next/image"
-import googleLogo from "@/public/assert/img/provider/google.png"
-import facebookLogo from "@/public/assert/img/provider/facebook.png"
 import { signIn, signOut } from "next-auth/react"
 
 export function GoogleSignInButton() {
@@ -15,7 +12,8 @@ export function GoogleSignInButton() {
             onClick={handleClick}
             className="login-button"
         >
-            <Image src={googleLogo} alt="Google Logo" width={20} height={20} />
+            
+            <i className="bi bi-google fs-6 me-1 text-primary"></i>
             <span className="ml-4">Đăng nhập bằng Google</span>
         </button>
 
@@ -31,7 +29,7 @@ export function FacebookSignInButton() {
             onClick={handleClick}
             className="login-button"
         >
-            <Image src={facebookLogo} alt="FaceBook Logo" width={20} height={20} />
+            <i className="bi bi-facebook fs-6 me-1 text-primary"></i>
             <span className="ml-4">Đăng nhập bằng Facebook</span>
         </button>
 

@@ -253,11 +253,8 @@ input {
     font-family: "Poppins", sans-serif;
 }
 
-main {
-    width: 100%;
+.container {
     min-height: 100vh;
-    overflow: hidden;
-    padding: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -313,22 +310,6 @@ form.sign-up-form {
     pointer-events: none;
 }
 
-.logo {
-    display: flex;
-    align-items: center;
-}
-
-.logo Image {
-    width: 27px;
-    margin-right: 0.3rem;
-}
-
-.logo h4 {
-    font-size: 1.1rem;
-    margin-top: -9px;
-    letter-spacing: -0.5px;
-    color: #ededed;
-}
 
 .heading h2 {
     font-size: 2.1rem;
@@ -362,7 +343,6 @@ form.sign-up-form {
 }
 
 .input-field {
-    position: absolute;
     width: 100%;
     height: 100%;
     background: none;
@@ -375,16 +355,6 @@ form.sign-up-form {
     transition: 0.4s;
 }
 
-label {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 0.95rem;
-    color: #bbb;
-    pointer-events: none;
-    transition: 0.4s;
-}
 
 .input-field.active {
     border-bottom-color: #151111;
@@ -427,10 +397,6 @@ label {
     color: #8371fd;
 }
 
-main.sign-up-mode form.sign-in-form {
-    opacity: 0;
-    pointer-events: none;
-}
 
 
 .carousel {
@@ -505,29 +471,17 @@ main.sign-up-mode form.sign-in-form {
     font-weight: 600;
     font-size: 1.6rem;
 }
-
-.bullets {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.col-9{
+    font-size: 0.7rem;
+    padding: 0;
+    width: fit-content;
+    margin: 0;
+    margin-top: 2px;
+}
+.col-2{
+    width: fit-content;
 }
 
-.bullets span {
-    display: block;
-    width: 0.5rem;
-    height: 0.5rem;
-    background-color: #aaa;
-    margin: 0 0.25rem;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.bullets span.active {
-    width: 1.1rem;
-    background-color: #151111;
-    border-radius: 1rem;
-}
 
 @media (max-width: 850px) {
     .box {
@@ -558,18 +512,6 @@ main.sign-up-mode form.sign-in-form {
 
     .heading {
         margin: 2rem 0;
-    }
-
-    form.sign-up-form {
-        transform: translateX(100%);
-    }
-
-    main.sign-up-mode form.sign-in-form {
-        transform: translateX(-100%);
-    }
-
-    main.sign-up-mode form.sign-up-form {
-        transform: translateX(0%);
     }
 
     .carousel {
