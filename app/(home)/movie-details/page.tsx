@@ -8,7 +8,7 @@ import "react-multi-carousel/lib/styles.css";
 import 'bootstrap/dist/css/bootstrap.css';
 import Link from "next/link";
 import "./index.css";
-
+import Showtime from "@/components/showDate";
 import dynamic from 'next/dynamic'
 import { movieDetailPageAPI } from '@/util/API/MovieDetailPage';
 import { movieAPI } from '@/util/API/Movie';
@@ -25,22 +25,6 @@ const MovieDetails = () => {
     const movieId = searchParams.get("id");
 
     const currentDate = useState(new Date());
-
-    const showdate = [
-        "20/07/2003",
-        "20/07/2003",
-        "20/07/2003",
-        "20/07/2003",
-        "20/07/2003",
-        "20/07/2003",
-        "20/07/2003",
-        "20/07/2003",
-        "20/07/2003",
-        "20/07/2003",
-        "20/07/2003",
-        "20/07/2003",
-        "20/07/2003"
-    ];
     const responsive = {
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
@@ -90,7 +74,7 @@ const MovieDetails = () => {
 
     return (
         <>
-            <div className="container-fluid bg-dark">
+            <div className="container bg-dark">
                 <div className="row">
                     <div className="col-md-6 col-lg-8 bg-dark text-white p-4">
                         <h4>Trang chủ &gt; Đặt vé &gt; {movieDetailPage?.name}</h4>
@@ -140,32 +124,8 @@ const MovieDetails = () => {
                 <div className="row px-3 mb-5">
                     <div className="col-md-18 bg-dark text-white">
                         <h4 className="text-center border-2 border-bottom border-danger py-2">VUI LÒNG CHỌN THÔNG TIN VÉ</h4>
-                        {/* <div className="bg-danger p-5"></div> */}
-                        <Carousel
-                            responsive={responsiveShowdate}
-                            ssr
-                            slidesToSlide={1}
-                            infinite
-                            itemClass="image-item"
-                            deviceType={''}
-                        >
-                            {showdate.map((s, index) => (
-                                    <div key={index} style={{ textAlign: 'center' }}>
-                                            <Link
-                                                key={index}
-                                                className={`text-wrapper text-decoration-none text-light fw-bold`} id={`nowShowing_${index}`}
-                                                href={{
-                                                    pathname: ``,
-                                                    query: { id: s }
-                                                }}
-                                            >
-                                                {s}
-                                            </Link>
-                                    </div>
-                                ))
-                            }
-                        </Carousel>
-                        <div className="grid-container mt-3 border-1 border-bottom border-light border-opacity-25">
+                        <Showtime movieId={movieId} />
+                        {/* <div className="grid-container mt-3 border-1 border-bottom border-light border-opacity-25">
                             <div className="item1">
                                 <div className="card bg-transparent text-white border-0">
                                     <div className="card-body">
@@ -202,7 +162,7 @@ const MovieDetails = () => {
                             <div className="item4">
                                 <button type="button" className="btn btn-dark">Secondary</button>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
 
@@ -224,20 +184,20 @@ const MovieDetails = () => {
                             {moviesNowShowing && moviesNowShowing.length > 0 ? (
                                 moviesNowShowing.map((mv, index) => (
                                     <div key={index} style={{ textAlign: 'center' }}>
-                                            <Link
-                                                key={mv.id}
-                                                className={`text-wrapper text-decoration-none text-light fw-bold`} id={`nowShowing_${index}`}
-                                                href={{
-                                                    pathname: ``,
-                                                    query: { id: mv.id }
-                                                }}
-                                            >
-                                                <Image
-                                                    src={`/assert/img/movie/${mv.poster}`}
-                                                    alt={`aga`}
-                                                   width={'250'} height= {'350'}
-                                                />
-                                            </Link>
+                                        <Link
+                                            key={mv.id}
+                                            className={`text-wrapper text-decoration-none text-light fw-bold`} id={`nowShowing_${index}`}
+                                            href={{
+                                                pathname: ``,
+                                                query: { id: mv.id }
+                                            }}
+                                        >
+                                            <Image
+                                                src={`/assert/img/movie/${mv.poster}`}
+                                                alt={`aga`}
+                                                width={'250'} height={'350'}
+                                            />
+                                        </Link>
                                     </div>
                                 ))
                             ) : (
