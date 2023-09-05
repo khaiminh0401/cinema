@@ -15,23 +15,17 @@ export const authconfig: NextAuthOptions = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
-                if (!credentials || !credentials.email || !credentials.password) {
-                    return null
-                }
-                const cus = await customerAPI.Login({ email: credentials.email, password: credentials.password })
+                const cus = await customerAPI.Login({ email: credentials?.email, password: credentials?.password })
                 if (cus) {
                     const user: User = {
                         id: cus.id,
                         email: cus.email,
                         image: "https://png.pngtree.com/png-clipart/20200701/original/pngtree-black-default-avatar-png-image_5407174.jpg",
-                        name: cus.name,
+                        name: cus.name
                     }
                     return user
                 }
                 return null
-
-
-
             }
         }),
         GoogleProvider({

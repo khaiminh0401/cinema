@@ -1,29 +1,25 @@
 'use client'
-import { FacebookSignInButton, GoogleSignInButton } from '@/components/authButtons';
 import './index.css';
+import { FacebookSignInButton, GoogleSignInButton } from '@/components/authButtons';
 import { redirect } from 'next/navigation';
 import { signIn, useSession } from 'next-auth/react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import Logo from './images/logo.png'
 import Image from 'next/image';
 import hinh from './images/MP01.png'
-interface IFormInput {
-    email: string;
-    password: string;
-}
+import { Validation } from '@/common/Validation/LoginValidation';
 const Login = () => {
     const [show, setShow] = useState(false);
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<IFormInput>();
-
+    } = useForm();
+   
     const session = useSession();
     if (session.data) return redirect("/");
-
-    const onSubmit: SubmitHandler<IFormInput> = async data => {
+    const onSubmit = async (data: any) => {
         const result = await signIn("credentials", {
             email: data.email,
             password: data.password,
@@ -51,19 +47,14 @@ const Login = () => {
                                 </div>
                                 <div className="actual-form">
                                     <div className="input-wrap">
-                                        <input type="text" className="input-field" {...register('email', { required: true, pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i })} placeholder='Email' />
-                                        {errors?.email?.type === "pattern" && (
-                                            <p className='text'>Không đúng định dạng email</p>
-                                        )}
-                                        {errors?.email?.type === "required" && (
-                                            <p className='text'>Vui lòng nhập thông tin</p>
-                                        )}
+                                        <input type="email" className="input-field" {...register('email', Validation.email)} placeholder='Email' />
+
+                                        <p className='text mt-1'>{errors.email?.message as string}</p>
+
                                     </div>
                                     <div className="input-wrap">
-                                        <input type="password" className="input-field" {...register('password', { required: true })} placeholder='Mật khẩu' />
-                                        {errors?.password?.type === "required" && (
-                                            <p className='text'>Vui lòng nhập thông tin</p>
-                                        )}
+                                        <input type="password" className="input-field" {...register('password', Validation.password)} placeholder='Mật khẩu' />
+                                        <p className='text mt-1'>{errors.password?.message as string}</p>
                                     </div>
                                     <div className='row mb-2'>
                                         <div className='col-2'>
