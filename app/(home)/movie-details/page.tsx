@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
-import 'bootstrap/dist/css/bootstrap.css';
 import Link from "next/link";
 import "./index.css";
 import Showtime from "@/components/showDate";
