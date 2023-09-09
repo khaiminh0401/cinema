@@ -89,7 +89,7 @@ const MovieDetails = () => {
                 <div className="row">
                     <div className="col-md-8 bg-dark text-white p-4">
                         <div className="d-flex">
-                            {movieDetailPage && <Image src={`/assert/img/movie/${movieDetailPage?.poster}`} className="mr-3" width={250} height={250} alt="Movie Poster" />}
+                            {movieDetailPage && <Image src={`/assert/img/movie/${movieDetailPage?.poster}`} className="mr-3" width={256} height={320} alt="Movie Poster" />}
                             <div className="ms-4 flex-grow-1">
                                 <h2 className="mb-3">{movieDetailPage?.name}</h2>
                                 <p><strong>Thể loại:</strong> {movieDetailPage?.movieTypeName}</p>

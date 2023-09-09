@@ -1,5 +1,6 @@
 import Image from "next/image";
 import "./index.css";
+import Link from "next/link";
 const Specical = () => {
     return (
         <nav className="navbar bg-opacity justify-content-around">
@@ -26,10 +27,10 @@ const Default = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ms-auto mt-1 mb-lg-0 ">
                         <li className="nav-item">
-                            <a className="nav-link " aria-current="page" href="#">Trang chủ</a>
+                            <Link className="nav-link " aria-current="page" href="/">Trang chủ</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link mx-2" href="#">Phim</a>
+                            <Link className="nav-link mx-2" href="#">Phim</Link>
                         </li>
                         <li className="nav-item ">
                             <a className="nav-link mx-2" href="#">Rạp</a>
@@ -48,7 +49,7 @@ const Default = () => {
                     </ul>
                     <div className="overlap-group-wrapper ms-5">
                         <div className="overlap-group">
-                            <a href="/login" className="text-wrapper-6 text-decoration-none text-light">Đăng nhập</a>
+                            <Link href="/login" className="text-wrapper-6 text-decoration-none text-light">Đăng nhập</Link>
                         </div>
                     </div>
                 </div>
