@@ -7,7 +7,7 @@ const Card = ({ ...props }: CardProps) => {
         <div className={`card ${props.className}`} id={props.id}>
             <div className="card-header">
                 <img className="imgMovie pe-3" alt="Image" src={"/assert/img/movie/" + props.data.poster} />
-                <div className="description">
+                <div className="description d-flex flex-column mb-3">
                     <span className="icon"><FaHeart/></span>
                     <span className="icon"><FaVideo/></span>
                     <span className="icon"><FaStar/></span>
