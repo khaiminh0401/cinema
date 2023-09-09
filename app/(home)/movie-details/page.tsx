@@ -97,7 +97,7 @@ const MovieDetails = () => {
                                 <p><strong>Diễn viên:</strong> {movieDetailPage?.actorsName}</p>
                                 <p><strong>Ngôn ngữ:</strong> {movieDetailPage?.languagesName}</p>
                                 <p><strong>Thời gian chiếu:</strong> {movieDetailPage?.time} phút</p>
-                                <p><strong>Đất nước:</strong> {movieDetailPage?.countryName}</p>
+                                <p><strong>Quốc gia:</strong> {movieDetailPage?.countryName}</p>
                                 <p><strong>Năm phát hành:</strong> {movieDetailPage?.yearofmanufacture}</p>
                             </div>
                         </div>
