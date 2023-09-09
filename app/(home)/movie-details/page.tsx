@@ -8,7 +8,7 @@ import "react-multi-carousel/lib/styles.css";
 import 'bootstrap/dist/css/bootstrap.css';
 import Link from "next/link";
 import "./index.css";
-import Showtime from "@/components/showDate";
+import WeekDate from "@/components/Date";
 import dynamic from 'next/dynamic'
 import { movieDetailPageAPI } from '@/util/API/MovieDetailPage';
 import { movieAPI } from '@/util/API/Movie';
@@ -124,45 +124,7 @@ const MovieDetails = () => {
                 <div className="row px-3 mb-5">
                     <div className="col-md-18 bg-dark text-white">
                         <h4 className="text-center border-2 border-bottom border-danger py-2">VUI LÒNG CHỌN THÔNG TIN VÉ</h4>
-                        <Showtime movieId={movieId} />
-                        {/* <div className="grid-container mt-3 border-1 border-bottom border-light border-opacity-25">
-                            <div className="item1">
-                                <div className="card bg-transparent text-white border-0">
-                                    <div className="card-body">
-                                        <h5 className="card-title py-1 border-1 border-bottom border-light">Tên chi nhánh</h5>
-                                        <p className="card-text fw-light">Địa chỉ................</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="item2">
-                                <div className="bg-danger text-center p-2 rounded-1">2D Sub</div>
-                            </div>
-                            <div className="item3">
-                                <div className="text-center border border-1 p-2 border-light rounded-1">2D</div>
-                            </div>
-                            <div className="item4">
-                                <button type="button" className="btn btn-dark">Secondary</button>
-                            </div>
-                        </div>
-                        <div className="grid-container mt-3 border-1 border-bottom border-light border-opacity-25">
-                            <div className="item1">
-                                <div className="card bg-transparent text-white border-0">
-                                    <div className="card-body">
-                                        <h5 className="card-title py-1 border-1 border-bottom border-light">Tên chi nhánh</h5>
-                                        <p className="card-text fw-light">Địa chỉ................</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="item2">
-                                <div className="bg-danger text-center p-2 rounded-1">2D Sub</div>
-                            </div>
-                            <div className="item3">
-                                <div className="text-center border border-1 p-2 border-light rounded-1">2D</div>
-                            </div>
-                            <div className="item4">
-                                <button type="button" className="btn btn-dark">Secondary</button>
-                            </div>
-                        </div> */}
+                        <WeekDate movieId={movieId} />
                     </div>
                 </div>
 

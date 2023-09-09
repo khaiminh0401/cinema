@@ -1,4 +1,4 @@
-const Button = () =>{
+const Button = () => {
     <button></button>
 };
 export default Button;

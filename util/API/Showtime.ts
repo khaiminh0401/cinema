@@ -1,6 +1,6 @@
 import { fetchAPI } from "./axios";
-const findShowtimeByMovieAndDate = async (showdate: any, movieId: any) => {
-    return (await fetchAPI.get("/showtime/byDateOfMovie", { params: { showdate: showdate, movieId: movieId } })).data as showtime[];
+const findShowtimeByMovieAndDate = async (showdate: any, movieId: any, page: any) => {
+    return (await fetchAPI.get("/showtime/getShowTimeByDate", { params: { showdate: showdate, movieId: movieId, page: page } })).data as showtime[];
 }
 
 export const showtimeAPI = {
