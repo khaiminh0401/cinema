@@ -25,15 +25,15 @@ const Home = () => {
   const [data, setData] = useState<movie[]>();
   const [moviesNowShowing, setMoviesNowShowing] = useState<movie[]>();
   const [cookie, setCookie] = useCookies(["statusId"]);
-  const handleCookie = (event: any, value: string) => {
+  const handleCookie = (value: string, event?: any) => {
+    if (event != undefined) event.preventDefault();
     setCookie("statusId", value);
-    // event.preventDefault();
   }
 
 
   useEffect(() => {
     if (cookie.statusId == undefined) {
-      handleCookie('', '1');
+      handleCookie('1');
     }
     const init = async () => {
       $("#next").click(() => {
@@ -83,7 +83,6 @@ const Home = () => {
                 );
               })}
             </div>
-
             <div className="buttons">
               <button id="prev"><FaAngleLeft size={40} /></button>
               <button id="next"><FaAngleRight size={40} /></button>
@@ -107,7 +106,7 @@ const Home = () => {
                           href={{
                           }}
                           onClick={(event) => {
-                            handleCookie(event, status.id + "");
+                            handleCookie(status.id + "", event);
                           }}
                         >
                           {status.name}
@@ -128,8 +127,7 @@ const Home = () => {
               href={{
                 pathname: `/movie-details`,
                 query: { id: movie.id }
-              }}
-            >
+              }}>
               <Card id={`card_${movie.id}`} className="" key={movie.id} data={movie} />
             </Link>
           })}

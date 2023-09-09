@@ -1,5 +1,6 @@
 'use client'
 import Image from "next/image";
+import { FaSearch, FaShoppingBasket } from "react-icons/fa";
 import "./index.css";
 import { useSession } from "next-auth/react";
 import { SignOutButton } from "../authButtons";
@@ -27,10 +28,10 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ms-auto mt-1 mb-lg-0 ">
                         <li className="nav-item">
-                            <a className="nav-link " aria-current="page" href="#">Trang chủ</a>
+                            <Link className="nav-link " aria-current="page" href="/">Trang chủ</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link mx-2" href="#">Phim</a>
+                            <Link className="nav-link mx-2" href="#">Phim</Link>
                         </li>
                         <li className="nav-item ">
                             <a className="nav-link mx-2" href="#">Rạp</a>
@@ -44,8 +45,12 @@ const Navbar = () => {
                         <li className="nav-item ">
                             <a className="nav-link mx-2" href="#">Giới thiệu</a>
                         </li>
-                        <i className="bi bi-search nav-link mx-2"></i>
-                        <i className="bi bi-basket2-fill nav-link mx-2"></i>
+                        <li className="nav-item mx-2 my-auto">
+                            <FaSearch />
+                        </li>
+                        <li className="nav-item mx-2 my-auto">
+                            <FaShoppingBasket />
+                        </li>
                     </ul>
                     <div className="overlap-group-wrapper ms-5">
                         {session ? (<>
@@ -63,10 +68,6 @@ const Navbar = () => {
                 </div>
             </div>
         </nav>
-
-
-
-
     );
 }
 
