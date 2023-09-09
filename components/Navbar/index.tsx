@@ -44,10 +44,10 @@ const Default = () => {
                         <li className="nav-item ">
                             <a className="nav-link mx-2" href="#">Giới thiệu</a>
                         </li>
-                        <li className="nav-item mx-2">
+                        <li className="nav-item mx-2 my-auto">
                             <FaSearch />
                         </li>
-                        <li className="nav-item mx-2">
+                        <li className="nav-item mx-2 my-auto">
                             <FaShoppingBasket />
                         </li>
                     </ul>
