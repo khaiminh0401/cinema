@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { FaSearch, FaOpencart } from "react-icons/fa";
+import { FaSearch, FaShoppingBasket } from "react-icons/fa";
 import "./index.css";
 const Specical = () => {
     return (
@@ -48,7 +48,7 @@ const Default = () => {
                             <FaSearch />
                         </li>
                         <li className="nav-item mx-2">
-                            <FaOpencart />
+                            <FaShoppingBasket />
                         </li>
                     </ul>
                     <div className="overlap-group-wrapper ms-5">
