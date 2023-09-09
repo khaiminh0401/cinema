@@ -6,7 +6,12 @@ import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { customerAPI } from "@/util/API/Customer";
+import { ErrorProps } from "next/error";
 
+type Warn ={
+    statusCode:'',
+    title:''
+}
 export const authconfig: NextAuthOptions = {
     providers: [
         CredentialsProvider({
@@ -15,17 +20,22 @@ export const authconfig: NextAuthOptions = {
                 password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
-                const cus = await customerAPI.Login({ email: credentials?.email, password: credentials?.password })
-                if (cus) {
-                    const user: User = {
-                        id: cus.id,
-                        email: cus.email,
-                        image: "https://png.pngtree.com/png-clipart/20200701/original/pngtree-black-default-avatar-png-image_5407174.jpg",
-                        name: cus.name
-                    }
-                    return user
+                try {
+                    const cus = await customerAPI.Login({ email: credentials?.email, password: credentials?.password })
+                    if (cus) {
+                        const user: User = {
+                            id: cus.id,
+                            email: cus.email,
+                            image: "https://png.pngtree.com/png-clipart/20200701/original/pngtree-black-default-avatar-png-image_5407174.jpg",
+                            name: cus.name
+                        }
+                        return user
+                    }    
+                } catch (error: any) {
+                    throw new Error(error.response.data.message)
                 }
                 return null
+                
             }
         }),
         GoogleProvider({

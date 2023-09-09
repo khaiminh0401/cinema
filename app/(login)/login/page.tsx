@@ -4,34 +4,38 @@ import { FacebookSignInButton, GoogleSignInButton } from '@/components/authButto
 import { redirect } from 'next/navigation';
 import { signIn, useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
 import Logo from './images/logo.png'
 import Image from 'next/image';
 import hinh from './images/MP01.png'
 import { Validation } from '@/common/Validation/LoginValidation';
+import { Error } from '@/common/Validation/error';
+import { notification } from 'antd';
 const Login = () => {
-    const [show, setShow] = useState(false);
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
-   
+    const [api, contextHolder] = notification.useNotification();
     const session = useSession();
     if (session.data) return redirect("/");
     const onSubmit = async (data: any) => {
         const result = await signIn("credentials", {
             email: data.email,
             password: data.password,
-            redirect: false,
-            callbackUrl: '/'
         });
         if (result?.error) {
-            setShow(true)
+            if (result?.error === Error.WRONG.code)
+                api.error({ message: "Thông báo lỗi", description: Error.WRONG.message + "mật khẩu. Vui lòng thử lại!" })
+            else if (result?.error === Error.NOT_EXISTS.code) {
+                api.error({ message: "Thông báo lỗi", description: "Email" + Error.NOT_EXISTS.message })
+            }
         }
+
     }
     return (
         <>
+            {contextHolder}
             <div className='container'>
                 <div className='box'>
                     <div className="inner-box">
@@ -62,9 +66,7 @@ const Login = () => {
                                         </div>
                                         <p className='text-white col-9'>Ghi nhớ đăng nhập?</p>
                                     </div>
-                                    {show && (<>
-                                        <p className='text'>Tài khoản và mật khẩu không đúng</p>
-                                    </>)}
+
 
                                     <input type="submit" value="Đăng nhập" className='sign-btn' />
                                 </div>
