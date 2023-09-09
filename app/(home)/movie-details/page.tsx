@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
-import 'bootstrap/dist/css/bootstrap.css';
 import Link from "next/link";
 import "./index.css";
 import WeekDate from "@/components/Date";
@@ -28,7 +27,7 @@ const MovieDetails = () => {
     const responsive = {
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
-            items: 4,
+            items: 5,
         },
         tablet: {
             breakpoint: { max: 1024, min: 464 },
@@ -90,7 +89,7 @@ const MovieDetails = () => {
                 <div className="row">
                     <div className="col-md-8 bg-dark text-white p-4">
                         <div className="d-flex">
-                            {movieDetailPage && <Image src={`/assert/img/movie/${movieDetailPage?.poster}`} className="mr-3" width={250} height={250} alt="Movie Poster" />}
+                            {movieDetailPage && <Image src={`/assert/img/movie/${movieDetailPage?.poster}`} className="mr-3" width={256} height={320} alt="Movie Poster" />}
                             <div className="ms-4 flex-grow-1">
                                 <h2 className="mb-3">{movieDetailPage?.name}</h2>
                                 <p><strong>Thể loại:</strong> {movieDetailPage?.movieTypeName}</p>
@@ -98,7 +97,7 @@ const MovieDetails = () => {
                                 <p><strong>Diễn viên:</strong> {movieDetailPage?.actorsName}</p>
                                 <p><strong>Ngôn ngữ:</strong> {movieDetailPage?.languagesName}</p>
                                 <p><strong>Thời gian chiếu:</strong> {movieDetailPage?.time} phút</p>
-                                <p><strong>Đất nước:</strong> {movieDetailPage?.countryName}</p>
+                                <p><strong>Quốc gia:</strong> {movieDetailPage?.countryName}</p>
                                 <p><strong>Năm phát hành:</strong> {movieDetailPage?.yearofmanufacture}</p>
                             </div>
                         </div>

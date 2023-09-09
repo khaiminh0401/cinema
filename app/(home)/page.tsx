@@ -1,5 +1,4 @@
 'use client'
-
 import React, { useState, useEffect } from "react";
 import Card from '@components/Card';
 import Link from "next/link";
@@ -26,15 +25,15 @@ const Home = () => {
   const [data, setData] = useState<movie[]>();
   const [moviesNowShowing, setMoviesNowShowing] = useState<movie[]>();
   const [cookie, setCookie] = useCookies(["statusId"]);
-  const handleCookie = (event: any, value: string) => {
+  const handleCookie = (value: string, event?: any) => {
+    if (event != undefined) event.preventDefault();
     setCookie("statusId", value);
-    // event.preventDefault();
   }
 
 
   useEffect(() => {
     if (cookie.statusId == undefined) {
-      handleCookie('', '1');
+      handleCookie('1');
     }
     const init = async () => {
       $("#next").click(() => {
@@ -107,7 +106,7 @@ const Home = () => {
                           href={{
                           }}
                           onClick={(event) => {
-                            handleCookie(event, status.id + "");
+                            handleCookie(status.id + "", event);
                           }}
                         >
                           {status.name}

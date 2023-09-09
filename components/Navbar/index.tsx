@@ -1,21 +1,23 @@
+'use client'
 import Image from "next/image";
+import { FaSearch, FaShoppingBasket } from "react-icons/fa";
 import "./index.css";
-const Specical = () => {
-    return (
-        <nav className="navbar bg-opacity justify-content-around">
-            <Image src="/assert/img/logo.png" width={"150"} height={"50"} alt="" />
-            <section className="d-flex justify-content-between align-items-center w-50">
-                <a className="nav-link fw-bold">Phim</a>
-                <a className="nav-link fw-bold">Lịch chiếu</a>
-                <a className="nav-link fw-bold">Liên hệ</a>
-                <a className="nav-link fw-bold">Về chúng tôi</a>
-                <button className="btn btn-danger"><a href="http://localhost:3000/login">Đăng nhập</a></button>
-            </section>
-        </nav>
-    );
-}
+import { useSession } from "next-auth/react";
+import { SignOutButton } from "../authButtons";
+import Link from "next/link";
+const Navbar = () => {
+    const { data: session } = useSession();
+    const userImage = session?.user?.image ? (
+        <Image
+            className="Image Profile"
+            src={session?.user?.image}
+            width={200}
+            height={200}
+            alt={session?.user?.name ?? "Profile Pic"}
+            priority={true}
+        />
+    ) : null
 
-const Default = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-light">
             <div className="container">
@@ -26,10 +28,10 @@ const Default = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav ms-auto mt-1 mb-lg-0 ">
                         <li className="nav-item">
-                            <a className="nav-link " aria-current="page" href="#">Trang chủ</a>
+                            <Link className="nav-link " aria-current="page" href="/">Trang chủ</Link>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link mx-2" href="#">Phim</a>
+                            <Link className="nav-link mx-2" href="#">Phim</Link>
                         </li>
                         <li className="nav-item ">
                             <a className="nav-link mx-2" href="#">Rạp</a>
@@ -43,26 +45,31 @@ const Default = () => {
                         <li className="nav-item ">
                             <a className="nav-link mx-2" href="#">Giới thiệu</a>
                         </li>
-                        <i className="bi bi-search nav-link mx-2"></i>
-                        <i className="bi bi-basket2-fill nav-link mx-2"></i>
+                        <li className="nav-item mx-2 my-auto">
+                            <FaSearch />
+                        </li>
+                        <li className="nav-item mx-2 my-auto">
+                            <FaShoppingBasket />
+                        </li>
                     </ul>
                     <div className="overlap-group-wrapper ms-5">
-                        <div className="overlap-group">
-                            <a href="/login" className="text-wrapper-6 text-decoration-none text-light">Đăng nhập</a>
-                        </div>
+                        {session ? (<>
+                            <p>{session?.user?.name}</p>
+                            {userImage}
+                            <SignOutButton />
+                        </>) :
+                            (<>
+                                <div className="overlap-group">
+                                    <Link href="/login" className="text-wrapper-6 text-decoration-none text-light">Đăng nhập</Link>
+                                </div>
+                            </>)
+                        }
                     </div>
                 </div>
             </div>
         </nav>
-
-
-
-
     );
 }
 
 
-export const Navbar = {
-    Specical,
-    Default
-};
+export default Navbar;

@@ -1,16 +1,17 @@
-.logo{
+.logo {
     width: 150px;
 }
 
-.nav-link{
+.nav-link {
     font-size: 18px;
     color: white;
 }
 
-.nav-link:hover{
+.nav-link:hover {
     color: red;
     /* background-color: antiquewhite; */
 }
+
 .overlap-group-wrapper .overlap-group {
     background-image: url("./../../public/assert/home/Vector.svg");
     background-size: 100% 100%;
@@ -33,6 +34,18 @@
     text-align: center;
 }
 
-.navbar{
+.navbar {
     background-color: black;
+}
+
+.Image.Profile {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.Image.Profile:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }

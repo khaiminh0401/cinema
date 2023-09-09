@@ -1,7 +1,14 @@
 import { fetchAPI } from "./axios";
-const findByKey = async (inputs: object) => {
-    return ((await fetchAPI.get("/customer/login", { params: { ...inputs } })).data as customer);
+
+const findAll = async () => {
+    return (await fetchAPI.get("/customer/getAll")).data as customer[];
+}
+
+const Login = async (inputs: Object) => {
+    return (await fetchAPI.post("/customer/login", inputs)).data;
 }
 export const customerAPI = {
-    findByKey
+    findAll,
+    Login
 }
+

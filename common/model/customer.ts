@@ -1,11 +1,11 @@
 interface customer {
     id: number,
-    name: String,
-    password: String,
-    email: String,
-    phone: String,
-    address: String,
+    name: string,
+    password: string,
+    email: string,
+    phone: string,
+    address: string,
     gender: number,
-    idfb: String,
-    imagefb: String
+    idfb?: string,
+    imagefb?: string
 }
