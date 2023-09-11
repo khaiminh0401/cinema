@@ -67,8 +67,8 @@ const WeekDate = (prop: any) => {
       <div className="row">
         <ShowTime prop={showtimeDetail} >
           <Pagination >
-            <button style={{ fontSize: "30px" }} onClick={() => { setCurrentPage(1) }} className="btn border-0 buttonPage text-white"><BiArrowToLeft className="hoverIcon" style={{ alignItems: "center", height: "57" }} /></button>
-            <button style={{ fontSize: "30px" }} onClick={() => { if (currentPage > 1) setCurrentPage(currentPage - 1) }} className="btn border-0 me-1 buttonPage text-white"><BiLeftArrowAlt className="hoverIcon" style={{ alignItems: "center", height: "57" }} /></button>
+            <button style={{ fontSize: "30px" }} onClick={() => { setCurrentPage(1) }} className="btn border-0 buttonPage text-white"><BiArrowToLeft style={{ alignItems: "center", height: "57" }} /></button>
+            <button style={{ fontSize: "30px" }} onClick={() => { if (currentPage > 1) setCurrentPage(currentPage - 1) }} className="btn border-0 me-1 buttonPage text-white"><BiLeftArrowAlt style={{ alignItems: "center", height: "57" }} /></button>
             {Array.from({ length: showtimeDetail.totalPages }, (_, index) => (
               <Pagination.Item
                 className={`${currentPage === index + 1 ? "activePage" : ""}`}
@@ -78,7 +78,7 @@ const WeekDate = (prop: any) => {
                 {index + 1}
               </Pagination.Item>
             ))}
-            <button style={{ fontSize: "30px" }} onClick={() => { if (currentPage < showtimeDetail.totalPages) setCurrentPage(currentPage + 1) }} className="btn border-0 ms-1 buttonPage text-white"><BiRightArrowAlt className="hoverIcon" style={{ alignItems: "center", height: "57" }} /></button>
+            <button style={{ fontSize: "30px" }} onClick={() => { if (currentPage < showtimeDetail.totalPages) setCurrentPage(currentPage + 1) }} className="btn border-0 ms-1 buttonPage text-white"><BiRightArrowAlt style={{ alignItems: "center", height: "57" }} /></button>
             <button style={{ fontSize: "30px" }} onClick={() => { setCurrentPage(showtimeDetail.totalPages) }} className="btn border-0 buttonPage text-white"><BiArrowToRight style={{ alignItems: "center", height: "57" }} /></button>
           </Pagination>
         </ShowTime>
