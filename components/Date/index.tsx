@@ -1,68 +1,66 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import moment from "moment";
 import { showtimeAPI } from '@/util/API/Showtime';
 import { Pagination } from 'react-bootstrap';
 import "./index.css";
 import ShowTime from "../ShowTime";
 import { BiArrowToLeft, BiLeftArrowAlt, BiRightArrowAlt, BiArrowToRight } from 'react-icons/bi';
 
-const WeekDate = (prop: any) => {
-  const [currentDate, setCurrentDate] = useState(new Date());
-  const [dateClick, setDateClick] = useState("");
-  const [showtimeDetail, setShowtimeDetail] = useState<any>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const getWeekDates = () => {
-    const weekStart = new Date(currentDate);
-    weekStart.setDate(currentDate.getDate() - currentDate.getDay());
-    const dates = [];
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(weekStart);
-      date.setDate(weekStart.getDate() + i);
-      dates.push(date);
-    }
-    return dates;
-  };
-  const date2 = new Date();
-  const currentDateStart = date2.toLocaleDateString('en-US', {
+let format = (data: any) => {
+  return data.toLocaleDateString('en-US', {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
   });
+};
 
-  let setDateOnClick = (date: any) => {
-    setDateClick(moment(date).format("YYYY-MM-DD"));
+const WeekDate = (prop: any) => {
+  const [dateClick, setDateClick] = useState(format(new Date()));
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [showtimeDetail, setShowtimeDetail] = useState<any>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const getWeekDates = () => {
+
+
+    const dates = [];
+    for (let i = 0; i < 7; i++) {
+      let date = new Date(currentDate)
+      date.setDate(currentDate.getDate() + i);
+      dates.push(date);
+    }
+    return dates;
   };
 
 
-  useEffect(() => {
-    const init = async () => {
-      if (!dateClick) {
-        const showtime = await showtimeAPI.findShowtimeByMovieAndDate(moment(currentDateStart).format("YYYY-MM-DD"), prop.movieId, (currentPage - 1));
-        setShowtimeDetail(showtime);
-        setDateClick(moment(currentDateStart).format("YYYY-MM-DD"));
-      } else {
-        const showtime = await showtimeAPI.findShowtimeByMovieAndDate(dateClick, prop.movieId, (currentPage - 1));
-        setShowtimeDetail(showtime);
-      };
-    }
-    init();
-  }, [dateClick, currentPage, currentDateStart]);
+
+  let setDateOnClick = (date: any) => {
+    setDateClick(format(date));
+  };
 
   const handlePageChange = (newPage: any) => {
     setCurrentPage(newPage);
   };
+
+  useEffect(() => {
+    const init = async () => {
+      const showtime = await showtimeAPI.findShowtimeByMovieAndDate(dateClick, prop.movieId, (currentPage - 1));
+      setShowtimeDetail(showtime);
+    }
+    init();
+  }, [dateClick, currentPage]);
+
+
 
   return (
     <div>
       <table className="table table-dark">
         <tbody>
           <tr>
-            <td><div className="fs-5 pb-1" onClick={() => setCurrentDate(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000))}><i className="bi bi-arrow-left-circle"></i></div></td>
-            {getWeekDates().map((date) => (
-              <td className="text-center pt-2" scope="col" key={date.toISOString()}><button className={`buttonDate ${dateClick === moment(date).format("YYYY-MM-DD") ? 'activeButton' : ''} btn `} onClick={() => { setDateOnClick(date) }}>{moment(date).format("DD/MM/YYYY")}</button></td>
+            <th><div className="fs-5 pb-1" onClick={() => setCurrentDate(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000))}><BiLeftArrowAlt /></div></th>
+            {getWeekDates().map((date, index) => (
+              <th className="text-center pt-2" scope="col" key={index}><button className={`buttonDate ${dateClick === format(date) ? 'activeButton' : ''} btn `} onClick={() => { setDateOnClick(date) }}>{format(date)}</button></th>
             ))}
-            <td><div className="fs-5 pb-1" onClick={() => setCurrentDate(new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000))}><i className="bi bi-arrow-right-circle"></i></div></td>
+            <th><div className="fs-5 pb-1" onClick={() => setCurrentDate(new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000))}><BiRightArrowAlt /></div></th>
           </tr>
         </tbody>
       </table>

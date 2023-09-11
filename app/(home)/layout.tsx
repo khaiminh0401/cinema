@@ -22,14 +22,12 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/_next/image?url=%2Fassert%2Fimg%2Flogo.png&w=256&q=75" type="image/x-icon" sizes="any"></link>
       </head>
-      <body>
-        <div className="container-fluid bg-dark">
-          <SessionProvider session={session}>
-            <Navbar/>
-            {children}
-            <Footer />
-          </SessionProvider>
-        </div>
+      <body className="container-fluid bg-dark">
+        <SessionProvider session={session}>
+          <Navbar />
+          {children}
+          <Footer />
+        </SessionProvider>
       </body>
     </html>
   )
