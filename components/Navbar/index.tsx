@@ -55,10 +55,11 @@ const Navbar = () => {
                         </div>
                         <div className="hidden sm:ml-6 sm:block">
                             <div className="flex space-x-4">
-                                <Link href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white focus:bg-gray-0 focus:text-red-500 focus:bg-gray-700 rounded-md px-3 py-2 text-lg font-medium">Phim</Link>
-                                <Link href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white focus:bg-gray-0 focus:text-red-500 focus:bg-gray-700 rounded-md px-3 py-2 text-lg font-medium">Rạp</Link>
-                                <Link href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white focus:bg-gray-0 focus:text-red-500 focus:bg-gray-700 rounded-md px-3 py-2 text-lg font-medium">Khuyến mãi</Link>
-                                <Link href="/about" className="text-gray-300 hover:bg-gray-700 hover:text-white focus:bg-gray-0 focus:text-red-500 focus:bg-gray-700 rounded-md px-3 py-2 text-lg font-medium">Giới thiệu</Link>
+                                <Link href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white  focus:text-red-500 focus:opacity-80 rounded-md px-3 py-2 text-lg font-medium">Phim</Link>
+                                <Link href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white  focus:text-red-500 focus:opacity-80 rounded-md px-3 py-2 text-lg font-medium">Rạp</Link>
+                                <Link href="#" className="text-gray-300 hover:bg-gray-700 hover:text-white  focus:text-red-500 focus:opacity-80 rounded-md px-3 py-2 text-lg font-medium">Khuyến mãi</Link>
+                                <Link href="/about" className="text-gray-300 hover:bg-gray-700 hover:text-white  focus:text-red-500 focus:opacity-80 rounded-md px-3 py-2 text-lg font-medium">Giới thiệu</Link>
+                                <FaSearch className="text-gray-300  hover:bg-gray-700 hover:text-white  focus:text-red-500 focus:opacity-80 rounded-md px-3 py-2 text-lg font-medium" />
                             </div>
                         </div>
                     </div>

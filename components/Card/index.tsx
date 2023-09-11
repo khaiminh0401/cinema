@@ -1,7 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaHeart, FaVideo, FaStar, FaRegClock, FaRegCalendar } from "react-icons/fa";
-import "./index.css"
 const Card = ({ ...props }: CardProps) => {
     return (
         <div className={`card ${props.className}`} id={props.id}>

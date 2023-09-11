@@ -1,5 +1,5 @@
 'use client'
-import './../globals.css';
+import '../globals.css';
 import { SessionProvider } from "next-auth/react"
 // const inter = Inter({ subsets: ['latin'] })
 import Footer from '@/components/Footer';
