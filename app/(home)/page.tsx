@@ -1,6 +1,5 @@
 'use client'
 import React, { useState, useEffect } from "react";
-import Card from '@components/Card';
 import Link from "next/link";
 import { movieAPI } from "@/util/API/Movie";
 import $, { param } from "jquery";
@@ -8,6 +7,7 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import "./index.css";
 import { useCookies } from "react-cookie";
 import { CookiesProvider } from 'react-cookie';
+import { CardDefault } from "@/components/Card";
 
 const Home = () => {
   const statusOfMovie = [
@@ -51,7 +51,6 @@ const Home = () => {
       const mv = await movieAPI.findAll();
       setMoviesNowShowing(mv);
     }
-
     init()
   }, [cookie.statusId])
 
@@ -65,20 +64,20 @@ const Home = () => {
               {moviesNowShowing?.map((m, i) => {
                 return (
                   <div key={m.id} className="main" style={{ backgroundImage: `url('/assert/home/${m.poster}')` }}>
-                    <div className="content">
-                      <div className="name h2">{m.name}</div>
-                      <div className="des mb-4">{m.describe}</div>
-                      <Link
-                        key={m.id}
-                        className={`text-wrapper text-decoration-none text-light fw-bold`} id={`nowShowing_${i}`}
-                        href={{
-                          pathname: `/movie-details`,
-                          query: { id: m.id }
-                        }}
-                      >
-                        Xem thêm
-                      </Link>
-                    </div>
+                    <div className="content rounded-md">
+                        <div className="font-bold text-lg mx-4 ">{m.name}</div>
+                        <div className="mb-4 m-4 text-white">{m.describe}</div>
+                        <Link
+                          key={m.id}
+                          className={`font-bold hover:text-red-900 m-4`} id={`nowShowing_${i}`}
+                          href={{
+                            pathname: `/movie-details`,
+                            query: { id: m.id }
+                          }}
+                        >
+                          Xem thêm
+                        </Link>
+                      </div>
                   </div>
                 );
               })}
@@ -91,45 +90,45 @@ const Home = () => {
         </>
       }
 
-      <div className="container mt-5">
-        <div className="box">
-          <div className="group-wrapper">
-            <div className="group">
-              <div className="overlap-group">
-                <div className="div type">
-                  <div className="d-flex flex-row-reverse justify-content-center text-center">
-                    {statusOfMovie?.map((status, i) => {
-                      return (
-                        <Link
-                          key={i}
-                          className={`text-wrapper ${status.id == parseInt(cookie.statusId) ? "text-danger" : 'text-white'} text-decoration-none`} id={`type_${i}`}
-                          href={{
-                          }}
-                          onClick={(event) => {
-                            handleCookie(status.id + "", event);
-                          }}
-                        >
-                          {status.name}
-                        </Link>
-                      )
-                    })}
-                  </div>
-                </div>
+      <div className="container ">
+        <div className="group">
+          <div className="overlap-group">
+            <div className="div type">
+              <div className="flex flex-row justify-content-center text-center">
+                {statusOfMovie?.map((status, i) => {
+                  return (
+                    <Link
+                      key={i}
+                      className={`text-wrapper ${status.id == parseInt(cookie.statusId) ? "text-danger" : 'text-white'} text-decoration-none`} id={`type_${i}`}
+                      href={{
+                      }}
+                      onClick={(event) => {
+                        handleCookie(status.id + "", event);
+                      }}
+                    >
+                      {status.name}
+                    </Link>
+                  )
+                })}
               </div>
             </div>
           </div>
         </div>
-        <div className="row mt-3" id="movie">
+        <div className="mt-3 flex flex-row justify-center" id="movie">
           {data?.map((movie: movie, index) => {
-            return <Link
-              key={movie.id}
-              className={`text-wrapper text-decoration-none col-6 col-md-3 p-4`} id={`${index}`}
-              href={{
-                pathname: `/movie-details`,
-                query: { id: movie.id }
-              }}>
-              <Card id={`card_${movie.id}`} className="" key={movie.id} data={movie} />
-            </Link>
+            return (
+              <>
+                <Link
+                  key={movie.id}
+                  className="basis-1/4" id={`${index}`}
+                  href={{
+                    pathname: `/movie-details`,
+                    query: { id: movie.id }
+                  }}>
+                  <CardDefault id={`card_${movie.id}`} key={movie.id} className="" data={movie} />
+                </Link>
+              </>
+            )
           })}
         </div>
       </div>
