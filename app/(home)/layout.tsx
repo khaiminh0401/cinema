@@ -1,9 +1,10 @@
 'use client'
+import { SessionProvider } from "next-auth/react";
 import '../globals.css';
-import { SessionProvider } from "next-auth/react"
 // const inter = Inter({ subsets: ['latin'] })
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+
 
 export const metadata = {
   title: 'Zuhot',
@@ -25,7 +26,7 @@ export default function HomeLayout({
       <body>
         <div className="container-fluid bg-dark">
           <SessionProvider session={session}>
-            <Navbar/>
+            <Navbar />
             {children}
             <Footer />
           </SessionProvider>

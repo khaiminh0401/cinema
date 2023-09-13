@@ -21,10 +21,6 @@
     box-shadow: 0 30px 50px #505050;
 }
 
-.main .text-wrapper:hover {
-    color: red !important;
-}
-
 .main:nth-child(0),
 .main:nth-child(1) {
     left: 0;

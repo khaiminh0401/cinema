@@ -1,13 +1,12 @@
 'use client'
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import { CardDefault } from "@/components/Card";
 import { movieAPI } from "@/util/API/Movie";
-import $, { param } from "jquery";
+import $ from "jquery";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import { CookiesProvider, useCookies } from "react-cookie";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import "./index.css";
-import { useCookies } from "react-cookie";
-import { CookiesProvider } from 'react-cookie';
-import { CardDefault } from "@/components/Card";
 
 const Home = () => {
   const statusOfMovie = [
@@ -65,19 +64,19 @@ const Home = () => {
                 return (
                   <div key={m.id} className="main" style={{ backgroundImage: `url('/assert/home/${m.poster}')` }}>
                     <div className="content rounded-md">
-                        <div className="font-bold text-lg mx-4 ">{m.name}</div>
-                        <div className="mb-4 m-4 text-white">{m.describe}</div>
-                        <Link
-                          key={m.id}
-                          className={`font-bold hover:text-red-900 m-4`} id={`nowShowing_${i}`}
-                          href={{
-                            pathname: `/movie-details`,
-                            query: { id: m.id }
-                          }}
-                        >
-                          Xem thêm
-                        </Link>
-                      </div>
+                      <div className="font-bold text-lg mx-4 ">{m.name}</div>
+                      <div className="mb-4 m-4 text-white">{m.describe}</div>
+                      <Link
+                        key={m.id}
+                        className={`font-bold hover:text-red-900 m-4`} id={`nowShowing_${i}`}
+                        href={{
+                          pathname: `/movie-details`,
+                          query: { id: m.id }
+                        }}
+                      >
+                        Xem thêm
+                      </Link>
+                    </div>
                   </div>
                 );
               })}
@@ -90,47 +89,45 @@ const Home = () => {
         </>
       }
 
-      <div className="container ">
-        <div className="group">
-          <div className="overlap-group">
-            <div className="div type">
-              <div className="flex flex-row justify-content-center text-center">
-                {statusOfMovie?.map((status, i) => {
-                  return (
-                    <Link
-                      key={i}
-                      className={`text-wrapper ${status.id == parseInt(cookie.statusId) ? "text-danger" : 'text-white'} text-decoration-none`} id={`type_${i}`}
-                      href={{
-                      }}
-                      onClick={(event) => {
-                        handleCookie(status.id + "", event);
-                      }}
-                    >
-                      {status.name}
-                    </Link>
-                  )
-                })}
-              </div>
+      <div className="group">
+        <div className="overlap-group">
+          <div className="div type">
+            <div className="flex flex-row justify-center text-center">
+              {statusOfMovie?.map((status, i) => {
+                return (
+                  <Link
+                    key={i}
+                    className={`text-3xl font-bold p-4 mt-3 ${status.id == parseInt(cookie.statusId) ? "text-red-900" : 'text-white'}`} id={`type_${i}`}
+                    href={{
+                    }}
+                    onClick={(event) => {
+                      handleCookie(status.id + "", event);
+                    }}
+                  >
+                    {status.name}
+                  </Link>
+                )
+              })}
             </div>
           </div>
         </div>
-        <div className="mt-3 flex flex-row justify-center" id="movie">
-          {data?.map((movie: movie, index) => {
-            return (
-              <>
-                <Link
-                  key={movie.id}
-                  className="basis-1/4" id={`${index}`}
-                  href={{
-                    pathname: `/movie-details`,
-                    query: { id: movie.id }
-                  }}>
-                  <CardDefault id={`card_${movie.id}`} key={movie.id} className="" data={movie} />
-                </Link>
-              </>
-            )
-          })}
-        </div>
+      </div>
+      <div className="mt-3 mx-auto flex flex-row justify-evenly flex-wrap w-2/3 " id="movie">
+        {data?.map((movie: movie, index) => {
+          return (
+            <>
+              <Link
+                key={movie.id}
+                className="basis-1/4" id={`${index}`}
+                href={{
+                  pathname: `/movie-details`,
+                  query: { id: movie.id }
+                }}>
+                <CardDefault id={`card_${movie.id}`} key={movie.id} className="" data={movie} />
+              </Link>
+            </>
+          )
+        })}
       </div>
     </CookiesProvider>
   )
