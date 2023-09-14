@@ -4,9 +4,9 @@ import { FacebookSignInButton, GoogleSignInButton } from '@/components/authButto
 import { redirect } from 'next/navigation';
 import { signIn, useSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
-import Logo from './images/logo.png'
+import Logo from '../../logo.png'
 import Image from 'next/image';
-import hinh from './images/MP01.png'
+import hinh from '@/public/assert/img/movie/MP05.png'
 import { Validation } from '@/common/Validation/LoginValidation';
 import { Error } from '@/common/Validation/error';
 import { notification } from 'antd';

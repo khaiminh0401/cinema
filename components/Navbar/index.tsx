@@ -1,5 +1,5 @@
 'use client'
-import { Typography } from "@material-tailwind/react";
+import { Button, Typography } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -21,14 +21,14 @@ const Navbar = () => {
         />
     ) : null
     const navList = (
-        <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
+        <ul className=" mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
             <Typography
                 as="li"
                 variant="lead"
                 color="white"
                 className="p-1 font-normal"
             >
-                <Link href="#" className="flex items-center focus:text-red-500 focus:opacity-80">
+                <Link href="#" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">
                     Phim
                 </Link>
             </Typography>
@@ -38,7 +38,7 @@ const Navbar = () => {
                 color="white"
                 className="p-1 font-normal"
             >
-                <Link href="#" className="flex items-center focus:text-red-500 focus:opacity-80">
+                <Link href="#" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">
                     Rạp
                 </Link>
             </Typography>
@@ -48,7 +48,7 @@ const Navbar = () => {
                 color="white"
                 className="p-1 font-normal"
             >
-                <Link href="#" className="flex items-center focus:text-red-500 focus:opacity-80">
+                <Link href="#" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">
                     Khuyến mãi
                 </Link>
             </Typography>
@@ -58,14 +58,14 @@ const Navbar = () => {
                 color="white"
                 className="p-1 font-normal"
             >
-                <Link href="#" className="flex items-center focus:text-red-500 focus:opacity-80">
+                <Link href="#" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">
                     Giới thiệu
                 </Link>
             </Typography>
         </ul>
     );
     return (
-        <nav className="bg-inherit py-3 ">
+        <nav className="w-3/4 bg-inherit py-3 mx-auto">
             <div className="mx-auto max-w-full px-2 sm:px-8 lg:px-5">
                 <div className="relative flex h-16 items-center justify-evenly">
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -79,7 +79,7 @@ const Navbar = () => {
                                 <img className="h-8 w-auto float-right" src="/assert/img/logo.png" alt="Your Company" />
                             </a>
                         </div>
-                        <div className="hidden sm:block mx-auto">
+                        <div className="hidden md:block mx-auto">
                             <div className="flex space-x-4">
                                 {navList}
                             </div>
@@ -112,13 +112,14 @@ const Navbar = () => {
                                 </div>
                             ) :
                             (
-                                <div className="flex flex-row">
-                                    <button className="mx-1 middle none center my-auto block rounded-lg bg-gradient-to-tr from-red-800 to-black py-2 px-4 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button" data-ripple-light="true">
+                                <div className="md:flex flex-row hidden ">
+                                    <Button variant="gradient" size="sm" color="gray" className="mr-1">
                                         <Link href="/login">Đăng nhập</Link>
-                                    </button>
-                                    <button className="middle none center my-auto block rounded-lg bg-gradient-to-tr from-black to-red-800 rotate-15 py-2 px-4 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button" data-ripple-light="true">
+                                    </Button>
+                                    <Button variant="gradient" size="sm" color="red">
                                         <Link href="/register">Đăng kí</Link>
-                                    </button>
+                                    </Button>
+
                                 </div>
 
                             )
@@ -127,7 +128,16 @@ const Navbar = () => {
                 </div>
             </div>
             <div className="sm:hidden" id="mobile-menu">
-                {openNav && (<div className="space-y-1 px-2 pb-3 pt-2">{navList}</div>)}
+                {openNav && (<div className="space-y-1 px-2 pb-3 pt-2">
+                    {navList}
+                    {!session && (
+                        <div className="md:flex flex-row">
+                            <Button variant="gradient" size="sm">
+                                <Link href="/login">Đăng nhập</Link>
+                            </Button>
+                        </div>)}
+                </div>)}
+
             </div>
         </nav >
     );
