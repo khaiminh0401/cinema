@@ -1,5 +1,4 @@
 'use client'
-import "./index.css"
 import { signIn, signOut } from "next-auth/react"
 
 export function GoogleSignInButton() {
@@ -8,13 +7,9 @@ export function GoogleSignInButton() {
     };
 
     return (
-        <button
-            onClick={handleClick}
-            className="login-button"
-        >
-            
-            <i className="bi bi-google fs-6 me-1 text-primary"></i>
-            <span className="ml-4">Đăng nhập bằng Google</span>
+        <button onClick={handleClick} className="flex select-none items-center bg-white text-gray-800 my-2 gap-3 rounded-lg border border-blue-gray-500 py-3.5 px-8 text-center align-middle font-sans text-xs font-bold uppercase  transition-all hover:opacity-75 focus:ring focus:ring-blue-gray-200 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button" data-ripple-dark="true">
+            <i className="bi bi-google me-1"></i>
+            Đăng nhập bằng google
         </button>
 
     )
@@ -25,13 +20,10 @@ export function FacebookSignInButton() {
     };
 
     return (
-        <button
-            onClick={handleClick}
-            className="login-button"
-        >
-            <i className="bi bi-facebook fs-6 me-1 text-primary"></i>
-            <span className="ml-4">Đăng nhập bằng Facebook</span>
-        </button>
+        <button onClick={handleClick} className="flex select-none items-center bg-white text-gray-800 my-2 gap-3 rounded-lg border border-blue-gray-500 py-3.5 px-6 text-center align-middle font-sans text-xs font-bold uppercase  transition-all hover:opacity-75 focus:ring focus:ring-blue-gray-200 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button" data-ripple-dark="true">
+        <i className="bi bi-facebook me-1"></i>
+        Đăng nhập bằng facebook
+    </button>
 
     )
 }
@@ -41,10 +33,10 @@ export function SignOutButton() {
         signOut();
     };
     return (
-        <button onClick={handleClick}
-            className="logout-button"
+        <p onClick={handleClick}
+            className="block px-4 py-2 text-sm text-red-600 hover:bg-gray-400 hover:cursor-pointer"
         >
-        <span className="ml-4">Đăng xuất</span>
-        </button>
+            Đăng xuất
+        </p>
     )
 }
