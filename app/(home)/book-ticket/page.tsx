@@ -7,7 +7,7 @@ const Order = () => {
     return (
         <div className="flex flex-row">
             <div className="basis-3/4"><Seat /></div>
-            <div className="basis-1/4"><OrderDetail /></div>
+            <div className="basis-1/4 flex items-center justify-center"><OrderDetail /></div>
         </div>
     );
 }
