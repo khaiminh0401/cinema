@@ -1,6 +1,6 @@
 
 "use client"
-
+import '../../../app/globals.scss';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Carousel from 'react-multi-carousel';
@@ -102,7 +102,7 @@ const MovieDetails = () => {
                             </div>
                         </div>
                         <h4 className="mt-4"><span className="border-2 border-bottom border-danger">NỘI DUNG PHIM</span></h4>
-                        <p style={{textAlign:"justify"}}>
+                        <p style={{ textAlign: "justify" }}>
                             {movieDetailPage?.describe}
                         </p>
                     </div>
