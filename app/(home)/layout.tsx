@@ -25,9 +25,9 @@ export default function HomeLayout({
       <body>
         <div className="container-fluid bg-dark">
           <SessionProvider session={session}>
-              <Navbar />
-              {children}
-              <Footer />
+            <Navbar />
+            {children}
+            <Footer />
           </SessionProvider>
         </div>
       </body>
