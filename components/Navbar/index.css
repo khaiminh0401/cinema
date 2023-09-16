@@ -7,9 +7,9 @@
     color: white;
 }
 
+.nav-link:focus,
 .nav-link:hover {
     color: red;
-    /* background-color: antiquewhite; */
 }
 
 .overlap-group-wrapper .overlap-group {

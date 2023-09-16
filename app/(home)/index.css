@@ -21,10 +21,6 @@
     box-shadow: 0 30px 50px #505050;
 }
 
-.main .text-wrapper:hover {
-    color: red !important;
-}
-
 .main:nth-child(0),
 .main:nth-child(1) {
     left: 0;
@@ -37,19 +33,20 @@
 }
 
 .main:nth-child(2) {
-    left: 50%;
+    left: 45%;
 }
 
 .main:nth-child(3) {
-    left: calc(50% + 220px);
+    left: calc(45% + 220px);
 }
 
-.main:nth-child(4) {
-    left: calc(50% + 440px);
+.main:nth-child(n+4) {
+    left: calc(45% + 440px);
+    opacity: 20;
 }
 
 .main:nth-child(n+5) {
-    left: calc(50% + 660px);
+    left: calc(40% + 660px);
     opacity: 0;
 }
 
@@ -69,6 +66,10 @@
 .main:nth-child(1) .content {
     display: block;
     z-index: 11111;
+    padding: 10px;
+    background-color: transparent;
+    box-shadow: 0 60px 40px -30px rgba(0, 0, 0, 0.27);
+    backdrop-filter: blur(90px);
 }
 
 .buttons {
@@ -91,81 +92,4 @@
 
 .buttons button:hover {
     color: red;
-}
-
-.box {
-    background-color: transparent;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-}
-
-.box .group-wrapper {
-    border: 0px none;
-    height: 48px;
-    width: 1550px;
-}
-
-.box .group {
-    height: 48px;
-    width: 1550px;
-}
-
-.box .overlap-group {
-    height: 48px;
-    position: relative;
-    width: 1556px;
-}
-
-.box .div {
-    display: flex;
-    justify-content: space-around;
-    height: 48px;
-    width: 1556px;
-}
-
-.box .text-wrapper {
-    color: #ffffff;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 32px;
-    font-weight: 400;
-    letter-spacing: 0;
-    line-height: normal;
-    width: 340px;
-}
-
-.box .text-wrapper-2 {
-    color: #aa1e21;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 32px;
-    font-weight: 400;
-    left: 568px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 0;
-    white-space: nowrap;
-    width: 312px;
-}
-
-.box .text-wrapper-3 {
-    color: #ffffff;
-    font-family: "Inter-Regular", Helvetica;
-    font-size: 32px;
-    font-weight: 400;
-    left: 1153px;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 0;
-    width: 397px;
-}
-
-.box .vector {
-    height: 3px;
-    left: 566px;
-    position: absolute;
-    top: 40px;
-    width: 288px;
 }

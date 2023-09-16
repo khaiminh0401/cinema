@@ -1,31 +1,41 @@
-import Image from "next/image";
+import {
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Typography,
+} from "@material-tailwind/react";
 import Link from "next/link";
-import { FaHeart, FaVideo, FaStar, FaRegClock, FaRegCalendar } from "react-icons/fa";
-import "./index.css"
-const Card = ({ ...props }: CardProps) => {
-    return (
-        <div className={`card ${props.className}`} id={props.id}>
-            <div className="card-header">
-                <img className="imgMovie pe-3" alt="Image" src={"/assert/img/movie/" + props.data.poster} />
-                <div className="description d-flex flex-column mb-3">
-                    <span className="icon"><FaHeart/></span>
-                    <span className="icon"><FaVideo/></span>
-                    <span className="icon"><FaStar/></span>
-                </div>
-            </div>
-
-            <Link
-                href={"/movie-details?id=" + props.data.id}
-                className="text-wrapper text-decoration-none pt-3 text-light "
-            >
-                {props.data.name}
-            </Link>
-            <p><span className="me-2 text-light"><FaRegClock/> 120 phút</span>
-                <span className="me-2  text-light"><FaRegCalendar/> 28/07/2023</span>
-                <span className="text-danger"><FaStar/> 8.3/10</span></p>
-
-
-        </div>
-    );
+import { FaRegCalendar, FaRegClock } from "react-icons/fa";
+export function CardDefault({ ...props }: CardProps) {
+  return (
+    <Card className="max-w-fit max-h-fit mx-3 bg-transparent hover:bg-brown-800 hover:scale-105 transition-transform">
+      <CardHeader floated={false} className="h-72">
+        <img src={"/assert/img/movie/" + props.data.poster} className="object-cover h-full w-full hover:scale-110 transition-transform"/> 
+      </CardHeader>
+      <CardBody className="text-center p-0 mt-4">
+        <Typography  color="white" className="text-xs hover:text-red-600 md:h-9 h-auto font-semibold">
+          <Link href={"/movie-details?id=" + props.data.id} >
+            {props.data.name}
+          </Link>
+        </Typography>
+      </CardBody>
+      <CardFooter className="flex justify-evenly gap-5 pt-1">
+        <Typography
+          color="white"
+          className="flex items-center gap-1.5 font-normal md:text-base text-xs"
+        >
+          <FaRegClock />
+          {props.data.time} Phút
+        </Typography>
+        <Typography
+          color="white"
+          className="flex items-center gap-1.5 font-normal"
+        >
+          <FaRegCalendar />
+          {props.data.yearofmanufacture}
+        </Typography>
+      </CardFooter>
+    </Card>
+  );
 }
-export default Card;
