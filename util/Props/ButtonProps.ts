@@ -1,13 +1,13 @@
-export interface ButtonPropos{
-    className? : String,
+export interface ButtonPropos {
+    className?: String,
     title?: string,
     onClick?: () => void,
-    icon? : React.ReactNode,
+    icon?: React.ReactNode,
     style?: any,
 }
 
-export interface aPropos{
-    className? : String,
+export interface aPropos {
+    className?: String,
     href: string
 }
 
