@@ -2,13 +2,13 @@
 import { checkError } from "@/common/validation/error";
 import { Validation } from "@/common/validation/page/registration";
 import { checkStatus } from "@/common/validation/status";
+import Button from "@/components/Button/page";
 import Input from "@/components/Input/page";
 import { customerAPI } from "@/util/API/Customer";
 import { errorNotification, successNotification } from "@/util/Notification";
 import Link from 'next/link';
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { SyncLoader } from "react-spinners";
 import './index.css';
 
 /**
@@ -98,7 +98,7 @@ const Register = () => {
                                             <div className="text-danger mt-1">{errors.gender?.message}</div>
                                         </div>
                                     </div>
-                                    {flag ? <><button className="btn signup" disabled><SyncLoader size={6} color="#ffffff" /></button></> : <><button className="btn signup">Đăng ký</button></>}
+                                    <Button disabled={flag} text={"Đăng ký"} bgColor="#daa5206c" textColor="white" className="btn w-100" />
                                 </form>
                                 <div className='row'>
                                     <span className="signup-link col-12 fs-7 fw-bolder">Đã có tài khoản? Đăng nhập <Link href="/login">
