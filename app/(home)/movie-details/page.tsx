@@ -10,7 +10,7 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
-import '../../../app/globals.scss';
+import '../../globals.css';
 import "./index.css";
 
 const DynamicHeader = dynamic(() => import('react-multi-carousel'), {

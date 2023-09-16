@@ -1,11 +1,11 @@
 'use client'
-import { Button, Typography } from "@material-tailwind/react";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { FaBars } from "react-icons/fa";
 import { SignOutButton } from "../authButtons";
+
 const Navbar = () => {
     const [openNav, setOpennav] = useState(false);
     const [openUser, setOpenUser] = useState(false);
@@ -22,34 +22,34 @@ const Navbar = () => {
     ) : null
     const navList = (
         <ul className=" mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-            <Typography
+            <p
                 className="p-1 font-bold text-lg"
             >
-                <Link href="#" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">
+                <Link href="#" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80 text-white">
                     Phim
                 </Link>
-            </Typography>
-            <Typography
+            </p>
+            <p
                 className="p-1 font-bold text-lg"
             >
                 <Link href="#" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">
                     Rạp
                 </Link>
-            </Typography>
-            <Typography
+            </p>
+            <p
                 className="p-1 font-bold text-lg"
             >
                 <Link href="#" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">
                     Khuyến mãi
                 </Link>
-            </Typography>
-            <Typography
+            </p>
+            <p
                 className="p-1 font-bold text-lg"
             >
                 <Link href="#" className="flex items-center hover:text-red-500  focus:text-red-500 focus:opacity-80">
                     Giới thiệu
                 </Link>
-            </Typography>
+            </p>
         </ul>
     );
     return (
