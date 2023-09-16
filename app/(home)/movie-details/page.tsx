@@ -102,7 +102,7 @@ const MovieDetails = () => {
                             </div>
                         </div>
                         <h4 className="mt-4"><span className="border-2 border-bottom border-danger">NỘI DUNG PHIM</span></h4>
-                        <p>
+                        <p style={{textAlign:"justify"}}>
                             {movieDetailPage?.describe}
                         </p>
                     </div>

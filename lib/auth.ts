@@ -1,17 +1,12 @@
+import { checkError } from "@/common/validation/error";
+import { customerAPI } from "@/util/API/Customer";
 import { NextAuthOptions, User } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import FacebookProvider from "next-auth/providers/facebook";
+import GoogleProvider from "next-auth/providers/google";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 
-import FacebookProvider from "next-auth/providers/facebook";
-import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { customerAPI } from "@/util/API/Customer";
-import { ErrorProps } from "next/error";
-
-type Warn ={
-    statusCode:'',
-    title:''
-}
 export const authconfig: NextAuthOptions = {
     providers: [
         CredentialsProvider({
@@ -21,7 +16,7 @@ export const authconfig: NextAuthOptions = {
             },
             async authorize(credentials, req) {
                 try {
-                    const cus = await customerAPI.Login({ email: credentials?.email, password: credentials?.password })
+                    const cus = await customerAPI.login({ email: credentials?.email, password: credentials?.password })
                     if (cus) {
                         const user: User = {
                             id: cus.id,
@@ -30,12 +25,12 @@ export const authconfig: NextAuthOptions = {
                             name: cus.name
                         }
                         return user
-                    }    
+                    }
                 } catch (error: any) {
-                    throw new Error(error.response.data.message)
+                    throw new Error(checkError(error.response.data.message, error.response.data.param))
                 }
                 return null
-                
+
             }
         }),
         GoogleProvider({

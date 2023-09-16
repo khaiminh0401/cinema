@@ -1,41 +1,37 @@
 'use client'
-import './index.css';
+import { Validation } from '@/common/validation/page/login';
+import Input from '@/components/Input/page';
 import { FacebookSignInButton, GoogleSignInButton } from '@/components/authButtons';
-import { redirect } from 'next/navigation';
+import Logo from '@/public/assert/img/logo.png';
+import hinh from '@/public/assert/img/movie/MP01.png';
+import { errorNotification } from '@/util/Notification';
 import { signIn, useSession } from 'next-auth/react';
-import { useForm } from 'react-hook-form';
-import Logo from './images/logo.png'
 import Image from 'next/image';
-import hinh from './images/MP01.png'
-import { Validation } from '@/common/Validation/LoginValidation';
-import { Error } from '@/common/Validation/error';
-import { notification } from 'antd';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { useForm } from 'react-hook-form';
+import './index.css';
 const Login = () => {
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
-    const [api, contextHolder] = notification.useNotification();
     const session = useSession();
     if (session.data) return redirect("/");
     const onSubmit = async (data: any) => {
         const result = await signIn("credentials", {
             email: data.email,
             password: data.password,
+            redirect: false
         });
         if (result?.error) {
-            if (result?.error === Error.WRONG.code)
-                api.error({ message: "Thông báo lỗi", description: Error.WRONG.message + "mật khẩu. Vui lòng thử lại!" })
-            else if (result?.error === Error.NOT_EXISTS.code) {
-                api.error({ message: "Thông báo lỗi", description: "Email" + Error.NOT_EXISTS.message })
-            }
+            errorNotification(result.error)
         }
 
     }
     return (
         <>
-            {contextHolder}
             <div className='container'>
                 <div className='box'>
                     <div className="inner-box">
@@ -47,28 +43,28 @@ const Login = () => {
                                 <div className="heading">
                                     <h2>Chào mừng</h2>
                                     <h6>Chưa có tài khoản? </h6>
-                                    <a href='#' className='toggle'>Đăng ký</a>
+                                    <Link href='/register' className='toggle'>Đăng ký</Link>
                                 </div>
                                 <div className="actual-form">
                                     <div className="input-wrap">
-                                        <input type="email" className="input-field" {...register('email', Validation.email)} placeholder='Email' />
+                                        <Input type="email" className="input-field" register={register('email', Validation.email)} placeholder='Email' />
 
                                         <p className='text mt-1'>{errors.email?.message as string}</p>
 
                                     </div>
                                     <div className="input-wrap">
-                                        <input type="password" className="input-field" {...register('password', Validation.password)} placeholder='Mật khẩu' />
+                                        <Input type="password" className="input-field" register={register('password', Validation.password)} placeholder='Mật khẩu' />
                                         <p className='text mt-1'>{errors.password?.message as string}</p>
                                     </div>
                                     <div className='row mb-2'>
                                         <div className='col-2'>
-                                            <input type="checkbox" />
+                                            <Input type="checkbox" />
                                         </div>
                                         <p className='text-white col-9'>Ghi nhớ đăng nhập?</p>
                                     </div>
 
 
-                                    <input type="submit" value="Đăng nhập" className='sign-btn' />
+                                    <button type="submit" className='sign-btn'>Đăng nhập</button>
                                 </div>
 
 
