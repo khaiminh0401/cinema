@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import "./index.css";
-import $ from "jquery";
+
 const Home = () => {
   const [data, setData] = useState<movie[]>();
   const [moviesNowShowing, setMoviesNowShowing] = useState<movie[]>();
@@ -23,20 +23,12 @@ const Home = () => {
   ];
   useEffect(() => {
     const init = async () => {
-      $("#next").click(() => {
-        let list = $(".main");
-
-        $("#slide").append(list[0]);
-      })
-      $("#prev").click(() => {
-        let list = $(".main");
-        $("#slide").prepend(list[list.length - 1]);
-      })
       const movie = await movieAPI.findByStatus(cookie.statusId);
       setData(movie);
+
       const mv = await movieAPI.findAll()
 
-      setMoviesNowShowing(movie);
+      setMoviesNowShowing(mv);
     }
     init()
     if (cookie.statusId == undefined) {
@@ -48,17 +40,17 @@ const Home = () => {
     if (event != undefined) event.preventDefault();
     setCookie("statusId", value);
   }
-  const handleClick = (e: any) => {
-    if (e.target.id == 'next') {
-      console.log("hi");
-    }
-    console.log(e);
-    
+  const handleClick = (i: number) => {
+      const movieAPI = moviesNowShowing?.slice(0,5)
+      console.log(movieAPI);
+
+
+
   }
 
   return (
     (<div key={1}>
-      {(moviesNowShowing?.length == 0) ? <></> :
+      {(moviesNowShowing?.length != 0) &&
         <>
           <div className="lll">
             <div id="slide" >
@@ -84,8 +76,8 @@ const Home = () => {
               })}
             </div>
             <div className="buttons">
-              <button id="prev" onClick={handleClick}><FaAngleLeft size={40} id="prev" /></button>
-              <button id="next" onClick={handleClick}><FaAngleRight size={40} id="next" /></button>
+              <button id="prev" ><FaAngleLeft size={40} id="prev" /></button>
+              <button id="next" onClick={()=>handleClick(0)}><FaAngleRight size={40} id="next" values="5"/></button>
             </div>
           </div>
         </>

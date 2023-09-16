@@ -23,50 +23,38 @@ const Navbar = () => {
     const navList = (
         <ul className=" mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
             <Typography
-                as="li"
-                variant="lead"
-                color="white"
-                className="p-1 font-normal"
+                className="p-1 font-bold text-lg"
             >
                 <Link href="#" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">
                     Phim
                 </Link>
             </Typography>
             <Typography
-                as="li"
-                variant="lead"
-                color="white"
-                className="p-1 font-normal"
+                className="p-1 font-bold text-lg"
             >
                 <Link href="#" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">
                     Rạp
                 </Link>
             </Typography>
             <Typography
-                as="li"
-                variant="lead"
-                color="white"
-                className="p-1 font-normal"
+                className="p-1 font-bold text-lg"
             >
                 <Link href="#" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">
                     Khuyến mãi
                 </Link>
             </Typography>
             <Typography
-                as="li"
-                variant="lead"
-                color="white"
-                className="p-1 font-normal"
+                className="p-1 font-bold text-lg"
             >
-                <Link href="#" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">
+                <Link href="#" className="flex items-center hover:text-red-500  focus:text-red-500 focus:opacity-80">
                     Giới thiệu
                 </Link>
             </Typography>
         </ul>
     );
     return (
-        <nav className="w-3/4 bg-inherit py-3 mx-auto">
-            <div className="mx-auto max-w-full px-2 sm:px-8 lg:px-5">
+        <nav className="w-4/5 bg-inherit py-3 mx-auto">
+            <div className="mx-auto max-w-full sm:px-8 lg:px-5">
                 <div className="relative flex h-16 items-center justify-evenly">
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                         <button type="button" onClick={() => setOpennav(!openNav)} className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
@@ -113,12 +101,12 @@ const Navbar = () => {
                             ) :
                             (
                                 <div className="md:flex flex-row hidden ">
-                                    <Button variant="gradient" size="sm" color="gray" className="mr-1">
+                                    <button className="middle none mr-1 center hidden rounded-lg bg-gradient-to-tr from-gray-700 to-gray-900 py-2 px-4 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block">
                                         <Link href="/login">Đăng nhập</Link>
-                                    </Button>
-                                    <Button variant="gradient" size="sm" color="red">
+                                    </button>
+                                    <button className="middle none center hidden rounded-lg bg-gradient-to-tr from-gray-900 to-red-700 py-2 px-4 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block">
                                         <Link href="/register">Đăng kí</Link>
-                                    </Button>
+                                    </button>
 
                                 </div>
 
@@ -132,9 +120,9 @@ const Navbar = () => {
                     {navList}
                     {!session && (
                         <div className="md:flex flex-row">
-                            <Button variant="gradient" size="sm">
+                            <button className="middle none center hidden rounded-lg bg-gradient-to-tr from-pink-600 to-red-400 py-2 px-4 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block" >
                                 <Link href="/login">Đăng nhập</Link>
-                            </Button>
+                            </button>
                         </div>)}
                 </div>)}
 

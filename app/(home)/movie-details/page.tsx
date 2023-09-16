@@ -1,17 +1,16 @@
 
 "use client"
-
-import { useEffect, useState } from 'react';
+import Showtime from "@/components/showDate";
+import { movieAPI } from '@/util/API/Movie';
+import { movieDetailPageAPI } from '@/util/API/MovieDetailPage';
+import dynamic from 'next/dynamic';
+import Image from 'next/image';
+import Link from "next/link";
 import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
-import Link from "next/link";
 import "./index.css";
-import Showtime from "@/components/showDate";
-import dynamic from 'next/dynamic'
-import { movieDetailPageAPI } from '@/util/API/MovieDetailPage';
-import { movieAPI } from '@/util/API/Movie';
-import Image from 'next/image';
 
 const DynamicHeader = dynamic(() => import('react-multi-carousel'), {
     ssr: false

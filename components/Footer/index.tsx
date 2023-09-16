@@ -8,7 +8,7 @@ import {
 const Footer = () => {
     return (
         <>
-            <hr />
+            <hr className="mt-5"/>
             <footer className="bg-inherit">
                 <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
                     <div className="md:flex md:justify-between">
