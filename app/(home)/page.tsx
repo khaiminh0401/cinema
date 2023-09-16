@@ -11,6 +11,9 @@ const Home = () => {
   const [data, setData] = useState<movie[]>();
   const [moviesNowShowing, setMoviesNowShowing] = useState<movie[]>();
   const [cookie, setCookie] = useCookies(["statusId"]);
+  const [currentIndex, setCurrentIndex] = useState({
+    prev: 0, next: 5
+  });
   const statusOfMovie = [
     {
       id: 0,
@@ -25,10 +28,7 @@ const Home = () => {
     const init = async () => {
       const movie = await movieAPI.findByStatus(cookie.statusId);
       setData(movie);
-
-      const mv = await movieAPI.findAll()
-
-      setMoviesNowShowing(mv);
+      setMoviesNowShowing(movie);
     }
     init()
     if (cookie.statusId == undefined) {
@@ -40,17 +40,31 @@ const Home = () => {
     if (event != undefined) event.preventDefault();
     setCookie("statusId", value);
   }
-  const handleClick = (i: number) => {
-      const movieAPI = moviesNowShowing?.slice(0,5)
-      console.log(movieAPI);
-
-
-
+  const handleClick = (e: any) => {
+    if (e.target.id == 'next') {
+      const prevIndex = currentIndex.prev + 1;
+      const nextIndex = currentIndex.next + 1;
+      if (data && nextIndex - 5 != data.length) {
+        const newShow = data?.slice(prevIndex, nextIndex);
+        setMoviesNowShowing(newShow)
+        setCurrentIndex({ prev: prevIndex, next: nextIndex })
+      }
+    }
+    if (e.target.id == 'prev') {
+      const prevIndex = currentIndex.prev - 1;
+      const nextIndex = currentIndex.next - 1;
+      console.log(prevIndex);
+      if (data && prevIndex != -1) {
+        const newShow = data?.slice(prevIndex, nextIndex);
+        setMoviesNowShowing(newShow)
+        setCurrentIndex({ prev: prevIndex, next: nextIndex })
+      }
+    }
   }
 
   return (
     (<div key={1}>
-      {(moviesNowShowing?.length != 0) &&
+      {(data?.length != 0) &&
         <>
           <div className="lll">
             <div id="slide" >
@@ -76,8 +90,8 @@ const Home = () => {
               })}
             </div>
             <div className="buttons">
-              <button id="prev" ><FaAngleLeft size={40} id="prev" /></button>
-              <button id="next" onClick={()=>handleClick(0)}><FaAngleRight size={40} id="next" values="5"/></button>
+              <button id="prev" onClick={handleClick}><FaAngleLeft size={40} id="prev" /></button>
+              <button id="next" onClick={handleClick}><FaAngleRight size={40} id="next" /></button>
             </div>
           </div>
         </>
@@ -106,7 +120,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="mt-3 mx-auto flex flex-row justify-start flex-wrap w-2/3 " id="movie">
+      <div className="mt-3 mx-auto flex flex-row justify-start flex-wrap w-4/5 " id="movie">
         {data?.map((movie: movie, index) => {
           return (
             <>

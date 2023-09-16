@@ -59,6 +59,7 @@ const Navbar = () => {
                     <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                         <button type="button" onClick={() => setOpennav(!openNav)} className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
                             <FaBars />
+                            <span className="hidden">Menu</span>
                         </button>
                     </div>
                     <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
@@ -101,10 +102,10 @@ const Navbar = () => {
                             ) :
                             (
                                 <div className="md:flex flex-row hidden ">
-                                    <button className="middle none mr-1 center hidden rounded-lg bg-gradient-to-tr from-gray-700 to-gray-900 py-2 px-4 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block">
+                                    <button className="mr-1 center hidden rounded-lg bg-gradient-to-tr from-gray-700 to-gray-900 py-2 px-4 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block">
                                         <Link href="/login">Đăng nhập</Link>
                                     </button>
-                                    <button className="middle none center hidden rounded-lg bg-gradient-to-tr from-gray-900 to-red-700 py-2 px-4 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block">
+                                    <button className="center hidden rounded-lg bg-gradient-to-tr from-gray-900 to-red-700 py-2 px-4 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block">
                                         <Link href="/register">Đăng kí</Link>
                                     </button>
 
@@ -120,7 +121,7 @@ const Navbar = () => {
                     {navList}
                     {!session && (
                         <div className="md:flex flex-row">
-                            <button className="middle none center hidden rounded-lg bg-gradient-to-tr from-pink-600 to-red-400 py-2 px-4 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block" >
+                            <button className="middle center rounded-lg bg-gradient-to-tr from-pink-600 to-red-400 py-2 px-4 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block" >
                                 <Link href="/login">Đăng nhập</Link>
                             </button>
                         </div>)}

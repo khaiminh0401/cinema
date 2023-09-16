@@ -3,7 +3,6 @@ import { Validation } from '@/common/validation/page/login';
 import Input from '@/components/Input/page';
 import { FacebookSignInButton, GoogleSignInButton } from '@/components/authButtons';
 import Logo from '@/public/assert/img/logo.png';
-import hinh from '@/public/assert/img/movie/MP01.png';
 import { errorNotification } from '@/util/Notification';
 import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -78,7 +77,7 @@ const Login = () => {
 
                         <div className="carousel">
                             <div className="images-wrapper">
-                                <Image src={hinh} alt='' className='image img-1' />
+                                <Image src="" alt='Cảousel' className='image img-1' />
                             </div>
                         </div>
 
