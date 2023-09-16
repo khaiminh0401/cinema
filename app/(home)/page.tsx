@@ -6,11 +6,14 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import "./index.css";
-import $ from "jquery";
+
 const Home = () => {
   const [data, setData] = useState<movie[]>();
   const [moviesNowShowing, setMoviesNowShowing] = useState<movie[]>();
   const [cookie, setCookie] = useCookies(["statusId"]);
+  const [currentIndex, setCurrentIndex] = useState({
+    prev: 0, next: 5
+  });
   const statusOfMovie = [
     {
       id: 0,
@@ -23,19 +26,8 @@ const Home = () => {
   ];
   useEffect(() => {
     const init = async () => {
-      $("#next").click(() => {
-        let list = $(".main");
-
-        $("#slide").append(list[0]);
-      })
-      $("#prev").click(() => {
-        let list = $(".main");
-        $("#slide").prepend(list[list.length - 1]);
-      })
       const movie = await movieAPI.findByStatus(cookie.statusId);
       setData(movie);
-      const mv = await movieAPI.findAll()
-
       setMoviesNowShowing(movie);
     }
     init()
@@ -50,15 +42,29 @@ const Home = () => {
   }
   const handleClick = (e: any) => {
     if (e.target.id == 'next') {
-      console.log("hi");
+      const prevIndex = currentIndex.prev + 1;
+      const nextIndex = currentIndex.next + 1;
+      if (data && nextIndex - 5 != data.length) {
+        const newShow = data?.slice(prevIndex, nextIndex);
+        setMoviesNowShowing(newShow)
+        setCurrentIndex({ prev: prevIndex, next: nextIndex })
+      }
     }
-    console.log(e);
-    
+    if (e.target.id == 'prev') {
+      const prevIndex = currentIndex.prev - 1;
+      const nextIndex = currentIndex.next - 1;
+      console.log(prevIndex);
+      if (data && prevIndex != -1) {
+        const newShow = data?.slice(prevIndex, nextIndex);
+        setMoviesNowShowing(newShow)
+        setCurrentIndex({ prev: prevIndex, next: nextIndex })
+      }
+    }
   }
 
   return (
     (<div key={1}>
-      {(moviesNowShowing?.length == 0) ? <></> :
+      {(data?.length != 0) &&
         <>
           <div className="lll">
             <div id="slide" >
@@ -114,7 +120,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <div className="mt-3 mx-auto flex flex-row justify-start flex-wrap w-2/3 " id="movie">
+      <div className="mt-3 mx-auto flex flex-row justify-start flex-wrap w-4/5 " id="movie">
         {data?.map((movie: movie, index) => {
           return (
             <>
