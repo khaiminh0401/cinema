@@ -43,7 +43,7 @@ const Footer = () => {
                                 </ul>
                             </div>
                             <div>
-                                <h2 className="mb-6 text-sm font-semibold uppercasetext-white">Security</h2>
+                                <h2 className="mb-6 text-sm font-semibold uppercasetext-white">Bảo mật</h2>
                                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                                     <li className="mb-4">
                                         <a href="#" className="hover:underline">Thỏa thuận sử dụng</a>
