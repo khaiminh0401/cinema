@@ -1,5 +1,5 @@
 
-import { Card, Typography } from "antd";
+import { Card } from "antd";
 import Link from "next/link";
 import { FaRegCalendar, FaRegClock } from "react-icons/fa";
 export function CardDefault({ ...props }: CardProps) {

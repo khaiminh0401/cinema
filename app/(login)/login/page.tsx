@@ -77,7 +77,7 @@ const Login = () => {
 
                         <div className="carousel">
                             <div className="images-wrapper">
-                                <Image src="" alt='Cảousel' className='image img-1' />
+                                <Image src="" alt='Carousel' className='image img-1' />
                             </div>
                         </div>
 
