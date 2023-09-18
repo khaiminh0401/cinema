@@ -14,7 +14,7 @@ const SeatItem : React.FC<SeatItem> = ({children,state}) => {
 
     return (
         <button 
-            className="w-max hover:bg-seat col-span-1 mx-auto" 
+            className={`w-max ${state?"bg-blue-gray-300":"bg-transparent"} rounded ${state? "" : "hover:bg-orange-900"} col-span-1 mx-auto px-2`} 
             type="button" 
             disabled={state}
             onClick={handleClick}
