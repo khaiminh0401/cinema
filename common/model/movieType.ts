@@ -1,4 +1,4 @@
 interface movieType {
 	id: string,
-	name: string
+	poster: string
 }

@@ -1,4 +1,5 @@
 
+import { constants } from "@/common/constants";
 import { Card, Typography } from "antd";
 import Link from "next/link";
 import { FaRegCalendar, FaRegClock } from "react-icons/fa";
@@ -36,7 +37,7 @@ export function CardDefault({ ...props }: CardProps) {
 
     <Card className="w-30 max-h-fit mx-3 hover:bg-brown-800 hover:scale-105 transition-transform"
       cover={
-        <img src={"/assert/img/movie/" + props.data.poster} className="object-cover h-full w-full hover:scale-110 transition-transform" />
+        <img src={`${constants.URL_IMAGES}${props.data.poster}`} className="object-cover h-full w-full hover:scale-110 transition-transform" />
       }
       actions={[
         <FaRegCalendar key="year" />,
