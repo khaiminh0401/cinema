@@ -1,5 +1,6 @@
 
 "use client"
+import { constants } from "@/common/constants";
 import WeekDate from "@/components/Date";
 import { movieAPI } from '@/util/API/Movie';
 import { movieDetailPageAPI } from '@/util/API/MovieDetailPage';
@@ -57,9 +58,8 @@ const MovieDetails = () => {
     useEffect(() => {
         const init = async () => {
             if (movieId != null) {
-                const movie = await movieDetailPageAPI.findMovieDetailPage(movieId);
-                setMovieDetailPage(movie);
-                console.log(movie)
+                const result = await movieDetailPageAPI.findMovieDetailPage(movieId);
+                setMovieDetailPage(result);
             }
 
             // Đang test nên để findAll, vì findMoviesNowShowing không có data trong database
@@ -76,7 +76,7 @@ const MovieDetails = () => {
             <div className="container bg-dark">
                 <div className="row">
                     <div className="col-md-6 col-lg-8 bg-dark text-white p-4">
-                        <h4>Trang chủ &gt; Đặt vé &gt; {movieDetailPage?.name}</h4>
+                        <h4>Trang chủ &gt; Đặt vé &gt; {movieDetailPage?.movieDetail.name}</h4>
                         {/* Rest of the content for this section */}
                     </div>
                     <div className="col-md-6 col-lg-4 bg-dark text-white p-4">
@@ -89,21 +89,21 @@ const MovieDetails = () => {
                 <div className="row">
                     <div className="col-md-8 bg-dark text-white p-4">
                         <div className="d-flex">
-                            {movieDetailPage && <Image src={`/assert/img/movie/${movieDetailPage?.poster}`} className="mr-3" width={256} height={320} alt="Movie Poster" />}
+                            {movieDetailPage && <Image src={`${constants.URL_IMAGES}${movieDetailPage?.movieDetail.poster}`} className="mr-3" width={256} height={320} alt="Movie Poster" />}
                             <div className="ms-4 flex-grow-1">
-                                <h2 className="mb-3">{movieDetailPage?.name}</h2>
-                                <p><strong>Thể loại:</strong> {movieDetailPage?.movieTypeName}</p>
-                                <p><strong>Đạo diễn:</strong> {movieDetailPage?.directorsName}</p>
-                                <p><strong>Diễn viên:</strong> {movieDetailPage?.actorsName}</p>
-                                <p><strong>Ngôn ngữ:</strong> {movieDetailPage?.languagesName}</p>
-                                <p><strong>Thời gian chiếu:</strong> {movieDetailPage?.time} phút</p>
-                                <p><strong>Quốc gia:</strong> {movieDetailPage?.countryName}</p>
-                                <p><strong>Năm phát hành:</strong> {movieDetailPage?.yearofmanufacture}</p>
+                                <h2 className="mb-3">{movieDetailPage?.movieDetail.name}</h2>
+                                <p><strong>Thể loại:</strong> {movieDetailPage?.movieDetail.movieTypeName}</p>
+                                <p><strong>Đạo diễn:</strong> {movieDetailPage?.movieDetail.directorsName}</p>
+                                <p><strong>Diễn viên:</strong> {movieDetailPage?.movieDetail.actorsName}</p>
+                                <p><strong>Ngôn ngữ:</strong> {movieDetailPage?.movieDetail.languagesName}</p>
+                                <p><strong>Thời gian chiếu:</strong> {movieDetailPage?.movieDetail.time} phút</p>
+                                <p><strong>Quốc gia:</strong> {movieDetailPage?.movieDetail.countryName}</p>
+                                <p><strong>Năm phát hành:</strong> {movieDetailPage?.movieDetail.yearofmanufacture}</p>
                             </div>
                         </div>
                         <h4 className="mt-4"><span className="border-2 border-bottom border-danger">NỘI DUNG PHIM</span></h4>
                         <p style={{ textAlign: "justify" }}>
-                            {movieDetailPage?.describe}
+                            {movieDetailPage?.movieDetail.describe}
                         </p>
                     </div>
                     <div className="col-md-4 bg-dark text-white p-4">
@@ -115,8 +115,8 @@ const MovieDetails = () => {
                         </div>
                         <div className="mb-4">
                             <h3 className="text-white">PHIM ĐANG CHIẾU</h3>
-                            <Image src={`/assert/home/${movieDetailPage?.poster}`} className="w-100" width={"0"} height={"0"} alt="Now Showing" />
-                            <h3 className="text-white mt-2"> {movieDetailPage?.name}</h3>
+                            <Image src={`${constants.URL_IMAGES}${movieDetailPage?.movieDetail.poster}`} className="w-100" width={"0"} height={"0"} alt="Now Showing" />
+                            <h3 className="text-white mt-2"> {movieDetailPage?.movieDetail.name}</h3>
                         </div>
                     </div>
                 </div>
@@ -126,7 +126,46 @@ const MovieDetails = () => {
                         <WeekDate movieId={movieId} />
                     </div>
                 </div>
+                <div className="row px-3 mb-4">
+                    <div className="col-md-18 bg-dark text-white">
+                        <h4 className="text-center  py-2">NHỮNG PHIM CÙNG THỂ LOẠI</h4>
 
+                        <Carousel
+                            responsive={responsive}
+                            ssr
+                            slidesToSlide={1}
+                            infinite
+                            containerClass="container-with-dots"
+                            itemClass="image-item"
+                            deviceType={''}
+                            autoPlay={true}
+                            autoPlaySpeed={3000}
+                        >
+                            {movieDetailPage?.listTypeOfMovies ? (
+                                movieDetailPage.listTypeOfMovies.map((mv, index) => (
+                                    <div key={index} style={{ textAlign: 'center' }}>
+                                        <Link
+                                            key={mv.id}
+                                            className={`text-wrapper text-decoration-none text-light fw-bold`} id={`nowShowing_${index}`}
+                                            href={{
+                                                pathname: ``,
+                                                query: { id: mv.id }
+                                            }}
+                                        >
+                                            <Image
+                                                src={`${constants.URL_IMAGES}${mv.poster}`}
+                                                alt={`aga`}
+                                                width={'250'} height={'350'}
+                                            />
+                                        </Link>
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No movies currently showing.</p>
+                            )}
+                        </Carousel>
+                    </div>
+                </div>
                 <div className="row px-3 mb-4">
                     <div className="col-md-18 bg-dark text-white">
                         <h4 className="text-center  py-2">NHỮNG PHIM ĐANG CHIẾU</h4>
@@ -154,7 +193,7 @@ const MovieDetails = () => {
                                             }}
                                         >
                                             <Image
-                                                src={`/assert/img/movie/${mv.poster}`}
+                                                src={`${constants.URL_IMAGES}${mv.poster}`}
                                                 alt={`aga`}
                                                 width={'250'} height={'350'}
                                             />
