@@ -27,12 +27,21 @@ const ChangePassword = () => {
     const formData = new FormData();
 
     const onSubmit: SubmitHandler<RegisterProps> = async (data) => {
-        formData.append('customerId', '1');
-        formData.append('currentPassword', data.currentPassword);
-        formData.append('newPassword', data.password);
+        if (data.password !== data.repassword) {
+            return errorNotification("Mật khẩu không khớp, vui lòng thử lại !");
+        }
 
-        await customerAPI.updatePassword(formData);
-        reset();
+        try {
+            formData.append('customerId', '1');
+            formData.append('currentPassword', data.currentPassword);
+            formData.append('newPassword', data.password);
+
+            await customerAPI.updatePassword(formData);
+            reset();
+        } catch (e: any) {
+            errorNotification(checkError(e.response.data.message, e.response.data.param) || "")
+        }
+
     };
 
     return (
