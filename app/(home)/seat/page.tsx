@@ -50,13 +50,6 @@ const Seat = () => {
                                 </SeatRow>
                             })
                         }
-                        {/* <SeatRow>
-                    {
-                        data?.map((s:any)=>{
-                            return <SeatItem key={s.id} state={s.state}>{s.name}</SeatItem>
-                        })
-                    }
-                </SeatRow> */}
                     </div>
                 </div>
                 <div className="col-end-4">
