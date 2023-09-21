@@ -1,4 +1,5 @@
-interface movieDetailPage {
+
+type movieDetail = {
     id: string,
     name: string,
     yearofmanufacture: number,
@@ -12,5 +13,14 @@ interface movieDetailPage {
     actorsName: string,
     directorsName: string,
     languagesName: string,
-    countryName: string
+    countryName: string,
+    movieTypeId: string
+}
+type typeofmovies = {
+    id: string,
+    poster: string
+}
+interface movieDetailPage {
+    movieDetail: movieDetail
+    listTypeOfMovies: typeofmovies[]
 }

@@ -1,4 +1,5 @@
 
+import { constants } from "@/common/constants";
 import { Card } from "antd";
 import Link from "next/link";
 import { FaRegCalendar, FaRegClock } from "react-icons/fa";
@@ -7,11 +8,11 @@ export function CardDefault({ ...props }: CardProps) {
     <Card className="w-64 h-fit m-3 hover:scale-110 transition-transform border-none hover:bg-red-700"
       cover={
         <div className="h-72 w-fit">
-          <img src={"/assert/img/movie/" + props.data.poster} className="object-cover h-full w-full border-none transition-transform" />
+          <img src={`${constants.URL_IMAGES}${props.data.poster}`} className="object-cover h-full w-full hover:scale-110 transition-transform" />
         </div>
       }
-      
-      style={{background: 'black'}}
+
+      style={{ background: 'black' }}
     >
       <p>
         <div className="text-center h-28">
