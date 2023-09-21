@@ -16,7 +16,11 @@ type movieDetail = {
     countryName: string,
     movieTypeId: string
 }
+type typeofmovies = {
+    id: string,
+    poster: string
+}
 interface movieDetailPage {
     movieDetail: movieDetail
-    listTypeOfMovies: movieType[]
+    listTypeOfMovies: typeofmovies[]
 }
