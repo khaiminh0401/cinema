@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from "axios";
 import { fetchAPI } from "./axios";
 
 const findAll = async () => {
-    return (await fetchAPI.get("/api/customer/getAll")).data as customer[];
+    return (await fetchAPI.get("/customer/getAll")).data as customer[];
 }
 
 const findId = async (id: number) => {
@@ -10,14 +10,14 @@ const findId = async (id: number) => {
 }
 
 const login = async (inputs: Object) => {
-    return (await fetchAPI.post("/api/customer/login", inputs)).data;
+    return (await fetchAPI.post("/customer/login", inputs)).data;
 }
 
 const registration = async (inputs: object) => {
-    return (await fetchAPI.post("/api/customer/registration", inputs)).data;
+    return (await fetchAPI.post("/customer/registration", inputs)).data;
 }
 const registrationConfirm = async (inputs: string) => {
-    return (await fetchAPI.get("/api/customer/active?userToken=" + inputs)).data;
+    return (await fetchAPI.get("/customer/active?userToken=" + inputs)).data;
 }
 
 const updateAvatar = async (formData: FormData, config?: AxiosRequestConfig<FormData>) => {
