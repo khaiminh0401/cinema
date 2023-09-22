@@ -1,11 +1,8 @@
 'use client'
 
-import { useEffect } from "react";
 import Navbar from "../../navbar";
 import ChangeAvatar from "./changeAvatar";
 import EditProfile from "./editProfile";
-import { fetchAPI } from "@/util/API/axios";
-import { customerAPI } from "@/util/API/Customer";
 
 const Profile = ({...props} : customer) => {
     // useEffect(() => {

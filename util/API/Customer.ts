@@ -28,8 +28,8 @@ const editProfile = async (customer: Object) => {
     return (await fetchAPI.put(`/api/customer/edit-profile`, customer)).data;
 }
 
-const updatePassword = async (formData: FormData) => {
-    return (await fetchAPI.put(`/api/customer/update-password`, formData)).data;
+const updatePassword = async (customer: Object) => {
+    return (await fetchAPI.put(`/api/customer/update-password`, customer)).data;
 }
 
 export const customerAPI = {

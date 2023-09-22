@@ -78,7 +78,7 @@ const Login = () => {
 
                         <div className="carousel">
                             <div className="images-wrapper">
-                                <Image src={hinh} alt='' className='image img-1' />
+                                {/*<Image src={hinh} alt='' className='image img-1' />*/}
                             </div>
                         </div>
 

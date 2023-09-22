@@ -1,109 +1,112 @@
 'use client'
 
-import { checkError } from "@/common/validation/error";
-import { Validation } from "@/common/validation/page/registration";
-import { checkStatus } from "@/common/validation/status";
+import {checkError} from "@/common/validation/error";
+import {Validation} from "@/common/validation/page/registration";
 import Input from "@/components/Input/page";
-import { customerAPI } from "@/util/API/Customer";
-import { errorNotification, successNotification } from "@/util/Notification";
+import {customerAPI} from "@/util/API/Customer";
+import {errorNotification, successNotification} from "@/util/Notification";
 import Link from 'next/link';
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { Form } from 'antd';
+import {useState} from "react";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {Form} from 'antd';
 import Navbar from "../../navbar";
 
 /**
  * Object of Register
  */
-type RegisterProps = {
-    currentPassword: string,
+type ChangePasswordProps = {
     password: string,
-    repassword: string,
+    newPassword: string,
+    reNewPassword: string,
 }
 
 const ChangePassword = () => {
     const [flag, setFlag] = useState<boolean>();
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<RegisterProps>();
+    const {
+        register,
+        handleSubmit,
+        formState: {errors},
+        reset
+    } = useForm<ChangePasswordProps>();
     const formData = new FormData();
 
-    const onSubmit: SubmitHandler<RegisterProps> = async (data) => {
-        if (data.password !== data.repassword) {
+    const onSubmit: SubmitHandler<ChangePasswordProps> = async (data) => {
+        const account = {
+            customerId: 1,
+            ...data
+        }
+
+        if (data.newPassword !== data.reNewPassword) {
             return errorNotification("Mật khẩu không khớp, vui lòng thử lại !");
         }
 
         try {
-            formData.append('customerId', '1');
-            formData.append('currentPassword', data.currentPassword);
-            formData.append('newPassword', data.password);
-
-            await customerAPI.updatePassword(formData);
+            await customerAPI.updatePassword(account);
             reset();
+            successNotification("Thay đổi mật khẩu thành công!")
         } catch (e: any) {
-            errorNotification(checkError(e.response.data.message, e.response.data.param) || "")
+            errorNotification(checkError("Mật khẩu hiện tại", e.response.data.message) || "")
         }
-
     };
 
     return (
         <div className="flex flex-row">
-            <div className="basis-1/4"><Navbar /></div>
+            <div className="basis-1/4"><Navbar/></div>
             <div className="basis-2/4">
                 <Form
                     name="basic"
-                    labelCol={{ span: 7 }}
-                    wrapperCol={{ span: 17 }}
+                    labelCol={{span: 7}}
+                    wrapperCol={{span: 17}}
                     labelAlign="left"
-                    initialValues={{ remember: true }}
+                    initialValues={{remember: true}}
                     onFinish={handleSubmit(onSubmit)}
-                    onFinishFailed={() => { }}
+                    onFinishFailed={() => {
+                    }}
                     autoComplete="off"
                 >
                     <h2 className="font-bold text-2xl mb-10 text-white text-left">Đổi mật khẩu</h2>
 
-                    <Form.Item<RegisterProps>
+                    <Form.Item
                         label={<span className="text-white">Mật khẩu hiện tại</span>}
-                        name="currentPassword"
                         colon={false}
                     >
                         <Input
                             type="password"
-                            className="w-full bg-inherit border border-white rounded-sm text-white"
-                            register={register("currentPassword", Validation.password)}
-                        />
-                        <div className="text-red-600 mt-1">{errors.password?.message}</div>
-                    </Form.Item>
-
-                    <Form.Item<RegisterProps>
-                        label={<span className="text-white">Mật khẩu mới</span>}
-                        name="password"
-                        colon={false}
-                    >
-                        <Input
-                            type="password"
-                            className="w-full bg-inherit border border-white rounded-sm text-white"
+                            className="w-full bg-inherit border border-stone-700 rounded-sm text-white"
                             register={register("password", Validation.password)}
                         />
                         <div className="text-red-600 mt-1">{errors.password?.message}</div>
                     </Form.Item>
 
-                    <Form.Item<RegisterProps>
-                        label={<span className="text-white">Nhập lại mật khẩu</span>}
-                        name="repassword"
+                    <Form.Item
+                        label={<span className="text-white">Mật khẩu mới</span>}
                         colon={false}
                     >
                         <Input
                             type="password"
-                            className="w-full bg-inherit border border-white rounded-sm text-white"
-                            register={register("repassword", Validation.password)}
+                            className="w-full bg-inherit border border-stone-700 rounded-sm text-white"
+                            register={register("newPassword", Validation.password)}
                         />
                         <div className="text-red-600 mt-1">{errors.password?.message}</div>
                     </Form.Item>
 
-                    <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+                    <Form.Item
+                        label={<span className="text-white">Nhập lại mật khẩu</span>}
+                        colon={false}
+                    >
+                        <Input
+                            type="password"
+                            className="w-full bg-inherit border border-stone-700 rounded-sm text-white"
+                            register={register("reNewPassword", Validation.password)}
+                        />
+                        <div className="text-red-600 mt-1">{errors.password?.message}</div>
+                    </Form.Item>
+
+                    <Form.Item wrapperCol={{offset: 8, span: 16}}>
                         <button
                             disabled={flag}
-                            className="w-1/3 py-2 rounded-md bg-blue-500 text-white shadow-none 
-                        hover:scale-105 hover:shadow-none hover:bg-blue-600 focus:scale-105 
+                            className="w-1/3 py-2 rounded-md bg-red-500 text-white shadow-none
+                        hover:scale-105 hover:shadow-none hover:bg-red-600 focus:scale-105
                         focus:shadow-none active:scale-100"
                         >
                             Thay đổi
@@ -111,12 +114,12 @@ const ChangePassword = () => {
                     </Form.Item>
                 </Form>
 
-                <div className='text-center'>
-                    <span className="text-white">
-                        Bạn quên mật khẩu ư?
-                        <Link href="/" className="text-cyan-400"> Nhấn vào đây</Link>
-                    </span>
-                </div>
+                {/*<div className='text-center'>*/}
+                {/*    <span className="text-white">*/}
+                {/*        Bạn quên mật khẩu ư?*/}
+                {/*        <Link href="/" className="text-cyan-400"> Nhấn vào đây</Link>*/}
+                {/*    </span>*/}
+                {/*</div>*/}
             </div>
         </div>
     );

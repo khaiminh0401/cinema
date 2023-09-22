@@ -45,40 +45,40 @@ const EditProfile = ({...props} : customer) => {
                 <p>Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
             </section>
 
-            <Form.Item<EditProfileProps>
+            <Form.Item
                 label={<span className="text-white">Tên</span>}
-                name="name"
+                // name="name"
                 colon={false}
             >
                 <Input
                     type="text"
-                    className="w-full bg-inherit border border-white rounded-sm text-white"
+                    className="w-full bg-inherit border border-stone-700 rounded-sm text-white"
                     register={register("name", Validation.name)}
                 />
                 <div className="text-red-600 mt-1">{errors.name?.message}</div>
             </Form.Item>
 
-            <Form.Item<EditProfileProps>
+            <Form.Item
                 label={<span className="text-white">Số điện thoại</span>}
-                name="phone"
+                // name="phone"
                 colon={false}
             >
                 <Input
                     type="text"
-                    className="w-full bg-inherit border border-white rounded-sm text-white"
+                    className="w-full bg-inherit border border-stone-700 rounded-sm text-white"
                     register={register("phone", Validation.phone)}
                 />
                 <div className="text-red-600 mt-1">{errors.phone?.message}</div>
             </Form.Item>
 
-            <Form.Item<EditProfileProps>
+            <Form.Item
                 label={<span className="text-white">Email</span>}
-                name="email"
+                // name="email"
                 colon={false}
             >
                 <Input
                     type="email"
-                    className="w-full bg-inherit border border-white rounded-sm text-white"
+                    className="w-full bg-inherit border border-stone-700 rounded-sm text-white"
                     register={register("email", Validation.email)}
                 />
                 <div className="text-red-600 mt-1">{errors.email?.message}</div>
@@ -86,7 +86,7 @@ const EditProfile = ({...props} : customer) => {
 
             <Form.Item
                 label={<span className="text-white">Giới tính</span>}
-                name="gender"
+                // name="gender"
                 colon={false}
             >
                 <div className="flex space-x-4">
@@ -122,8 +122,8 @@ const EditProfile = ({...props} : customer) => {
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                 <button
-                    className="w-1/3 py-2 rounded-md bg-blue-500 text-white shadow-none 
-                        hover:scale-105 hover:shadow-none hover:bg-blue-600 focus:scale-105 
+                    className="w-1/3 py-2 rounded-md bg-red-500 text-white shadow-none
+                        hover:scale-105 hover:shadow-none hover:bg-red-600 focus:scale-105
                         focus:shadow-none active:scale-100"
                 >
                     Cập nhật

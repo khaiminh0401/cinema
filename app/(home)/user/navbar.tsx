@@ -42,7 +42,7 @@ const items: MenuItem[] = [
 ];
 
 const Navbar = () => {
-    const [collapsed, setCollapsed] = useState(true);
+    const [collapsed, setCollapsed] = useState(false);
 
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);

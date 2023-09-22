@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import AvatarEditor from "react-avatar-editor";
-import { Modal, Slider, Button, Input } from "antd";
-import { CropperModalProps } from "@/util/Props/CropperModalProps";
-import { fetchAPI } from "@/util/API/axios";
-import { customerAPI } from "@/util/API/Customer";
+import {Modal, Slider, Button, Input} from "antd";
+import {CropperModalProps} from "@/util/Props/CropperModalProps";
+import {fetchAPI} from "@/util/API/axios";
+import {customerAPI} from "@/util/API/Customer";
+import {errorNotification, successNotification} from "@/util/Notification";
 
-const CropperModal = ({ ...props }: CropperModalProps, avatar: string) => {
+const CropperModal = ({...props}: CropperModalProps) => {
     const [slideValue, setSlideValue] = useState<number>(10);
     const cropRef = useRef<AvatarEditor | null>(null);
     const formData = new FormData();
@@ -16,14 +17,15 @@ const CropperModal = ({ ...props }: CropperModalProps, avatar: string) => {
             const dataUrl = cropRef.current.getImage().toDataURL();
             const result = await fetch(dataUrl);
             const blob = await result.blob();
+
             props.setPreview(URL.createObjectURL(blob));
-            // props.setPreview(avatar);
             props.setModalOpen(false);
 
-            const options = { type: blob.type, lastModified: Date.now() };
-            const file = new File([blob], "download3.png", options);
 
-            formData.append('customerId', '5');
+            const options = {type: blob.type, lastModified: Date.now()};
+            const file = new File([blob], props.avatar, options);
+
+            formData.append('customerId', '3');
             formData.append('multipartFile', file);
 
             customerAPI.updateAvatar(formData, {
@@ -31,6 +33,10 @@ const CropperModal = ({ ...props }: CropperModalProps, avatar: string) => {
                     "Content-Type": "multipart/form-data",
                     "Access-Control-Allow-Origin": "*",
                 },
+            }).then(() => {
+                successNotification("Thay đổi ảnh đại diện thành công!")
+            }).catch(() => {
+                errorNotification("Không lưu được ảnh!");
             });
         }
     };
@@ -43,7 +49,7 @@ const CropperModal = ({ ...props }: CropperModalProps, avatar: string) => {
             maskClosable={false}
             okText="Lưu"
             cancelText="Hủy"
-            okButtonProps={{ className: "bg-black" }}
+            okButtonProps={{className: "bg-black"}}
             onOk={handleSave}
             onCancel={() => props.setModalOpen(false)}
         >
@@ -51,7 +57,7 @@ const CropperModal = ({ ...props }: CropperModalProps, avatar: string) => {
                 <AvatarEditor
                     ref={cropRef}
                     image={props.src || ""}
-                    style={{ width: "100%", height: "100%" }}
+                    style={{width: "100%", height: "100%"}}
                     border={50}
                     borderRadius={150}
                     color={[0, 0, 0, 0.72]}
