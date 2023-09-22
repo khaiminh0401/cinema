@@ -1,8 +1,8 @@
 
 "use client"
 import { constants } from "@/common/constants";
+import { CardDiscount } from "@/components/CardDiscount";
 import WeekDate from "@/components/Date";
-import { movieAPI } from '@/util/API/Movie';
 import { movieDetailPageAPI } from '@/util/API/MovieDetailPage';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 import '../../globals.css';
-import "./index.css";
 
 const DynamicHeader = dynamic(() => import('react-multi-carousel'), {
     ssr: false
@@ -76,7 +75,7 @@ const MovieDetails = () => {
                         <div className="grid grid-cols-12 gap-2">
                             <div className="lg:col-span-10 md:col-span-8 sm:col-span-12 col-span-12">
                                 <div className="grid grid-cols-12 gap-6">
-                                    {movieDetailPage && <Image src={`${constants.URL_IMAGES}${movieDetailPage?.movieDetail.poster}`} className="lg:col-span-3 md:col-span-6 sm:col-span-6 col-span-12 w-full h-92 bg-white" width={384} height={320} alt="Movie Poster" />}
+                                    {movieDetailPage && <Image src={`${constants.URL_IMAGES}${movieDetailPage?.movieDetail.poster}`} className="lg:col-span-3 md:col-span-6 sm:col-span-6 col-span-12 w-full h-92 bg-white" width={2560} height={1440} alt="Movie Poster" />}
                                     <div className="lg:col-span-9 md:col-span-6 sm:col-span-6 col-span-12 w-fit h-full text-lg">
                                         <h4 className="mb-3 text-lg text-red-400 font-semibold">{movieDetailPage?.movieDetail.name}</h4>
                                         <p><strong>Thể loại:</strong> {movieDetailPage?.movieDetail.movieTypeName}</p>
@@ -95,18 +94,8 @@ const MovieDetails = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="lg:col-span-2 md:col-span-4 sm:col-span-12 col-span-12 text-lg">
-                                <h1 className="text-center text-white mb-5"><span className="border-b-2 border-red-500 pb-2">NHẬN KHUYẾN MÃI</span></h1>
-                                <div className="border border-white p-2 text-center mb-4">
-                                    <h4 className="text-white">EMAIL</h4>
-                                </div>
-                                <div className="bg-red-950 p-2 text-center mb-4 hover:bg-red-500">
-                                    <h4 className="text-white">ĐĂNG KÍ</h4>
-                                </div>
-                                <div className="mb-4">
-                                    <h3 className="text-white">PHIM ĐANG CHIẾU</h3>
-                                    <h3 className="text-white mt-2"> {movieDetailPage?.movieDetail.name}</h3>
-                                </div>
+                            <div className="lg:col-span-2 md:col-span-4 sm:col-span-12 col-span-12">
+                                <CardDiscount to="/register" discount="5%" images={`${movieDetailPage?.movieDetail.poster}`} />
                             </div>
                         </div>
                     </div>
@@ -115,14 +104,14 @@ const MovieDetails = () => {
 
             <div className="mx-10 px-3 mb-5">
                 <div className="text-white">
-                    <h3 className="text-center border-b-2 border-red-900 py-2">VUI LÒNG CHỌN THÔNG TIN VÉ</h3>
+                    <h3 className="text-center border-b-2 border-red-900 py-2 text-lg font-semibold">VUI LÒNG CHỌN THÔNG TIN VÉ</h3>
                     <WeekDate movieId={movieId} />
                 </div>
             </div>
             <div className="grid grid-cols-12 gap-2">
                 <div className="col-span-12">
                     <div className="h-fit mx-auto text-white">
-                        <h4 className="text-center py-2">NHỮNG PHIM CÙNG THỂ LOẠI</h4>
+                        <h4 className="text-center py-2 text-lg font-semibold">NHỮNG PHIM CÙNG THỂ LOẠI</h4>
 
                         <Carousel
                             responsive={responsive}
@@ -149,7 +138,7 @@ const MovieDetails = () => {
                                             <Image
                                                 src={`${constants.URL_IMAGES}${mv.poster}`}
                                                 alt={`aga`}
-                                                width={'300'} height={'300'}
+                                                width='2560' height='1440'
                                                 className="h-full w-full"
                                             />
                                         </Link>

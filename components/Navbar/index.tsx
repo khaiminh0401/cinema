@@ -93,8 +93,8 @@ const Navbar = () => {
                                                 </div>
                                                 <hr />
                                                 <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-0">Thông tin cá nhân</a>
-                                                <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-1">cài đặt</a>
-                                                <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-1">đơn hàng</a>
+                                                <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-1">Cài đặt</a>
+                                                <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-1">Đơn hàng</a>
                                                 <SignOutButton />
                                             </div>
                                         )}

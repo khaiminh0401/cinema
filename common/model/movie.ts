@@ -8,3 +8,11 @@ interface movie {
 	trailer: string,
 	status: string,
 }
+
+type MovieFilter = {
+	movieType?: string,
+	country?: number,
+	branch?: string,
+	status?: string,
+	name: string
+  }
