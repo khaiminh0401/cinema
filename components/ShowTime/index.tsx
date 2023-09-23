@@ -8,11 +8,11 @@ const ShowTime = ({ children, prop }: any) => {
                 <>
                     <div className='grid grid-cols-12'>
                         {prop.content?.map((showtime: any) => {
-                            return <div key={showtime.id} className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 mx-2 mt-3 border-1 border-bottom border-light border-opacity-25 col-lg-6 pb-2">
-                                <div className="col-lg-12 max-w-sm rounded overflow-hidden from-red-950 to-black bg-gradient-to-b shadow-lg">
+                            return <div key={showtime.id} className="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 mx-2 mt-3 border-opacity-25 pb-2">
+                                <div className="col-lg-12 w-full rounded overflow-hidden from-red-950 to-black bg-gradient-to-b shadow-lg">
                                     <div className="px-6 py-4">
-                                        <div className="mb-2 text-md font-semibold border-b-2 border-red-800 uppercase">Chi nhánh: <span className="text-red-400 font-semibold">{showtime.branchName}</span></div>
-                                        <p className='font-sans text-justify text-sm'>
+                                        <div className="mb-2 text-md font-semibold border-b-2 border-red-800 uppercase">Chi nhánh: <span className="text-red-600 font-semibold">{showtime.branchName}</span></div>
+                                        <p className='font-sans text-sm'>
                                             <p>Địa chỉ: {showtime.branchAddress}</p>
                                             <p>Phòng: {showtime.roomName}</p>
                                             <p>Thời gian: {showtime.startTime}</p>
