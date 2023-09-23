@@ -1,4 +1,4 @@
-import '../globals.css';
+// import '';
 
 export const metadata = {
     title: 'Zuhot - Đặt ghế',
@@ -8,7 +8,7 @@ export const metadata = {
 export default function BookSeatLayout({
     children
 }: {
-    children: React.ReactNode,
+    children: React.ReactNode
 }) {
     return (
         { children }

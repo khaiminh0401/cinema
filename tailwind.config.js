@@ -10,6 +10,9 @@ module.exports = withMT({
   theme: {
     color:{
       // "seat": "bloack"
+    },
+    token:{
+      "colorPrimary":"#F44336"
     }
   },
   plugins: [],
