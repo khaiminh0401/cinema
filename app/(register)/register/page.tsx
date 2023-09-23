@@ -81,13 +81,13 @@ const Register = () => {
                                 <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white rounded-lg sm:flex ">
                                     <li className="w-full  sm:border-b-0 sm:border-r dark:border-gray-600 " >
                                         <div className="flex items-center pl-3">
-                                            <Input id="horizontal-list-radio-license" register={register("gender", Validation.gender)} type="radio" defaultValue="true" name="list-radio" className="w-4 h-4 bg-gray-600 border-gray-500" />
+                                            <Input id="horizontal-list-radio-license" register={register("gender", Validation.gender)} type="radio" value="true" name="list-radio" className="w-4 h-4 bg-gray-600 border-gray-500" />
                                             <label htmlFor="horizontal-list-radio-license" className="w-full py-3 ml-2 text-sm font-medium text-gray-900 ">Nam</label>
                                         </div>
                                     </li>
                                     <li className="w-full  sm:border-b-0 sm:border-r dark:border-gray-600">
                                         <div className="flex items-center pl-3">
-                                            <Input id="horizontal-list-radio-id" register={register("gender", Validation.gender)} type="radio" defaultValue="false" name="list-radio" className="w-4 h-4 bg-gray-600 border-gray-500" />
+                                            <Input id="horizontal-list-radio-id" register={register("gender", Validation.gender)} type="radio" value="false" name="list-radio" className="w-4 h-4 bg-gray-600 border-gray-500" />
                                             <label htmlFor="horizontal-list-radio-id" className="w-full py-3 ml-2 text-sm font-medium text-gray-900 ">Nữ</label>
                                         </div>
                                     </li>
