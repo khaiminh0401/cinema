@@ -124,12 +124,12 @@ const Home = () => {
         <form action="" onSubmit={handleSubmit(onSubmit)} className="flex items-center">
           <div className=" mr-8 ">
             <label htmlFor="" className="opacity-50 font-bold">Quốc Gia</label> <hr className="opacity-50" />
-            <SelectOption className="appearance-none text-white bg-inherit border-3 rounded my-3 p-2 h-10 ring-1 ring-red-500/50" register={register("country")} defaultValue={0} id="country" name="Quốc gia" options={
+            <SelectOption className="text-white bg-inherit border-3 rounded my-3 p-2 h-10 ring-1 ring-red-500/50" register={register("country")} defaultValue={0} id="country" name="Quốc gia" options={
               dataSelect?.country.map((value) => (
                 {
                   value: value.id,
                   label: value.name,
-                  className:'bg-gray-800 text-white '
+                  className: 'bg-gray-800 text-white '
                 }
               ))
             } />
@@ -141,7 +141,7 @@ const Home = () => {
                 {
                   value: value.id,
                   label: value.name,
-                  className:'bg-gray-800 text-white hover:bg-red-600'
+                  className: 'bg-gray-800 text-white hover:bg-red-600'
                 }
               ))
             } />
@@ -153,7 +153,7 @@ const Home = () => {
                 {
                   value: value.id,
                   label: value.name,
-                  className:'bg-gray-800 text-white hover:bg-red-600'
+                  className: 'bg-gray-800 text-white hover:bg-red-600'
                 }
               ))
             } />
@@ -169,7 +169,7 @@ const Home = () => {
             allowClear={true}
             onSearch={onSearch}
             size="large"
-            style={{ width: 304,backgroundColor:"inherit"}}
+            style={{ width: 304, backgroundColor: "inherit" }}
             className="justify-self-end my-auto rounded ring-1 ring-red-500/50"
           />
         </div>
