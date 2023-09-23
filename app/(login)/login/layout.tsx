@@ -16,9 +16,11 @@ export default function LoginLayout({
   return (
     <html lang="en">
       <body>
-        <SessionProvider session={session}>
-          {children}
-        </SessionProvider>
+        <div className="min-h-screen flex items-center bg-white ">
+          <SessionProvider session={session}>
+            {children}
+          </SessionProvider>
+        </div>
       </body>
     </html>
   )

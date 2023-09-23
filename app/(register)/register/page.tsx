@@ -2,15 +2,14 @@
 import { checkError } from "@/common/validation/error";
 import { Validation } from "@/common/validation/page/registration";
 import { checkStatus } from "@/common/validation/status";
-import Button from "@/components/Button/page";
 import Input from "@/components/Input/page";
+import Logo from '@/public/assert/img/logo.png';
 import { customerAPI } from "@/util/API/Customer";
 import { errorNotification, successNotification } from "@/util/Notification";
+import Image from "next/image";
 import Link from 'next/link';
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import './index.css';
-
 /**
  * Object of Register
  */
@@ -22,6 +21,8 @@ type RegisterProps = {
     phone: string,
     gender: boolean
 }
+
+
 const Register = () => {
     const [flag, setFlag] = useState<boolean>();
     const { register, handleSubmit, formState: { errors } } = useForm<RegisterProps>();
@@ -45,71 +46,74 @@ const Register = () => {
             setFlag(false)
         }
     };
-    return (
-        <div className="form-bg">
-            <div className="container">
-                <div className="row">
-                    <div className="">
-                        <div className="form-container row">
-                            <div className="left-content d-none d-lg-block col-auto col-lg-4 me-3">
-                            </div>
-                            <div className="right-content col-12 col-lg-7 rounded p-4">
-                                <h3 className="form-title">Đăng ký</h3>
-                                <form className="form-horizontal" onSubmit={handleSubmit(onSubmit)}>
-                                    <div className="form-group">
-                                        <label>Tên</label>
-                                        <Input type="text" className="form-control" register={register("name", Validation.name)} />
-                                        <div className="text-danger mt-1">{errors.name?.message}</div>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Số điện thoại</label>
-                                        <Input type="text" className="form-control" register={register("phone", Validation.phone)} />
-                                        <div className="text-danger mt-1">{errors.phone?.message}</div>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Email</label>
-                                        <Input type="email" className="form-control" register={register("email", Validation.email)} />
-                                        <div className="text-danger mt-1">{errors.email?.message}</div>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Mật khẩu</label>
-                                        <Input type="password" className="form-control" register={register("password", Validation.password)} />
-                                        <div className="text-danger mt-1">{errors.password?.message}</div>
-                                    </div>
-                                    <div className="form-group">
-                                        <label>Nhập lại mật khẩu</label>
-                                        <Input type="password" className="form-control" register={register("repassword", Validation.password)} />
-                                        <div className="text-danger mt-1">{errors.repassword?.message}</div>
-                                    </div>
 
-                                    <div className="form-group">
-                                        <label>Giới tính</label>
-                                        <div className="mt-3">
-                                            <div className="form-check form-check-inline">
-                                                <Input className="form-check-input" value='true' type="radio" register={register("gender", Validation.gender)}
-                                                    name="inlineRadioOptions" id="inlineRadio1" />
-                                                <label className="form-check-label" htmlFor="inlineRadio1">Nam</label>
-                                            </div>
-                                            <div className="form-check form-check-inline">
-                                                <Input className="form-check-input" value='false' type="radio" register={register("gender", Validation.gender)}
-                                                    name="inlineRadioOptions" id="inlineRadio2" />
-                                                <label className="form-check-label" htmlFor="inlineRadio2">Nữ</label>
-                                            </div>
-                                            <div className="text-danger mt-1">{errors.gender?.message}</div>
-                                        </div>
-                                    </div>
-                                    <Button disabled={flag} text={"Đăng ký"} bgColor="#daa5206c" textColor="white" className="btn w-100" />
-                                </form>
-                                <div className='row'>
-                                    <span className="signup-link col-12 fs-7 fw-bolder">Đã có tài khoản? Đăng nhập <Link href="/login">
-                                        tại đây</Link></span>
-                                </div>
-                            </div>
+    return (
+        <section className="bg-black">
+            <div className="flex justify-center min-h-screen">
+                <div className="hidden bg-cover lg:block lg:w-3/5" style={{ backgroundImage: 'url("https://i.pinimg.com/564x/16/12/c0/1612c065d800dabef40f212aed5ff292.jpg")' }}>
+                </div>
+                <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
+                    <div className="w-full">
+                        <div className="flex justify-start mx-auto mb-10">
+                            <Link href="/"><Image src={Logo} alt='' width={200} height={200} /></Link>
                         </div>
+                        <h1 className="text-2xl font-semibold tracking-wider  capitalize text-white">
+                            Đăng kí tài khoản ngay
+                        </h1>
+                        <form className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
+                            <div>
+                                <label className="block mb-2 text-sm text-gray-200">Họ và Tên</label>
+                                <Input type="text" register={register("name", Validation.name)} className="block w-full px-5 py-3 mt-2  text-gray-700 border rounded-lg placeholder-gray-600  border-gray-700 focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                                <div className="text-red-600 mt-1 text-sm h-5">{errors.name?.message}</div>
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm text-gray-200">Số Điện Thoại</label>
+                                <Input type="text" register={register("phone", Validation.phone)} className="block w-full px-5 py-3 mt-2 text-gray-700 border rounded-lg placeholder-gray-600  border-gray-700 focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                                <div className="text-red-600 mt-1 text-sm h-5">{errors.phone?.message}</div>
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm text-gray-200">Email</label>
+                                <Input type="text" register={register("email", Validation.email)} className="block w-full px-5 py-3 mt-2 text-gray-700 border rounded-lg placeholder-gray-600  border-gray-700 focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                                <div className="text-red-600 mt-1 text-sm h-5">{errors.email?.message}</div>
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm text-gray-200">Giới Tính</label>
+                                <ul className="items-center w-full text-sm font-medium text-gray-900 bg-white rounded-lg sm:flex ">
+                                    <li className="w-full  sm:border-b-0 sm:border-r dark:border-gray-600 " >
+                                        <div className="flex items-center pl-3">
+                                            <Input id="horizontal-list-radio-license" register={register("gender", Validation.gender)} type="radio" defaultValue="true" name="list-radio" className="w-4 h-4 bg-gray-600 border-gray-500" />
+                                            <label htmlFor="horizontal-list-radio-license" className="w-full py-3 ml-2 text-sm font-medium text-gray-900 ">Nam</label>
+                                        </div>
+                                    </li>
+                                    <li className="w-full  sm:border-b-0 sm:border-r dark:border-gray-600">
+                                        <div className="flex items-center pl-3">
+                                            <Input id="horizontal-list-radio-id" register={register("gender", Validation.gender)} type="radio" defaultValue="false" name="list-radio" className="w-4 h-4 bg-gray-600 border-gray-500" />
+                                            <label htmlFor="horizontal-list-radio-id" className="w-full py-3 ml-2 text-sm font-medium text-gray-900 ">Nữ</label>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <div className="text-red-600 mt-1 text-sm h-5">{errors.gender?.message}</div>
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm text-gray-200">Mật Khẩu</label>
+                                <Input type="password" register={register("password", Validation.password)} className="block w-full px-5 py-3 mt-2 text-gray-700 border rounded-lg placeholder-gray-600  border-gray-700 focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                                <div className="text-red-600 mt-1 text-sm h-5">{errors.password?.message}</div>
+                            </div>
+                            <div>
+                                <label className="block mb-2 text-sm text-gray-200">Xác Nhận Mật Khẩu</label>
+                                <Input type="password" register={register("repassword", Validation.password)} className="block w-full px-5 py-3 mt-2 text-gray-700 border rounded-lg placeholder-gray-600  border-gray-700 focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                                <div className="text-red-600 mt-1 text-sm h-5">{errors.repassword?.message}</div>
+                            </div>
+                            <button className="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-gray-800  uppercase transition-colors duration-300 transform bg-gray-200 rounded-lg hover:bg-red-700 focus:outline-none hover:text-white  focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                                <span>Đăng kí </span>
+                            </button>
+                        </form>
                     </div>
                 </div>
-            </div >
-        </div >
+            </div>
+        </section>
+
+
     );
 }
 export default Register;
