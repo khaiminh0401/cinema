@@ -23,8 +23,8 @@ export const CardDiscount = ({ ...props }: CardDiscount) => {
                 color="black"
                 bgColor="white"
                 errorLevel="H"
-                value={`${props.to}`}
-                icon={`${constants.ROOT}images/logo.jpg`}
+                value={`${constants.ROOT_FE}${props.to}`}
+                icon={`${constants.ROOT_API}images/logo.jpg`}
             />
         </div>
     )

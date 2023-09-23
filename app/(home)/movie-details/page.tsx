@@ -95,7 +95,7 @@ const MovieDetails = () => {
                                 </div>
                             </div>
                             <div className="lg:col-span-2 md:col-span-4 sm:col-span-12 col-span-12">
-                                <CardDiscount to="/register" discount="5%" images={`${movieDetailPage?.movieDetail.poster}`} />
+                                <CardDiscount to="register" discount="15%" images={`${movieDetailPage?.movieDetail.poster}`} />
                             </div>
                         </div>
                     </div>
