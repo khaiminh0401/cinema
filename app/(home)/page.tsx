@@ -1,20 +1,21 @@
 'use client'
+import { constants } from "@/common/constants";
+import { checkError } from "@/common/validation/error";
 import { CardDefault } from "@/components/Card";
 import SelectOption from "@/components/Select";
 import { homeAPI } from "@/util/API/Home";
 import { movieAPI } from "@/util/API/Movie";
+import { errorNotification } from "@/util/Notification";
 import { Input } from 'antd';
+import { SearchProps } from "antd/es/input";
 import $ from "jquery";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import "./index.css";
-import { SearchProps } from "antd/es/input";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { constants } from "@/common/constants";
-import { errorNotification } from "@/util/Notification";
-import { checkError } from "@/common/validation/error";
+import { BiSolidSearch } from "react-icons/bi";
 const { Search } = Input;
 type SelectedType = {
   movieType: movieType[],
@@ -120,41 +121,58 @@ const Home = () => {
         </>
       }
       <div className="search justify-evenly flex my-4 mb-6 p-3">
-        <form action="" onSubmit={handleSubmit(onSubmit)} className="justify-start">
-          <SelectOption className="bg-white text-black border-3 rounded m-3 p-2 h-10" register={register("country")} defaultValue={0} id="country" name="Quốc gia" options={
-            dataSelect?.country.map((value) => (
-              {
-                value: value.id,
-                label: value.name
-              }
-            ))
-          } />
-          <SelectOption className="bg-white text-black border-3 rounded m-3 p-2 h-10" register={register("movieType")} defaultValue={''} id="movieType" name="Thể loại" options={
-            dataSelect?.movieType.map((value) => (
-              {
-                value: value.id,
-                label: value.name
-              }
-            ))
-          } />
-          <SelectOption className="bg-white text-black border-3 rounded m-3 p-2 h-10" register={register("branch")} defaultValue={''} id="branch" name="Chi nhánh" options={
-            dataSelect?.branch.map((value) => (
-              {
-                value: value.id,
-                label: value.name
-              }
-            ))
-          } />
-          <button type="submit" className="bg-white text-black border-3 rounded ml-1 p-2 hover:bg-red-600">Tìm kiếm</button>
+        <form action="" onSubmit={handleSubmit(onSubmit)} className="flex items-center">
+          <div className=" mr-8 ">
+            <label htmlFor="" className="opacity-50 font-bold">Quốc Gia</label> <hr className="opacity-50" />
+            <SelectOption className="appearance-none text-white bg-inherit border-3 rounded my-3 p-2 h-10 ring-1 ring-red-500/50" register={register("country")} defaultValue={0} id="country" name="Quốc gia" options={
+              dataSelect?.country.map((value) => (
+                {
+                  value: value.id,
+                  label: value.name,
+                  className:'bg-gray-800 text-white '
+                }
+              ))
+            } />
+          </div>
+          <div className="mr-8">
+            <label htmlFor="" className="opacity-50 font-bold">Thể Loại</label> <hr className="opacity-50" />
+            <SelectOption className="text-white bg-inherit border-3 rounded my-3 p-2 h-10 ring-1 ring-red-500/50" register={register("movieType")} defaultValue={''} id="movieType" name="Thể loại" options={
+              dataSelect?.movieType.map((value) => (
+                {
+                  value: value.id,
+                  label: value.name,
+                  className:'bg-gray-800 text-white hover:bg-red-600'
+                }
+              ))
+            } />
+          </div>
+          <div className="mr-5">
+            <label htmlFor="" className="opacity-50 font-bold">Chi Nhánh</label> <hr className="opacity-50" />
+            <SelectOption className="text-white bg-inherit border-3 rounded my-3 p-2 h-10 ring-1 ring-red-500/50" register={register("branch")} defaultValue={''} id="branch" name="Chi nhánh" options={
+              dataSelect?.branch.map((value) => (
+                {
+                  value: value.id,
+                  label: value.name,
+                  className:'bg-gray-800 text-white hover:bg-red-600'
+                }
+              ))
+            } />
+          </div>
+          <div className="mt-6">
+            <button type="submit" className="text-white border-3 rounded p-3 hover:bg-red-600 ring-1 ring-red-500/50"><BiSolidSearch /></button>
+          </div>
         </form>
-        <Search
-        enterButton
-          allowClear={true}
-          onSearch={onSearch}
-          size="large"
-          style={{ width: 304}}
-          className="justify-self-end my-auto bg-red-600 rounded"
-        />
+        <div className="mr-8">
+          <label htmlFor="" className="opacity-50 font-bold ">Tìm Kiếm</label> <hr className="opacity-50 mb-3" />
+          <Search
+            enterButton
+            allowClear={true}
+            onSearch={onSearch}
+            size="large"
+            style={{ width: 304,backgroundColor:"inherit"}}
+            className="justify-self-end my-auto rounded ring-1 ring-red-500/50"
+          />
+        </div>
       </div>
       <div className="group" >
         <div className="overlap-group">
