@@ -20,8 +20,8 @@ export const CardDiscount = ({ ...props }: CardDiscount) => {
             </div>
             <QRCode
                 className="mx-auto mt-4"
-                color="black"
-                bgColor="white"
+                color="white"
+                bgColor="black"
                 errorLevel="H"
                 value={`${constants.ROOT_FE}${props.to}`}
                 icon={`${constants.ROOT_API}images/logo.jpg`}
