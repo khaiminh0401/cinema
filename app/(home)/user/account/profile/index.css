@@ -1,0 +1,12 @@
+input[type = "file"] {
+    display: none;
+}
+
+.lblUpload {
+    color: #fff;
+    background: #c0392b;
+    user-select: none;
+    cursor: pointer;
+    box-shadow: 5px 15px 25px rgba(0, 0, 0, 0.35);
+    border-radius: 3px;
+}
