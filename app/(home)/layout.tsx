@@ -4,6 +4,7 @@ import '../globals.css';
 // const inter = Inter({ subsets: ['latin'] })
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+import {Session} from "next-auth";
 
 export const metadata = {
   title: 'Zuhot',
@@ -15,7 +16,7 @@ export default function HomeLayout({
   session
 }: {
   children: React.ReactNode,
-  session: any
+  session: Session
 }) {
   return (
     <html lang="en">

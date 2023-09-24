@@ -1,22 +1,22 @@
-import { checkError } from "@/common/validation/error";
-import { customerAPI } from "@/util/API/Customer";
-import { NextAuthOptions, User } from "next-auth";
+import {checkError} from "@/common/validation/error";
+import {customerAPI} from "@/util/API/Customer";
+import {NextAuthOptions, User} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
-import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import {useSession} from "next-auth/react";
+import {redirect} from "next/navigation";
 
 export const authconfig: NextAuthOptions = {
     providers: [
         CredentialsProvider({
             credentials: {
-                email: { label: "Email", type: "text" },
-                password: { label: "Password", type: "password" }
+                email: {label: "Email", type: "text"},
+                password: {label: "Password", type: "password"}
             },
             async authorize(credentials, req) {
                 try {
-                    const cus = await customerAPI.login({ email: credentials?.email, password: credentials?.password })
+                    const cus = await customerAPI.login({email: credentials?.email, password: credentials?.password})
                     if (cus) {
                         const user: User = {
                             id: cus.id,
@@ -43,13 +43,24 @@ export const authconfig: NextAuthOptions = {
         }),
 
     ],
+
     pages: {
         signIn: '/login'
-    }
+    },
+
+    callbacks: {
+        session: ({ session, token }) => ({
+            ...session,
+            user: {
+                ...session.user,
+                id: token.sub,
+            },
+        }),
+    },
 }
 
 export function LoginIsRequiredClient() {
-    const { status } = useSession({
+    const {status} = useSession({
         required: true,
         onUnauthenticated() {
             redirect("/login")

@@ -1,9 +1,12 @@
-import { Validation } from "@/common/validation/page/registration";
+import {Validation} from "@/common/validation/page/registration";
 import Input from "@/components/Input/page";
-import { customerAPI } from "@/util/API/Customer";
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { Form } from 'antd';
+import {customerAPI} from "@/util/API/Customer";
+import {useEffect, useState} from "react";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {Form} from 'antd';
+import {useSession} from "next-auth/react";
+import {checkStatus} from "@/common/validation/status";
+import {successNotification} from "@/util/Notification";
 
 /**
  * Object of Register
@@ -15,8 +18,24 @@ type EditProfileProps = {
     gender: boolean
 }
 
-const EditProfile = ({...props} : customer) => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<EditProfileProps>();
+const EditProfile = ({...props}: customer) => {
+    const {
+        register,
+        handleSubmit,
+        formState: {errors},
+        reset
+    } = useForm<EditProfileProps>();
+    const {data: session} = useSession();
+    const [customer, setCustomer] = useState<customer>();
+
+    useEffect(() => {
+        // const customerId = session?.user?.id;
+        const init = async () => {
+            const cus = await customerAPI.findId(1);
+            setCustomer(cus);
+        }
+        init();
+    }, []);
 
     const onSubmit: SubmitHandler<EditProfileProps> = async (data) => {
         const newCustomer = {
@@ -24,7 +43,9 @@ const EditProfile = ({...props} : customer) => {
             ...data
         }
 
-        await customerAPI.editProfile(newCustomer);
+        if (checkStatus(await customerAPI.editProfile(newCustomer))) {
+            successNotification("");
+        }
 
         reset();
     };
@@ -32,18 +53,33 @@ const EditProfile = ({...props} : customer) => {
     return (
         <Form
             name="basic"
-            labelCol={{ span: 7 }}
-            wrapperCol={{ span: 17 }}
+            labelCol={{span: 7}}
+            wrapperCol={{span: 17}}
             labelAlign="left"
-            initialValues={{ remember: true }}
+            initialValues={{remember: true}}
             onFinish={handleSubmit(onSubmit)}
-            onFinishFailed={() => { }}
+            onFinishFailed={() => {
+            }}
             autoComplete="off"
         >
             <section className="mb-10 text-white text-left">
                 <h2 className="font-bold text-2xl">Hồ Sơ Của Tôi</h2>
                 <p>Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
             </section>
+
+
+            <Form.Item
+                label={<span className="text-white">Email</span>}
+                // name="email"
+                colon={false}
+            >
+                <input
+                    type="email"
+                    className="w-full bg-inherit border-none rounded-sm text-white"
+                    disabled={true}
+                    defaultValue={customer?.email}
+                />
+            </Form.Item>
 
             <Form.Item
                 label={<span className="text-white">Tên</span>}
@@ -52,8 +88,9 @@ const EditProfile = ({...props} : customer) => {
             >
                 <Input
                     type="text"
-                    className="w-full bg-inherit border border-stone-700 rounded-sm text-white"
+                    className="w-full bg-inherit border-none rounded-sm text-white"
                     register={register("name", Validation.name)}
+                    defaultValue={customer?.name}
                 />
                 <div className="text-red-600 mt-1">{errors.name?.message}</div>
             </Form.Item>
@@ -65,23 +102,11 @@ const EditProfile = ({...props} : customer) => {
             >
                 <Input
                     type="text"
-                    className="w-full bg-inherit border border-stone-700 rounded-sm text-white"
+                    className="w-full bg-inherit border-none rounded-sm text-white"
                     register={register("phone", Validation.phone)}
+                    defaultValue={customer?.phone}
                 />
                 <div className="text-red-600 mt-1">{errors.phone?.message}</div>
-            </Form.Item>
-
-            <Form.Item
-                label={<span className="text-white">Email</span>}
-                // name="email"
-                colon={false}
-            >
-                <Input
-                    type="email"
-                    className="w-full bg-inherit border border-stone-700 rounded-sm text-white"
-                    register={register("email", Validation.email)}
-                />
-                <div className="text-red-600 mt-1">{errors.email?.message}</div>
             </Form.Item>
 
             <Form.Item
@@ -120,7 +145,7 @@ const EditProfile = ({...props} : customer) => {
                 <div className="text-red-600 mt-1">{errors.gender?.message}</div>
             </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Form.Item wrapperCol={{offset: 8, span: 16}}>
                 <button
                     className="w-1/3 py-2 rounded-md bg-red-500 text-white shadow-none
                         hover:scale-105 hover:shadow-none hover:bg-red-600 focus:scale-105

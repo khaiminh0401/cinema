@@ -3,6 +3,8 @@ import CropperModal from './cropperModal';
 import {Input, InputRef} from "antd";
 import "./index.css";
 import {FaUpload} from "react-icons/fa6";
+import {useSession} from "next-auth/react";
+import {User} from "next-auth";
 // Container
 const ChangeAvatar = () => {
     // image src
@@ -20,6 +22,8 @@ const ChangeAvatar = () => {
     // file name
     const [fileName, setFileName] = useState<string | null>(null);
 
+    const { data: session }  = useSession();
+
     // handle Click
     const handleInputClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
@@ -35,6 +39,8 @@ const ChangeAvatar = () => {
             setFileName(e.target.files[0].name);
             setModalOpen(true);
         }
+
+        console.log(session?.user?.id);
     };
 
     return (

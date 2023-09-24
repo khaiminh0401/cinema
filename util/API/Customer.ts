@@ -6,7 +6,7 @@ const findAll = async () => {
 }
 
 const findId = async (id: number) => {
-    return (await fetchAPI.get(`/api/customer/${id}`)).data as customer;
+    return (await fetchAPI.get(`/customer/${id}`)).data as customer;
 }
 
 const login = async (inputs: Object) => {
