@@ -21,15 +21,15 @@ const registrationConfirm = async (inputs: string) => {
 }
 
 const updateAvatar = async (formData: FormData, config?: AxiosRequestConfig<FormData>) => {
-    return (await fetchAPI.put(`/api/customer/update-avatar`, formData, config)).data;
+    return (await fetchAPI.put(`/customer/update-avatar`, formData, config)).data;
 }
 
 const editProfile = async (customer: Object) => {
-    return (await fetchAPI.put(`/api/customer/edit-profile`, customer)).data;
+    return (await fetchAPI.put(`/customer/edit-profile`, customer)).data;
 }
 
 const updatePassword = async (customer: Object) => {
-    return (await fetchAPI.put(`/api/customer/update-password`, customer)).data;
+    return (await fetchAPI.put(`/customer/update-password`, customer)).data;
 }
 
 export const customerAPI = {

@@ -40,7 +40,7 @@ const ChangeAvatar = () => {
             setModalOpen(true);
         }
 
-        console.log(session?.user?.id);
+        // console.log(session?.user?.id);
     };
 
     return (

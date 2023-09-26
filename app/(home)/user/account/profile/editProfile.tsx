@@ -3,10 +3,11 @@ import Input from "@/components/Input/page";
 import {customerAPI} from "@/util/API/Customer";
 import {useEffect, useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
-import {Form} from 'antd';
+import {Form, Select} from 'antd';
 import {useSession} from "next-auth/react";
 import {checkStatus} from "@/common/validation/status";
-import {successNotification} from "@/util/Notification";
+import {errorNotification, successNotification} from "@/util/Notification";
+import {Option} from "rc-select";
 
 /**
  * Object of Register
@@ -17,37 +18,56 @@ type EditProfileProps = {
     phone: string,
     gender: boolean
 }
-
 const EditProfile = ({...props}: customer) => {
     const {
         register,
         handleSubmit,
-        formState: {errors},
-        reset
+        formState: { errors },
+        reset,
+        setValue
     } = useForm<EditProfileProps>();
+
     const {data: session} = useSession();
+
     const [customer, setCustomer] = useState<customer>();
 
+    const [gender, setGender] = useState<boolean>()
+
     useEffect(() => {
-        // const customerId = session?.user?.id;
-        const init = async () => {
-            const cus = await customerAPI.findId(1);
-            setCustomer(cus);
+        async function fetchData() {
+            try {
+                await customerAPI.findId(4).then((response) => {
+                    setCustomer(response);
+                }).catch(() => {
+                    errorNotification("Kết nối bất ổn. Thử lại sau nhé")
+                });
+
+            } catch (error) {
+                console.error("Error fetching customer:", error);
+            }
         }
-        init();
+
+        fetchData();
     }, []);
+
+    useEffect(() => {
+        console.log(customer)
+        if (customer) {
+            setValue("name", customer.name)
+            setValue("phone", customer.phone)
+            setGender(customer.gender)
+        }
+    }, [customer]);
 
     const onSubmit: SubmitHandler<EditProfileProps> = async (data) => {
         const newCustomer = {
-            id: 1,
+            id: 4,
             ...data
         }
 
         if (checkStatus(await customerAPI.editProfile(newCustomer))) {
-            successNotification("");
+            successNotification("Cập nhật thành công!");
         }
-
-        reset();
     };
 
     return (
@@ -67,23 +87,20 @@ const EditProfile = ({...props}: customer) => {
                 <p>Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
             </section>
 
-
             <Form.Item
                 label={<span className="text-white">Email</span>}
-                // name="email"
                 colon={false}
             >
                 <input
                     type="email"
                     className="w-full bg-inherit border-none rounded-sm text-white"
                     disabled={true}
-                    defaultValue={customer?.email}
+                    value={customer?.email}
                 />
             </Form.Item>
 
             <Form.Item
                 label={<span className="text-white">Tên</span>}
-                // name="name"
                 colon={false}
             >
                 <Input
@@ -97,14 +114,12 @@ const EditProfile = ({...props}: customer) => {
 
             <Form.Item
                 label={<span className="text-white">Số điện thoại</span>}
-                // name="phone"
                 colon={false}
             >
                 <Input
                     type="text"
                     className="w-full bg-inherit border-none rounded-sm text-white"
                     register={register("phone", Validation.phone)}
-                    defaultValue={customer?.phone}
                 />
                 <div className="text-red-600 mt-1">{errors.phone?.message}</div>
             </Form.Item>
@@ -114,34 +129,42 @@ const EditProfile = ({...props}: customer) => {
                 // name="gender"
                 colon={false}
             >
-                <div className="flex space-x-4">
-                    <div className="flex items-center">
-                        <Input
-                            className=""
-                            value='true'
-                            type="radio"
-                            register={register("gender", Validation.gender)}
-                            name="inlineRadioOptions"
-                            id="inlineRadio1"
-                        />
-                        <label className="text-white" htmlFor="inlineRadio1">
-                            Nam
-                        </label>
-                    </div>
-                    <div className="flex items-center">
-                        <Input
-                            className=""
-                            value='false'
-                            type="radio"
-                            register={register("gender", Validation.gender)}
-                            name="inlineRadioOptions"
-                            id="inlineRadio2"
-                        />
-                        <label className="text-white" htmlFor="inlineRadio2">
-                            Nữ
-                        </label>
-                    </div>
-                </div>
+                {/*<div className="flex space-x-4">*/}
+                {/*    <div className="flex items-center">*/}
+                {/*        <Input*/}
+                {/*            className=""*/}
+                {/*            defaultValue='true'*/}
+                {/*            type="radio"*/}
+                {/*            register={register("gender", Validation.gender)}*/}
+                {/*            name="inlineRadioOptions"*/}
+                {/*            id="inlineRadio1"*/}
+                {/*            defaultChecked={customer?.gender === false}*/}
+                {/*        />*/}
+                {/*        <label className="text-white" htmlFor="inlineRadio1">*/}
+                {/*            Nam*/}
+                {/*        </label>*/}
+                {/*    </div>*/}
+                {/*    <div className="flex items-center">*/}
+                {/*        <Input*/}
+                {/*            className=""*/}
+                {/*            defaultValue='false'*/}
+                {/*            type="radio"*/}
+                {/*            register={register("gender", Validation.gender)}*/}
+                {/*            name="inlineRadioOptions"*/}
+                {/*            id="inlineRadio2"*/}
+                {/*            defaultChecked={customer?.gender === true}*/}
+                {/*        />*/}
+                {/*        <label className="text-white" htmlFor="inlineRadio2">*/}
+                {/*            Nữ*/}
+                {/*        </label>*/}
+                {/*    </div>*/}
+                {/*</div>*/}
+                <Select
+                    defaultValue={`${customer?.gender}`}
+                >
+                    <Option value="true">Nam</Option>
+                    <Option value="false">Nữ</Option>
+                </Select>
                 <div className="text-red-600 mt-1">{errors.gender?.message}</div>
             </Form.Item>
 

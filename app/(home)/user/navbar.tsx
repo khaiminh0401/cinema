@@ -65,7 +65,7 @@ const Navbar = () => {
                 />
             </Button>
 
-            <div className={"left-0 transition-transform -translate-x-full sm:translate-x-0"}>
+            <div className={"left-0 transition-transform -translate-x-full sm:translate-x-0 xs:hidden md:h-72"}>
                 <div
                     id="sidebar-multi-level-sidebar"
                     className={"fixed"}
@@ -82,7 +82,7 @@ const Navbar = () => {
                                     src={<img
                                         src={"https://th.bing.com/th/id/R.d7800ae0e7bce71f7474026872829021?rik=J9LLGXJjZtfBBw&riu=http%3a%2f%2fwww.arts-wallpapers.com%2fmovie_wallpapers%2fAVATAR-MOVIE%2fimages%2favatar_movie_11.jpg&ehk=9JZC3ur5pdrG0zwiCPRAfAsP9cjGNihKKSuVIdLbPoQ%3d&risl=&pid=ImgRaw&r=0"}
                                         alt="avatar"/>}
-                                    className='hover:scale-110 xxl:hidden'
+                                    className='hover:scale-110'
                                 />
                             </section>
 

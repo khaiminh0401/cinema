@@ -7,11 +7,14 @@ export interface InputProps {
     placeholder?: string,
     value?: string,
     defaultValue?: string,
-    disabled?: string,
+    disabled?: boolean,
     min?: number,
     max?: number,
     width?: number,
+    checked?: boolean,
+    defaultChecked?: boolean,
+    autoFocus?: boolean,
     onClick?: () => void,
     onChange?: (event: any) => void,
-    register?: UseFormRegisterReturn
+    register?: UseFormRegisterReturn,
 }

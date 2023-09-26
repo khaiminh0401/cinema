@@ -5,7 +5,7 @@ interface customer {
     email: string,
     phone: string,
     address: string,
-    gender: number,
+    gender: boolean,
     idfb?: string,
     imagefb?: string
 }
