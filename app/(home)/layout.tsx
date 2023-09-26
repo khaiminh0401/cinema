@@ -4,6 +4,8 @@ import '../globals.css';
 // const inter = Inter({ subsets: ['latin'] })
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
+import { ConfigProvider } from "antd";
+import { theme } from "./theme";
 
 export const metadata = {
   title: 'Zuhot',
@@ -24,11 +26,14 @@ export default function HomeLayout({
       </head>
       <body>
         <div className="container-fluid bg-dark">
-          <SessionProvider session={session}>
-            <Navbar />
-            {children}
-            <Footer />
-          </SessionProvider>
+          <ConfigProvider theme={theme}>
+            <SessionProvider session={session}>
+              <Navbar />
+              {children}
+              <Footer />
+            </SessionProvider>
+          </ConfigProvider>
+
         </div>
       </body>
     </html>

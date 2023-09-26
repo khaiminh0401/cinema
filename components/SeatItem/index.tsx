@@ -1,26 +1,27 @@
 import { ReactNode, useState } from "react";
 import SeatIcon from "@/common/Icon/SeatIcon";
 interface SeatItem{
-    children?: ReactNode,
-    state: boolean
+    obj:any,
+    onClick: (name:string) => any
 }
 
-const SeatItem : React.FC<SeatItem> = ({children,state}) => {
+const SeatItem : React.FC<SeatItem> = ({obj,onClick}) => {
     const [choose,setChoose] = useState(false);
     const handleClick = () =>{
         setChoose(!choose);
+        onClick(obj);
     }
-    let Item = () => state ? <SeatIcon.ItemHasBooked/> : <SeatIcon.ItemDefault/>;
+    let Item = () => obj.booked ? <SeatIcon.ItemHasBooked/> : <SeatIcon.ItemDefault/>;
 
     return (
         <button 
-            className={`w-max ${!state && !choose?"bg-blue-gray-600":"bg-transparent"} rounded ${state || !choose? "" : "hover:bg-orange-900"} col-span-1 mx-auto px-2`} 
+            className={`w-max bg-transparent col-span-1 mx-auto px-2`} 
             type="button" 
-            disabled={state}
+            disabled={obj.booked}
             onClick={handleClick}
         > 
             {!choose ? <Item/>: <SeatIcon.ItemChoose/>}
-            <p>{children}</p>
+            <p>{obj.name}</p>
       </button>
     );
 }

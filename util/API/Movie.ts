@@ -11,10 +11,14 @@ const findByStatus = async (status: String) => {
 const findMoviesNowShowing = async () => {
     return (await fetchAPI.get(`/api/movie/nowshowing`)).data as movie[];
 }
+const getByShowTime = async (id: any) =>{
+    return (await fetchAPI.get(`/api/movie/getByShowTime?showtimeid=${id}`)).data as movie; 
+}
 
 export const movieAPI = {
     findAll,
     findById,
     findByStatus,
     findMoviesNowShowing,
+    getByShowTime
 }
