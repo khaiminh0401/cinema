@@ -5,15 +5,10 @@ import ChangeAvatar from "./changeAvatar";
 import EditProfile from "./editProfile";
 import {useSession} from "next-auth/react";
 
-const Profile = ({...props} : customer) => {
-    // useEffect(() => {
-    //     const init = async () => {
-    //         const customer = await customerAPI.findId(1);
-    //     }
+const Profile = () => {
+    const {data: session} = useSession();
 
-    //     init();
-    // }, []);
-    // const {data: session} = useSession();
+    const userId = Number(session?.user.id);
 
     return (
         <div className="container mx-auto p-4">
@@ -28,7 +23,7 @@ const Profile = ({...props} : customer) => {
                 {/* Cột 2: EditProfile */}
                 <div className="col-span-1 sm:col-span-1 md:col-span-4">
                     <div className="p-4">
-                        <EditProfile {...props} />
+                        <EditProfile userId={userId}/>
                     </div>
                 </div>
 

@@ -25,7 +25,7 @@ const CropperModal = ({...props}: CropperModalProps) => {
             const options = {type: blob.type, lastModified: Date.now()};
             const file = new File([blob], props.avatar, options);
 
-            formData.append('customerId', '3');
+            formData.append('customerId', `${props.userId}`);
             formData.append('multipartFile', file);
 
             customerAPI.updateAvatar(formData, {

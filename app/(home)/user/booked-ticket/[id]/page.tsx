@@ -1,10 +1,11 @@
 'use client'
 
 import Navbar from "@/app/(home)/user/navbar";
-import Link from "next/link";
 import {Button, Card, QRCode} from "antd";
 import React, {useEffect, useState} from "react";
 import {useParams} from "next/navigation";
+import "./index.css"
+import Ticket from "@/app/(home)/user/booked-ticket/ticket";
 
 const BillDetail = () => {
     const param = useParams();
@@ -53,7 +54,7 @@ const BillDetail = () => {
                         <div className="p-4">
                             {/* Thông tin khách hàng */}
                             <section className={"bg-neutral-900 rounded p-4 mb-4"}>
-                                <h2 className={"font-bold text-xl mb-4"}>Thông tin khách hàng</h2>
+                                <h2 className={"font-bold text-xl mb-4 text-cyan-500"}>Thông tin khách hàng</h2>
                                 <div className={"text-gray-300"}>
                                     <p className={"mb-1"}>Họ và tên
                                         <span className={"float-right text-white"}>Hồ Hoàng Khang</span>
@@ -67,10 +68,40 @@ const BillDetail = () => {
                                 </div>
                             </section>
 
+                            {/* Thông tin phim */}
                             <section className={"bg-neutral-900 rounded p-4 mb-4"}>
-                                {/* Thông tin lượt chiếu */}
+                                <h2 className={"font-bold text-xl mb-4 text-cyan-500"}>Thông tin phim</h2>
+                                <div className="grid grid-cols-10 gap-x-4 lg:grid-cols-5">
+                                    <div className="col-span-3 lg:col-span-1">
+                                        <img
+                                            src={"https://th.bing.com/th/id/R.0a469b27f977da0314447d0605103e1d?rik=wvR%2fZMI2jfgtkA&riu=http%3a%2f%2fwww.paragsankhe.com%2fwp-content%2fuploads%2f2012%2f07%2fofficial-poster-for-london-olympic-games-1948-by-walter-herz.jpeg&ehk=Xqw4YSW6YG7s%2bWMws1MStvjrupUlD4flraICaGHcM9k%3d&risl=&pid=ImgRaw&r=0"}
+                                            className={"w-28 h-40"}
+                                        />
+                                    </div>
+                                    <div className="col-span-7 lg:col-span-4">
+                                        <div className={""}>
+                                            <h2 className={"font-bold text-xl mb-4"}>Phim mèo</h2>
+                                            <p className={"text-gray-300"}>Đất nước:
+                                                <span className={"text-white"}> Việt Nam</span>
+                                            </p>
+                                            <p className={"text-gray-300"}>Ngôn ngữ:
+                                                <span className={"text-white"}> Tiếng Việt</span>
+                                            </p>
+                                            <p className={"text-gray-300"}>Năm sản xuất:
+                                                <span className={"text-white"}> 04-01-2003</span>
+                                            </p>
+                                            <p className={"text-gray-300"}>Độ tuổi:
+                                                <span className={"text-white"}> 18+</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section className={"bg-neutral-900 rounded p-4 mb-4"}>
+                                {/* Thông tin vé */}
                                 <div className={"mb-8"}>
-                                    <h2 className={"font-bold text-green-600 text-xl mb-4"}>Thông tin lượt chiếu</h2>
+                                    <h2 className={"font-bold text-cyan-500 text-xl mb-4"}>Thông tin lượt chiếu</h2>
                                     <Card
                                         bordered={false}
                                         className={"w-fit bg-inherit border border-2 border-neutral-800 text-white my-5"}
@@ -104,7 +135,8 @@ const BillDetail = () => {
                                             <span className={"float-right text-green-500"}>Thành công</span>
                                         </p>
                                         <p className={"mb-1"}>Rạp
-                                            <span className={"float-right text-white"}>Chi nhánh Quang Trung - Gò Vấp</span>
+                                            <span
+                                                className={"float-right text-white"}>Chi nhánh Quang Trung - Gò Vấp</span>
                                         </p>
                                         <p className={"mb-1"}>Phòng
                                             <span className={"float-right text-white"}>01</span>
@@ -121,9 +153,11 @@ const BillDetail = () => {
                                     </div>
                                 </div>
 
+                                <Ticket />
+
                                 {/* Thông tin topping */}
                                 <div>
-                                    <h2 className={"font-bold text-green-600 text-xl mb-4"}>Thông tin topping</h2>
+                                    <h2 className={"font-bold text-cyan-500 text-xl mb-4"}>Thông tin topping</h2>
                                     <div className={"text-gray-300"}>
                                         <p className={"mb-1"}>Topping
                                             <span className={"float-right text-white"}>2 pepsi, 1 bắp</span>

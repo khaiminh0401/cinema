@@ -18,7 +18,8 @@ type EditProfileProps = {
     phone: string,
     gender: boolean
 }
-const EditProfile = ({...props}: customer) => {
+
+const EditProfile = (props: any) => {
     const {
         register,
         handleSubmit,
@@ -27,19 +28,18 @@ const EditProfile = ({...props}: customer) => {
         setValue
     } = useForm<EditProfileProps>();
 
-    const {data: session} = useSession();
-
     const [customer, setCustomer] = useState<customer>();
 
-    const [gender, setGender] = useState<boolean>()
+    const [gender, setGender] = useState<boolean>();
 
+    const { userId } = props;
+
+    console.log()
     useEffect(() => {
         async function fetchData() {
             try {
-                await customerAPI.findId(4).then((response) => {
+                await customerAPI.findId(userId).then((response) => {
                     setCustomer(response);
-                }).catch(() => {
-                    errorNotification("Kết nối bất ổn. Thử lại sau nhé")
                 });
 
             } catch (error) {
@@ -48,10 +48,9 @@ const EditProfile = ({...props}: customer) => {
         }
 
         fetchData();
-    }, []);
+    }, [userId]);
 
     useEffect(() => {
-        console.log(customer)
         if (customer) {
             setValue("name", customer.name)
             setValue("phone", customer.phone)

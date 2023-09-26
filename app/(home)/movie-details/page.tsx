@@ -77,7 +77,7 @@ const MovieDetails = () => {
                                 <div className="grid grid-cols-12 gap-6">
                                     {movieDetailPage && <Image src={`${constants.URL_IMAGES}${movieDetailPage?.movieDetail.poster}`} className="lg:col-span-3 md:col-span-6 sm:col-span-6 col-span-12 w-full h-92 bg-white" width={2560} height={1440} alt="Movie Poster" />}
                                     <div className="lg:col-span-9 md:col-span-6 sm:col-span-6 col-span-12 w-fit h-full text-lg">
-                                        <h4 className="mb-3 text-lg text-red-400 font-semibold">{movieDetailPage?.movieDetail.name}</h4>
+                                        <h4 className="mb-3 text-lg text-red-600 font-semibold">{movieDetailPage?.movieDetail.name}</h4>
                                         <p><strong>Thể loại:</strong> {movieDetailPage?.movieDetail.movieTypeName}</p>
                                         <p><strong>Đạo diễn:</strong> {movieDetailPage?.movieDetail.directorsName}</p>
                                         <p><strong>Diễn viên:</strong> {movieDetailPage?.movieDetail.actorsName}</p>
@@ -95,7 +95,7 @@ const MovieDetails = () => {
                                 </div>
                             </div>
                             <div className="lg:col-span-2 md:col-span-4 sm:col-span-12 col-span-12">
-                                <CardDiscount to="/register" discount="5%" images={`${movieDetailPage?.movieDetail.poster}`} />
+                                <CardDiscount to="register" valueQR="KHUYENMAI5%" discount="5" />
                             </div>
                         </div>
                     </div>

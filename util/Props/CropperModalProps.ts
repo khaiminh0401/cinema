@@ -3,5 +3,6 @@ export interface CropperModalProps {
     modalOpen: boolean;
     setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setPreview: React.Dispatch<React.SetStateAction<string | null>>;
-    avatar: string
+    avatar: string;
+    userId: number
 }

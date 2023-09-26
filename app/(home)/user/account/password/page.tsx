@@ -5,13 +5,12 @@ import {Validation} from "@/common/validation/page/registration";
 import Input from "@/components/Input/page";
 import {customerAPI} from "@/util/API/Customer";
 import {errorNotification, successNotification} from "@/util/Notification";
-import Link from 'next/link';
 import {useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Form} from 'antd';
 import Navbar from "../../navbar";
-import EditProfile from "@/app/(home)/user/account/profile/editProfile";
-import ChangeAvatar from "@/app/(home)/user/account/profile/changeAvatar";
+import {useSession} from "next-auth/react";
+import {checkStatus} from "@/common/validation/status";
 
 /**
  * Object of Register
@@ -23,7 +22,9 @@ type ChangePasswordProps = {
 }
 
 const ChangePassword = () => {
-    const [flag, setFlag] = useState<boolean>();
+    // const [flag, setFlag] = useState<boolean>();
+    const {data: session} = useSession();
+
     const {
         register,
         handleSubmit,
@@ -32,9 +33,11 @@ const ChangePassword = () => {
     } = useForm<ChangePasswordProps>();
     const formData = new FormData();
 
+    const userId = session?.user.id;
+
     const onSubmit: SubmitHandler<ChangePasswordProps> = async (data) => {
         const account = {
-            customerId: 1,
+            customerId: userId,
             ...data
         }
 
@@ -42,13 +45,23 @@ const ChangePassword = () => {
             return errorNotification("Mật khẩu không khớp, vui lòng thử lại !");
         }
 
-        try {
-            await customerAPI.updatePassword(account);
-            reset();
-            successNotification("Thay đổi mật khẩu thành công!")
-        } catch (e: any) {
-            errorNotification(checkError("Mật khẩu hiện tại", e.response.data.message) || "")
+        // await customerAPI.updatePassword(account).then(() => {
+        //     setTimeout(() => {
+        //         reset();
+        //         successNotification("Thay đổi mật khẩu thành công!");
+        //     }, 0);
+        // }).catch((e) => {
+        //     errorNotification("Mập khau")
+        // });
+        if (checkStatus(await customerAPI.updatePassword(account))) {
+            successNotification("Thay đổi mật khẩu thành công!");
         }
+
+        reset({
+            password: "",
+            newPassword: "",
+            reNewPassword: ""
+        });
     };
 
     return (
@@ -57,7 +70,7 @@ const ChangePassword = () => {
                 {/* Cột 1: Navbar */}
                 <div className="md:col-span-1">
                     <div className="p-4">
-                        <Navbar />
+                        <Navbar/>
                     </div>
                 </div>
 
@@ -79,6 +92,7 @@ const ChangePassword = () => {
 
                             <Form.Item
                                 label={<span className="text-white">Mật khẩu hiện tại</span>}
+                                name={"password"}
                                 colon={false}
                             >
                                 <Input
@@ -115,7 +129,6 @@ const ChangePassword = () => {
 
                             <Form.Item wrapperCol={{offset: 8, span: 16}}>
                                 <button
-                                    disabled={flag}
                                     className="w-1/3 py-2 rounded-md bg-red-500 text-white shadow-none
                         hover:scale-105 hover:shadow-none hover:bg-red-600 focus:scale-105
                         focus:shadow-none active:scale-100"

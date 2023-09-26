@@ -6,7 +6,7 @@ import {FaUpload} from "react-icons/fa6";
 import {useSession} from "next-auth/react";
 import {User} from "next-auth";
 // Container
-const ChangeAvatar = () => {
+const ChangeAvatar = (props: any) => {
     // image src
     const [src, setSrc] = useState<string | null>(null);
 
@@ -23,6 +23,8 @@ const ChangeAvatar = () => {
     const [fileName, setFileName] = useState<string | null>(null);
 
     const { data: session }  = useSession();
+
+    const { userId } = props;
 
     // handle Click
     const handleInputClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -51,6 +53,7 @@ const ChangeAvatar = () => {
                 setPreview={setPreview}
                 setModalOpen={setModalOpen}
                 avatar={fileName || ''}
+                userId={userId}
             />
             <div className="img-container">
                 <img

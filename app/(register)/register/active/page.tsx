@@ -27,9 +27,9 @@ const Active = () => {
         }
     }, [])
     return (
-        <>
+        <div className="min-h-screen min-w-full bg-white">
             {error === "" ? <Result status="success" title="Thông báo:" subTitle="Kích hoạt tài khoản thành công !" extra={[<Button href="/" key="console">Trang chủ</Button>]} /> : <Result status="error" title="Thông báo lỗi" subTitle={error} extra={[<Button href="/" type="primary" key="console">Trang chủ</Button>, <Button key="buy" href="/register">Đăng ký lại</Button>]} />}
-        </>
+        </div>
     );
 }
 export default Active;

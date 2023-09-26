@@ -1,6 +1,6 @@
 'use client'
-import { signIn, signOut } from "next-auth/react"
-import { BiLogoFacebookCircle, BiLogoGoogle } from "react-icons/bi";
+import { signIn, signOut } from "next-auth/react";
+import { FaFacebook, FaGoogle } from "react-icons/fa6";
 
 export function GoogleSignInButton() {
     const handleClick = () => {
@@ -8,10 +8,12 @@ export function GoogleSignInButton() {
     };
 
     return (
-        <button onClick={handleClick} className="flex select-none items-center bg-white text-gray-800 my-2 gap-3 rounded-lg border border-blue-gray-500 py-3.5 px-8 text-center align-middle font-sans text-xs font-bold uppercase  transition-all hover:opacity-75 focus:ring focus:ring-blue-gray-200 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button" data-ripple-dark="true">
-            <BiLogoGoogle/>
-            Đăng nhập bằng google
-        </button>
+        <div onClick={handleClick} className="flex items-center justify-center mt-4 transition-colors duration-300 transform border rounded-lg border-gray-700 text-gray-200  hover:bg-red-600 hover:cursor-pointer">
+            <div className="px-4 py-2">
+                <FaGoogle />
+            </div>
+            <span className="w-5/6 px-4 py-3 font-bold text-center">Đăng nhập với Google</span>
+        </div>
     )
 }
 export function FacebookSignInButton() {
@@ -20,10 +22,12 @@ export function FacebookSignInButton() {
     };
 
     return (
-        <button onClick={handleClick} className="flex select-none items-center bg-white text-gray-800 my-2 gap-3 rounded-lg border border-blue-gray-500 py-3.5 px-6 text-center align-middle font-sans text-xs font-bold uppercase  transition-all hover:opacity-75 focus:ring focus:ring-blue-gray-200 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="button" data-ripple-dark="true">
-        <BiLogoFacebookCircle/>
-        Đăng nhập bằng facebook
-    </button>
+        <div onClick={handleClick} className="flex items-center justify-center mt-4 transition-colors duration-300 transform border rounded-lg border-gray-700 text-gray-200  hover:bg-red-600 hover:cursor-pointer">
+            <div className="px-4 py-2">
+                <FaFacebook />
+            </div>
+            <span className="w-5/6 px-4 py-3 font-bold text-center">Đăng nhập với Facebook</span>
+        </div>
 
     )
 }

@@ -54,12 +54,14 @@ const WeekDate = (prop: any) => {
   return (
     <>
       <div className="grid grid-cols-1 pb-2 border-b-2 border-red-950">
-        <div className="sm:col-span-3 lg:col-span-12 md:col-span-6 col-span-3 mt-2 mx-auto">
-          <button className="py-1 m-2 rounded-full text-center" onClick={() => setCurrentDate(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000))}><BiLeftArrowAlt /></button>
-          {getWeekDates().map((date, index) => (
-            <button key={index} className={`${dateClick === format(date) ? 'bg-red-950 text-white' : 'bg-white text-black rounded-full'} px-5 py-1 m-2 rounded-full text-center`} onClick={() => { setDateOnClick(date) }}>{format(date)}</button>
-          ))}
-          <button className="py-1 m-2 text-center rounded-full" onClick={() => setCurrentDate(new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000))}><BiRightArrowAlt /></button>
+        <div className="flex sm:col-span-3 lg:col-span-12 md:col-span-6 col-span-3 mt-2 mx-auto">
+          <button className="py-1 text-center flex-none" onClick={() => setCurrentDate(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000))}><BiLeftArrowAlt /></button>
+          <div className="grow mx-2">
+            {getWeekDates().map((date, index) => (
+              <button key={index} className={`${dateClick === format(date) ? 'bg-red-950 text-white' : 'bg-white text-black'} lg:px-8 md:px-7 sm:px-6 sm:mx-2 py-1 my-2 rounded-lg text-center w-full sm:w-auto`} onClick={() => { setDateOnClick(date) }}>{format(date)}</button>
+            ))}
+          </div>
+          <button className="py-1 text-center flex-none" onClick={() => setCurrentDate(new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000))}><BiRightArrowAlt /></button>
         </div>
       </div>
       <ShowTime prop={showtimeDetail}>

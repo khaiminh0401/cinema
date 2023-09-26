@@ -8,6 +8,9 @@ import {useSession} from "next-auth/react";
 import {redirect} from "next/navigation";
 
 export const authconfig: NextAuthOptions = {
+    session: {
+        strategy: "jwt",
+    },
     providers: [
         CredentialsProvider({
             credentials: {
@@ -18,13 +21,12 @@ export const authconfig: NextAuthOptions = {
                 try {
                     const cus = await customerAPI.login({email: credentials?.email, password: credentials?.password})
                     if (cus) {
-                        const user: User = {
+                        return {
                             id: cus.id,
                             email: cus.email,
                             image: "https://png.pngtree.com/png-clipart/20200701/original/pngtree-black-default-avatar-png-image_5407174.jpg",
                             name: cus.name
-                        }
-                        return user
+                        };
                     }
                 } catch (error: any) {
                     throw new Error(checkError(error.response.data.message, error.response.data.param))
@@ -43,13 +45,11 @@ export const authconfig: NextAuthOptions = {
         }),
 
     ],
-
     pages: {
         signIn: '/login'
     },
-
     callbacks: {
-        session: ({ session, token }) => ({
+         session: ({session, token}) => ({
             ...session,
             user: {
                 ...session.user,
@@ -57,6 +57,7 @@ export const authconfig: NextAuthOptions = {
             },
         }),
     },
+
 }
 
 export function LoginIsRequiredClient() {
