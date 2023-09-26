@@ -7,17 +7,15 @@ export const metadata = {
 }
 
 export default function LoginLayout({
-  children,
-  session
+  children
 }: {
   children: React.ReactNode,
-  session: any
 }) {
   return (
     <html lang="en">
       <body>
         <div className="min-h-screen flex items-center bg-white ">
-          <SessionProvider session={session}>
+          <SessionProvider>
             {children}
           </SessionProvider>
         </div>
