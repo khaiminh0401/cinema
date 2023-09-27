@@ -16,8 +16,6 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {FaAngleLeft, FaAngleRight} from "react-icons/fa";
 import "./index.css";
 import {BiSolidSearch} from "react-icons/bi";
-import {useSession} from "next-auth/react";
-import {log} from "util";
 
 const {Search} = Input;
 type SelectedType = {
@@ -106,7 +104,7 @@ const Home = () => {
         (<div key={1}>
             {(moviesNowShowing?.length != 0) &&
                 <>
-                    <div className="lll">
+                    <div className="lll hidden lg:block">
                         <div id="slide">
                             {moviesNowShowing?.map((m, i) => {
                                 return (
@@ -137,8 +135,8 @@ const Home = () => {
                     </div>
                 </>
             }
-            <div className="search justify-evenly flex my-4 mb-6 p-3">
-                <form action="" onSubmit={handleSubmit(onSubmit)} className="flex items-center">
+            <div className="search justify-evenly md:flex my-4 mb-6 p-3 ">
+                <form action="" onSubmit={handleSubmit(onSubmit)} className="md:flex items-center">
                     <div className=" mr-8 ">
                         <label htmlFor="" className="opacity-50 font-bold">Quốc Gia</label>
                         <hr className="opacity-50"/>
@@ -169,7 +167,7 @@ const Home = () => {
                             ))
                         }/>
                     </div>
-                    <div className="mr-5">
+                    <div className="mr-5 align-middle">
                         <label htmlFor="" className="opacity-50 font-bold">Chi Nhánh</label>
                         <hr className="opacity-50"/>
                         <SelectOption
@@ -184,21 +182,23 @@ const Home = () => {
                             ))
                         }/>
                     </div>
-                    <div className="mt-6">
+                    <div className="mt-6 block w-full lg:inline">
                         <button type="submit"
-                                className="text-white border-3 rounded p-3 hover:bg-red-600 ring-1 ring-red-500/50">
-                            <BiSolidSearch/></button>
+                                className="w-full text-white border-3 rounded p-2 lg:px-6 hover:bg-red-600 ring-1 ring-red-500/50">
+                            <BiSolidSearch className="hidden md:inline"/>
+                            <label className="inline lg:hidden ">Tìm kiếm</label>
+                        </button>
                     </div>
                 </form>
-                <div className="mr-8">
-                    <label htmlFor="" className="opacity-50 font-bold ">Tìm Kiếm</label>
+                <div className="lg:mr-8">
+                    <label htmlFor="" className="opacity-50 font-bold">Tìm Kiếm</label>
                     <hr className="opacity-50 mb-3"/>
                     <Search
                         enterButton
                         allowClear={true}
                         onSearch={onSearch}
                         size="large"
-                        style={{width: 304, backgroundColor: "inherit"}}
+                        style={{width: 340, backgroundColor: "inherit"}}
                         className="justify-self-end my-auto rounded ring-1 ring-red-500/50"
                     />
                 </div>
@@ -210,7 +210,7 @@ const Home = () => {
                             {statusOfMovie.map((status, i) => {
                                 return (<div key={i} className="p-4 mt-3">
                                     <Link
-                                        className={`text-3xl font-bold ${status.id == cookie.statusId ? "text-red-900" : "text-white"}`}
+                                        className={`lg:text-3xl text-lg font-bold ${status.id == cookie.statusId ? "text-red-900" : "text-white"}`}
                                         id={`type_${i}`}
                                         href={{}}
                                         onClick={(event) => {
@@ -233,7 +233,7 @@ const Home = () => {
                         <>
                             <Link
                                 key={movie.id}
-                                className="basis-1/4" id={`${index}`}
+                                className="lg:basis-1/4" id={`${index}`}
                                 href={{
                                     pathname: `/movie-details`,
                                     query: {id: movie.id}
