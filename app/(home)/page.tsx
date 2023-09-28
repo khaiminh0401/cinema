@@ -197,9 +197,10 @@ const Home = () => {
                         enterButton
                         allowClear={true}
                         onSearch={onSearch}
+                        bordered={false}
                         size="large"
                         style={{width: 340, backgroundColor: "inherit"}}
-                        className="justify-self-end my-auto rounded ring-1 ring-red-500/50"
+                        className="justify-self-end my-auto ring-1 ring-red-500/50 rounded"
                     />
                 </div>
             </div>

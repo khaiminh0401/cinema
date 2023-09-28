@@ -1,11 +1,9 @@
 import {Validation} from "@/common/validation/page/registration";
 import Input from "@/components/Input/page";
 import {customerAPI} from "@/util/API/Customer";
-import {useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Form} from 'antd';
 import {useSession} from "next-auth/react";
-import {User} from "next-auth";
 
 /**
  * Object of Register
@@ -20,7 +18,6 @@ type EditProfileProps = {
 const EditProfile = ({...props}: customer) => {
     const {register, handleSubmit, formState: {errors}, reset} = useForm<EditProfileProps>();
     const {data: session} = useSession();
-    console.log(session?.user.id)
     const onSubmit: SubmitHandler<EditProfileProps> = async (data) => {
         const newCustomer = {
             id: 1,

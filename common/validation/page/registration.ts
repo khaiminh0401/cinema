@@ -1,5 +1,17 @@
-import { EMAIL, FORMAT_EMAIL, FORMAT_PHONE, GENDER, MAX_PASSWORD, MAX_PHONE, MIN_PASSWORD, MIN_PHONE, NAME, PASSWORD, PHONE } from '@/common/validation/types';
-import { validation } from '@/common/validation/validation';
+import {
+    EMAIL,
+    FORMAT_EMAIL,
+    FORMAT_PHONE,
+    GENDER,
+    MAX_PASSWORD,
+    MAX_PHONE,
+    MIN_PASSWORD,
+    MIN_PHONE,
+    NAME,
+    PASSWORD,
+    PHONE
+} from '@/common/validation/types';
+import {validation} from '@/common/validation/validation';
 
 export const Validation = {
     name: {

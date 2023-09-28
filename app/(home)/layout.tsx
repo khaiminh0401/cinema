@@ -1,11 +1,11 @@
 'use client'
-import { SessionProvider } from "next-auth/react";
+import {SessionProvider} from "next-auth/react";
 import '../globals.css';
 // const inter = Inter({ subsets: ['latin'] })
 import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
-import { ConfigProvider } from "antd";
-import { theme } from "./theme";
+import {ConfigProvider} from "antd";
+import {theme} from "./theme";
 
 export const metadata = {
   title: 'Zuhot',

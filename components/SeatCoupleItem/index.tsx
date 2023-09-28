@@ -1,5 +1,6 @@
-import { ReactNode, useState } from "react";
+import {ReactNode, useState} from "react";
 import SeatIcon from "@/common/Icon/SeatIcon";
+
 interface SeatItem{
     children?: ReactNode,
     state: boolean

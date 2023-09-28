@@ -1,7 +1,7 @@
-
-import { Card, Typography } from "antd";
+import {Card, Typography} from "antd";
 import Link from "next/link";
-import { FaCirclePlay } from "react-icons/fa6";
+import {FaCirclePlay} from "react-icons/fa6";
+
 const OrderDetail = () => {
     return (
         <Card className="w-80 bg-inherit text-white relative">

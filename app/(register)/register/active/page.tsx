@@ -1,11 +1,11 @@
 'use client'
-import { checkError } from "@/common/validation/error";
-import { checkStatus } from "@/common/validation/status";
-import { customerAPI } from "@/util/API/Customer";
-import { errorNotification, successNotification } from "@/util/Notification";
-import { Button, Result } from "antd";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import {checkError} from "@/common/validation/error";
+import {checkStatus} from "@/common/validation/status";
+import {customerAPI} from "@/util/API/Customer";
+import {errorNotification, successNotification} from "@/util/Notification";
+import {Button, Result} from "antd";
+import {useSearchParams} from "next/navigation";
+import {useEffect, useState} from "react";
 
 const Active = () => {
     const searchParams = useSearchParams();

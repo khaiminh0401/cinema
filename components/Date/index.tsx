@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { showtimeAPI } from '@/util/API/Showtime';
-import { Pagination } from 'react-bootstrap';
+import React, {useEffect, useState} from "react";
+import {showtimeAPI} from '@/util/API/Showtime';
+import {Pagination} from 'react-bootstrap';
 import "./index.css";
 import ShowTime from "../ShowTime";
-import { BiArrowToLeft, BiLeftArrowAlt, BiRightArrowAlt, BiArrowToRight } from 'react-icons/bi';
+import {BiArrowToLeft, BiArrowToRight, BiLeftArrowAlt, BiRightArrowAlt} from 'react-icons/bi';
 
 let format = (data: any) => {
   return data.toLocaleDateString('en-US', {

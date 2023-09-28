@@ -1,14 +1,15 @@
 'use client'
-import { Validation } from '@/common/validation/page/login';
+import {Validation} from '@/common/validation/page/login';
 import Input from '@/components/Input/page';
-import { FacebookSignInButton, GoogleSignInButton } from '@/components/authButtons';
+import {FacebookSignInButton, GoogleSignInButton} from '@/components/authButtons';
 import Logo from '@/public/assert/img/logo.png';
-import { errorNotification } from '@/util/Notification';
-import { signIn, useSession } from 'next-auth/react';
+import {errorNotification} from '@/util/Notification';
+import {signIn, useSession} from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import { useForm } from 'react-hook-form';
+import {redirect} from 'next/navigation';
+import {useForm} from 'react-hook-form';
+
 const Login = () => {
     const {
         register,

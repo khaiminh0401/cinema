@@ -1,4 +1,5 @@
-import { notification } from 'antd';
+import {notification} from 'antd';
+
 notification.config({
     maxCount: 3,
     placement: 'bottomRight'
