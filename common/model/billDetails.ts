@@ -1,0 +1,22 @@
+interface billDetails {
+    id: number,
+    totalPrice: number,
+    exportDate: Date,
+    exportStatus: number,
+    startTime: Date,
+    showDate: Date,
+    movieName: string,
+    limitAge: number,
+    yearOfManufacture: number,
+    country: string,
+    roomName: string,
+    branchName: string,
+    customerName: string,
+    customerPhone: string,
+    customerEmail: string,
+    seats: string,
+    toppingName: string,
+    toppingTotalPrice: number,
+    ticketTotalPrice: number,
+    tickets: ticketBillDetailsPage[]
+}

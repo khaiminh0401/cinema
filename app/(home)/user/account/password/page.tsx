@@ -75,7 +75,7 @@ const ChangePassword = () => {
                 </div>
 
                 {/* Cột 2: Change password */}
-                <div className="md:col-span-2">
+                <div className="sm:col-span-1 md:col-span-2">
                     <div className="p-4">
                         <Form
                             name="basic"
@@ -97,7 +97,7 @@ const ChangePassword = () => {
                             >
                                 <Input
                                     type="password"
-                                    className="w-full bg-inherit border border-stone-700 rounded-sm text-white"
+                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     register={register("password", Validation.password)}
                                 />
                                 <div className="text-red-600 mt-1">{errors.password?.message}</div>
@@ -109,7 +109,7 @@ const ChangePassword = () => {
                             >
                                 <Input
                                     type="password"
-                                    className="w-full bg-inherit border border-stone-700 rounded-sm text-white"
+                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     register={register("newPassword", Validation.password)}
                                 />
                                 <div className="text-red-600 mt-1">{errors.password?.message}</div>
@@ -121,19 +121,19 @@ const ChangePassword = () => {
                             >
                                 <Input
                                     type="password"
-                                    className="w-full bg-inherit border border-stone-700 rounded-sm text-white"
+                                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                                     register={register("reNewPassword", Validation.password)}
                                 />
                                 <div className="text-red-600 mt-1">{errors.password?.message}</div>
                             </Form.Item>
 
-                            <Form.Item wrapperCol={{offset: 8, span: 16}}>
+                            <Form.Item wrapperCol={{offset: 8, span: 16}} className={"mt-8"}>
                                 <button
-                                    className="w-1/3 py-2 rounded-md bg-red-500 text-white shadow-none
-                        hover:scale-105 hover:shadow-none hover:bg-red-600 focus:scale-105
-                        focus:shadow-none active:scale-100"
-                                >
-                                    Thay đổi
+                                    className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
+  <span
+      className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+      Thay đổi mật khẩu
+  </span>
                                 </button>
                             </Form.Item>
                         </Form>

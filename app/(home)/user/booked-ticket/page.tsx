@@ -7,19 +7,30 @@ import Link from "next/link";
 import Input from "@components/Input/page";
 import {Validation} from "@/common/validation/page/registration";
 import {billAPI} from "@/util/API/Bill";
+import {useSession} from "next-auth/react";
+import Login from "@/app/(login)/login/page";
+import {DateUtils} from "@/util/DateUtils";
 
 const BookedTicket = () => {
     const [billHistories, setBillHistories] = useState<billHistory[]>();
     let content: JSX.Element;
+    const { data: session } = useSession();
+    const  userId  = Number(session?.user.id);
 
     useEffect(() => {
-        const init = async () => {
-            const bh = await billAPI.getBillHistory(5);
-            setBillHistories(bh);
-        }
+        if (session) {
+            const init = async () => {
+                const bh = await billAPI.getBillHistory(userId);
+                setBillHistories(bh);
+            }
 
-        init();
-    }, [])
+            init();
+        }
+    }, [session])
+
+    if (!session){
+        return <Login/>;
+    }
 
     const paymentStatus = (status: number) => {
         if (status === 0) {
@@ -59,7 +70,7 @@ const BookedTicket = () => {
                                                 <div className="text-center">
                                                     <p>Thời gian chiếu</p>
                                                     <p className={"text-red-600 font-semibold"}>{`${billHistory.startTime}`}</p>
-                                                    <p>{`${billHistory.showDate}`}</p>
+                                                    <p>{DateUtils.formatDate(new Date(billHistory.showDate))}</p>
                                                     <p className={"font-semibold"}>
                                                         {paymentStatus(billHistory.exportStatus)}
                                                     </p>
@@ -73,7 +84,7 @@ const BookedTicket = () => {
                                                         <span>, Phim: {billHistory.movieName}</span>
                                                     </p>
                                                     <p>Rạp: Chi nhánh {`${billHistory.branchName}`}</p>
-                                                    <p>{billHistory.roomName}, Ghế: {billHistory.seat}</p>
+                                                    <p>{billHistory.roomName}, Ghế: {billHistory.seats}</p>
                                                     <p>
                                                         <span>Thời lượng phim: {billHistory.movieTime} phút</span>
                                                         <span className={"float-right"}>

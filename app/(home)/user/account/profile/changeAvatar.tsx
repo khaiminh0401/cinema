@@ -5,6 +5,7 @@ import "./index.css";
 import {FaUpload} from "react-icons/fa6";
 import {useSession} from "next-auth/react";
 import {User} from "next-auth";
+import {RiDeleteBin6Line} from "react-icons/ri";
 // Container
 const ChangeAvatar = (props: any) => {
     // image src
@@ -22,9 +23,9 @@ const ChangeAvatar = (props: any) => {
     // file name
     const [fileName, setFileName] = useState<string | null>(null);
 
-    const { data: session }  = useSession();
+    const {data: session} = useSession();
 
-    const { userId } = props;
+    const {userId} = props;
 
     // handle Click
     const handleInputClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -55,7 +56,7 @@ const ChangeAvatar = (props: any) => {
                 avatar={fileName || ''}
                 userId={userId}
             />
-            <div className="img-container">
+            <div className="relative mb-10">
                 <img
                     src={
                         preview ||
@@ -64,8 +65,12 @@ const ChangeAvatar = (props: any) => {
                     alt=""
                     width="200"
                     height="200"
-                    style={{borderRadius: "150px"}}
+                    className={"rounded-full"}
                 />
+
+                <button className="absolute bottom-0 left-40 rounded-full">
+                    <RiDeleteBin6Line/>
+                </button>
             </div>
 
             <div className="mt-3">

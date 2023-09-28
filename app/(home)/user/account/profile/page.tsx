@@ -30,7 +30,7 @@ const Profile = () => {
                 {/* Cột 3: ChangeAvatar */}
                 <div className="col-span-1 sm:col-span-1 md:col-span-2">
                     <div className="p-4">
-                        <ChangeAvatar />
+                        <ChangeAvatar userId={userId} />
                     </div>
                 </div>
             </div>

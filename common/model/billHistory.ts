@@ -11,5 +11,5 @@ interface billHistory {
     roomName: string,
     branchName: string,
     address: string,
-    seat: string
+    seats: string
 }

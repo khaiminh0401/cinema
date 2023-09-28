@@ -6,20 +6,29 @@ import React, {useEffect, useState} from "react";
 import {useParams} from "next/navigation";
 import "./index.css"
 import Ticket from "@/app/(home)/user/booked-ticket/ticket";
+import {billAPI} from "@/util/API/Bill";
+import {DateUtils} from "@/util/DateUtils";
+import {NumberUtils} from "@/util/NumberUtils";
+import {useSession} from "next-auth/react";
+import {AxiosRequestConfig} from "axios";
 
 const BillDetail = () => {
     const param = useParams();
-    const [billDetail, setBillDetail] = useState();
+    const [billDetails, setBillDetails] = useState<billDetails>();
     let content: JSX.Element;
-
+    const { data: session } = useSession();
+    const  userId  = session?.user.id;
+    console.log(userId)
     useEffect(() => {
-        const init = async () => {
-            // const billDetailFromAPI = await billDetailAPI(param.id)
+        if (session) {
+            const init = async () => {
+                const billDetailsFromAPI = await billAPI.getBillDetails(Number(param.id), Number(userId));
+                setBillDetails(billDetailsFromAPI);
+            }
 
+            init();
         }
-
-        init();
-    }, []);
+    }, [session]);
 
     const paymentStatus = (status: number) => {
         if (status === 0) {
@@ -54,23 +63,23 @@ const BillDetail = () => {
                         <div className="p-4">
                             {/* Thông tin khách hàng */}
                             <section className={"bg-neutral-900 rounded p-4 mb-4"}>
-                                <h2 className={"font-bold text-xl mb-4 text-cyan-500"}>Thông tin khách hàng</h2>
+                                <h2 className={"font-bold text-xl mb-4 text-white uppercase"}>Thông tin khách hàng</h2>
                                 <div className={"text-gray-300"}>
                                     <p className={"mb-1"}>Họ và tên
-                                        <span className={"float-right text-white"}>Hồ Hoàng Khang</span>
+                                        <span className={"float-right text-white"}>{billDetails?.customerName}</span>
                                     </p>
                                     <p className={"mb-1"}>Số điện thoại
-                                        <span className={"float-right text-white"}>0858442505</span>
+                                        <span className={"float-right text-white"}>{billDetails?.customerPhone}</span>
                                     </p>
                                     <p className={"mb-1"}>Email
-                                        <span className={"float-right text-white"}>hohoangkhang18@gmail.com</span>
+                                        <span className={"float-right text-white"}>{billDetails?.customerEmail}</span>
                                     </p>
                                 </div>
                             </section>
 
                             {/* Thông tin phim */}
                             <section className={"bg-neutral-900 rounded p-4 mb-4"}>
-                                <h2 className={"font-bold text-xl mb-4 text-cyan-500"}>Thông tin phim</h2>
+                                <h2 className={"font-bold text-xl mb-4 text-white uppercase"}>Thông tin phim</h2>
                                 <div className="grid grid-cols-10 gap-x-4 lg:grid-cols-5">
                                     <div className="col-span-3 lg:col-span-1">
                                         <img
@@ -80,18 +89,19 @@ const BillDetail = () => {
                                     </div>
                                     <div className="col-span-7 lg:col-span-4">
                                         <div className={""}>
-                                            <h2 className={"font-bold text-xl mb-4"}>Phim mèo</h2>
+                                            <h2 className={"font-bold text-xl mb-4"}>{billDetails?.movieName}</h2>
                                             <p className={"text-gray-300"}>Đất nước:
-                                                <span className={"text-white"}> Việt Nam</span>
+                                                <span className={"text-white"}> {billDetails?.country}</span>
                                             </p>
                                             <p className={"text-gray-300"}>Ngôn ngữ:
                                                 <span className={"text-white"}> Tiếng Việt</span>
                                             </p>
                                             <p className={"text-gray-300"}>Năm sản xuất:
-                                                <span className={"text-white"}> 04-01-2003</span>
+                                                <span className={"text-white"}> {billDetails?.yearOfManufacture}</span>
                                             </p>
                                             <p className={"text-gray-300"}>Độ tuổi:
-                                                <span className={"text-white"}> 18+</span>
+                                                <span
+                                                    className={"text-white"}> {billDetails?.limitAge !== 0 ? billDetails?.limitAge : 'Không giới hạn'}</span>
                                             </p>
                                         </div>
                                     </div>
@@ -101,7 +111,8 @@ const BillDetail = () => {
                             <section className={"bg-neutral-900 rounded p-4 mb-4"}>
                                 {/* Thông tin vé */}
                                 <div className={"mb-8"}>
-                                    <h2 className={"font-bold text-cyan-500 text-xl mb-4"}>Thông tin lượt chiếu</h2>
+                                    <h2 className={"font-bold text-xl mb-4 text-white uppercase"}>Thông tin vé & lượt
+                                        chiếu</h2>
                                     <Card
                                         bordered={false}
                                         className={"w-fit bg-inherit border border-2 border-neutral-800 text-white my-5"}
@@ -118,12 +129,14 @@ const BillDetail = () => {
                                             </div>
                                             <div className="col-span-7">
                                                 <div className={"ms-4"}>
-                                                    <h2 className={"font-bold text-xl mb-4"}>18001421</h2>
+                                                    <h2 className={"font-bold text-xl mb-4"}>Mã hóa
+                                                        đơn: {billDetails?.id}</h2>
                                                     <p className={"text-gray-300"}>Ghế:
-                                                        <span className={"text-white"}> A11, A12</span>
+                                                        <span className={"text-white"}> {billDetails?.seats}</span>
                                                     </p>
                                                     <p className={"text-gray-300"}>Tổng giá:
-                                                        <span className={"text-white"}> 180.000đ</span>
+                                                        <span
+                                                            className={"text-white"}> {NumberUtils.formatCurrency(Number(billDetails?.ticketTotalPrice))}</span>
                                                     </p>
                                                 </div>
                                             </div>
@@ -136,37 +149,48 @@ const BillDetail = () => {
                                         </p>
                                         <p className={"mb-1"}>Rạp
                                             <span
-                                                className={"float-right text-white"}>Chi nhánh Quang Trung - Gò Vấp</span>
+                                                className={"float-right text-white"}>Chi nhánh {billDetails?.branchName}</span>
                                         </p>
                                         <p className={"mb-1"}>Phòng
-                                            <span className={"float-right text-white"}>01</span>
+                                            <span className={"float-right text-white"}>{billDetails?.roomName}</span>
                                         </p>
                                         <p className={"mb-1"}>Thời gian:
-                                            <span className={"float-right text-green-600"}>08:00 07-09-2023</span>
+                                            <span
+                                                className={"float-right text-green-600"}>{`${billDetails?.startTime} ${billDetails?.showDate}`}</span>
                                         </p>
                                         <p className={"mb-1"}>Số lượng ghế
-                                            <span className={"float-right text-white"}>2</span>
+                                            <span className={"float-right text-white"}>{billDetails?.tickets.length}</span>
                                         </p>
                                         <p className={"mb-1"}>Số ghế
-                                            <span className={"float-right text-green-600"}>A11, A12</span>
+                                            <span className={"float-right text-green-600"}>{billDetails?.seats}</span>
+                                        </p>
+                                        <p className={"mb-1"}>Tổng giá vé
+                                            <span
+                                                className={"float-right"}>{NumberUtils.formatCurrency(Number(billDetails?.ticketTotalPrice))}</span>
                                         </p>
                                     </div>
                                 </div>
 
-                                <Ticket />
+                                <Ticket tickets={billDetails?.tickets || []}/>
 
                                 {/* Thông tin topping */}
-                                <div>
-                                    <h2 className={"font-bold text-cyan-500 text-xl mb-4"}>Thông tin topping</h2>
-                                    <div className={"text-gray-300"}>
-                                        <p className={"mb-1"}>Topping
-                                            <span className={"float-right text-white"}>2 pepsi, 1 bắp</span>
-                                        </p>
-                                        <p className={"mb-1"}>Giá tiền
-                                            <span className={"float-right text-white"}>70.000đ</span>
-                                        </p>
+                                {/* Kiểm tra khách hàng có đặt thức ăn không */}
+                                {!billDetails?.toppingName ? <></> :
+                                    <div>
+                                        <h2 className={"font-bold text-xl mb-4 text-white uppercase"}>Thông tin
+                                            topping</h2>
+                                        <div className={"text-gray-300"}>
+                                            <p className={"mb-1"}>Topping
+                                                <span
+                                                    className={"float-right text-white"}>{billDetails.toppingName}</span>
+                                            </p>
+                                            <p className={"mb-1"}>Giá tiền
+                                                <span
+                                                    className={"float-right text-white"}>{billDetails.toppingTotalPrice}</span>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                }
                             </section>
 
                             <Card
@@ -174,22 +198,43 @@ const BillDetail = () => {
                                 className={"bg-neutral-800 text-white my-5"}
                             >
                                 <div className={"text-gray-300"}>
-                                    <p className={"mb-1"}>Tổng giá vé xem phim
-                                        <span className={"float-right text-white"}>250.000đ</span>
+                                    <p className={"mb-1"}>Giá vé xem phim
+                                        <span
+                                            className={"float-right text-white"}>{NumberUtils.formatCurrency(Number(billDetails?.ticketTotalPrice))}</span>
                                     </p>
+
+                                    {/* Giá topping */}
+                                    {
+                                        !billDetails?.toppingName ? <></> :
+                                            <p className={"mb-1"}>Giá topping
+                                                <span
+                                                    className={"float-right text-white"}>{NumberUtils.formatCurrency(Number(billDetails?.toppingTotalPrice))}</span>
+                                            </p>
+                                    }
                                     <p className={"mb-1"}>Phí thanh toán
-                                        <span className={"float-right text-white"}>0đ</span>
+                                        <span className={"float-right text-white"}>
+                                            {NumberUtils.formatCurrency(
+                                                (parseFloat(`${billDetails?.ticketTotalPrice}`) + parseFloat(`${billDetails?.toppingTotalPrice}`))
+                                                * parseFloat(`${billDetails?.tickets[0].vat}`)
+                                            )}
+                                        </span>
                                     </p>
                                     <hr className={"my-1"}/>
-                                    <p className={"mb-1"}>Thanh toán với Momo
-                                        <span className={"float-right text-white text-lg font-semibold"}>250.000đ</span>
+                                    <p className={"mb-1"}>Thanh toán với ...
+                                        <span className={"float-right text-white text-lg font-semibold"}>
+                                            {NumberUtils.formatCurrency((parseFloat(`${billDetails?.ticketTotalPrice}`) + parseFloat(`${billDetails?.toppingTotalPrice}`))
+                                                +
+                                                ((parseFloat(`${billDetails?.ticketTotalPrice}`) + parseFloat(`${billDetails?.toppingTotalPrice}`))
+                                                    * parseFloat(`${billDetails?.tickets[0].vat}`))
+                                            )}
+                                        </span>
                                     </p>
                                 </div>
                             </Card>
 
                             {/* Thanh toán lại */}
                             <section>
-                                {paymentStatus(2)}
+                                {paymentStatus(Number(billDetails?.exportStatus))}
                             </section>
                         </div>
                     </div>

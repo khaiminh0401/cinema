@@ -23,16 +23,16 @@ const EditProfile = (props: any) => {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
         reset,
         setValue
     } = useForm<EditProfileProps>();
 
     const [customer, setCustomer] = useState<customer>();
 
-    const [gender, setGender] = useState<boolean>();
+    const [gender, setGender] = useState<string>();
 
-    const { userId } = props;
+    const {userId} = props;
 
     console.log()
     useEffect(() => {
@@ -52,21 +52,26 @@ const EditProfile = (props: any) => {
 
     useEffect(() => {
         if (customer) {
-            setValue("name", customer.name)
-            setValue("phone", customer.phone)
-            setGender(customer.gender)
+            setValue("name", customer.name);
+            setValue("phone", customer.phone);
+            setGender(`${customer.gender}`);
         }
     }, [customer]);
 
     const onSubmit: SubmitHandler<EditProfileProps> = async (data) => {
         const newCustomer = {
-            id: 4,
-            ...data
+            id: userId,
+            ...data,
+            gender: gender
         }
 
         if (checkStatus(await customerAPI.editProfile(newCustomer))) {
             successNotification("Cập nhật thành công!");
         }
+    };
+
+    const handleGenderChange = (value: string) => {
+        setGender(value);
     };
 
     return (
@@ -101,12 +106,12 @@ const EditProfile = (props: any) => {
             <Form.Item
                 label={<span className="text-white">Tên</span>}
                 colon={false}
+                className={"relative z-0 w-full mb-6 group"}
             >
                 <Input
                     type="text"
-                    className="w-full bg-inherit border-none rounded-sm text-white"
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     register={register("name", Validation.name)}
-                    defaultValue={customer?.name}
                 />
                 <div className="text-red-600 mt-1">{errors.name?.message}</div>
             </Form.Item>
@@ -117,49 +122,31 @@ const EditProfile = (props: any) => {
             >
                 <Input
                     type="text"
-                    className="w-full bg-inherit border-none rounded-sm text-white"
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     register={register("phone", Validation.phone)}
                 />
                 <div className="text-red-600 mt-1">{errors.phone?.message}</div>
             </Form.Item>
+
+            {/*<Form.Item*/}
+            {/*    label={<span className="text-white">Địa chỉ</span>}*/}
+            {/*    colon={false}*/}
+            {/*>*/}
+            {/*    <Input*/}
+            {/*        type="text"*/}
+            {/*        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"*/}
+            {/*        register={register("", Validation.phone)}*/}
+            {/*    />*/}
+            {/*    <div className="text-red-600 mt-1">{errors.phone?.message}</div>*/}
+            {/*</Form.Item>*/}
 
             <Form.Item
                 label={<span className="text-white">Giới tính</span>}
                 // name="gender"
                 colon={false}
             >
-                {/*<div className="flex space-x-4">*/}
-                {/*    <div className="flex items-center">*/}
-                {/*        <Input*/}
-                {/*            className=""*/}
-                {/*            defaultValue='true'*/}
-                {/*            type="radio"*/}
-                {/*            register={register("gender", Validation.gender)}*/}
-                {/*            name="inlineRadioOptions"*/}
-                {/*            id="inlineRadio1"*/}
-                {/*            defaultChecked={customer?.gender === false}*/}
-                {/*        />*/}
-                {/*        <label className="text-white" htmlFor="inlineRadio1">*/}
-                {/*            Nam*/}
-                {/*        </label>*/}
-                {/*    </div>*/}
-                {/*    <div className="flex items-center">*/}
-                {/*        <Input*/}
-                {/*            className=""*/}
-                {/*            defaultValue='false'*/}
-                {/*            type="radio"*/}
-                {/*            register={register("gender", Validation.gender)}*/}
-                {/*            name="inlineRadioOptions"*/}
-                {/*            id="inlineRadio2"*/}
-                {/*            defaultChecked={customer?.gender === true}*/}
-                {/*        />*/}
-                {/*        <label className="text-white" htmlFor="inlineRadio2">*/}
-                {/*            Nữ*/}
-                {/*        </label>*/}
-                {/*    </div>*/}
-                {/*</div>*/}
                 <Select
-                    defaultValue={`${customer?.gender}`}
+                    value={gender} onChange={handleGenderChange}
                 >
                     <Option value="true">Nam</Option>
                     <Option value="false">Nữ</Option>
@@ -167,13 +154,13 @@ const EditProfile = (props: any) => {
                 <div className="text-red-600 mt-1">{errors.gender?.message}</div>
             </Form.Item>
 
-            <Form.Item wrapperCol={{offset: 8, span: 16}}>
+            <Form.Item wrapperCol={{offset: 8, span: 16}} className={"mt-8"}>
                 <button
-                    className="w-1/3 py-2 rounded-md bg-red-500 text-white shadow-none
-                        hover:scale-105 hover:shadow-none hover:bg-red-600 focus:scale-105
-                        focus:shadow-none active:scale-100"
-                >
-                    Cập nhật
+                    className="relative inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-red-200 via-red-300 to-yellow-200 group-hover:from-red-200 group-hover:via-red-300 group-hover:to-yellow-200 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400">
+  <span
+      className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+      Cập nhật
+  </span>
                 </button>
             </Form.Item>
         </Form>

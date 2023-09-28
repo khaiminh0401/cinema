@@ -6,22 +6,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@700;900&display=swap');
 
 :root {
-    font-size: 20px;
-    --dark-blue: #1f2029;
+    /*font-size: 20px;*/
+    --dark-blue: rgb(23 23 23 / 1);
     --white-gr: #c4c3ca;
     --yellow: #ffeba7;
     --yellow-2: #f8ab37;
 }
-/*body{*/
-/*    color: var(--white-gr);*/
-/*    background-color: inherit;*/
-/*    overflow-x: hidden;*/
-/*}*/
+
 h2{
     font-family: 'Lato', sans-serif;
     font-weight: 700;
     color: var(--white-gr);
-    font-size: 26px;
+    font-size: 20px;
 }
 
 .color-yellow {
@@ -115,7 +111,7 @@ h2{
 .checkbox-ticket:checked + label{
     transform: translateY(-10px);
 }
-.checkbox-ticket + label .duration{
+.checkbox-ticket + label .ticket-id{
     font-family: 'Lato', sans-serif;
     font-weight: 700;
     font-size: 18px;
@@ -128,7 +124,7 @@ h2{
 .checkbox-ticket + label .price{
     font-family: 'Lato', sans-serif;
     font-weight: 900;
-    font-size: 40px;
+    font-size: 30px;
     line-height: 1;
     text-transform: uppercase;
     color: var(--dark-blue);
