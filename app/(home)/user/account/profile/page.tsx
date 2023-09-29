@@ -31,14 +31,14 @@ const Profile = () => {
 
     return (
         <div className={"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-7 gap-4"}>
-            {/* Cột 2: EditProfile */}
+            {/* C1: EditProfile */}
             <div className="col-span-1 sm:col-span-1 md:col-span-5">
                 <div className="p-4">
                     <EditProfile editCustomer={customer}/>
                 </div>
             </div>
 
-            {/* Cột 3: ChangeAvatar */}
+            {/* C2: ChangeAvatar */}
             <div className="col-span-1 sm:col-span-1 md:col-span-2">
                 <div className="p-4">
                     <ChangeAvatar customerId={customerId} keyfacebook={customer?.keyfacebook}

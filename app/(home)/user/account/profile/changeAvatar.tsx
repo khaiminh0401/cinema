@@ -37,7 +37,10 @@ const ChangeAvatar = ({...props}: ChangeAvatarProps) => {
     const [fileName, setFileName] = useState<string | null>(null);
 
     useEffect(() => {
-        setPreview(`https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/${props.avatar}`)
+        if (props.avatar)
+            setPreview(`https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/${props.avatar}`);
+        else
+            setPreview("https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/default.png");
     }, [props.avatar]);
 
     // handle Click
@@ -56,7 +59,7 @@ const ChangeAvatar = ({...props}: ChangeAvatarProps) => {
             setModalOpen(true);
         }
     };
-    console.log(preview);
+
     return (
         <section className={"flex justify-center items-center md:block"}>
             <CropperModal
@@ -71,7 +74,7 @@ const ChangeAvatar = ({...props}: ChangeAvatarProps) => {
                 <img
                     src={
                         preview ||
-                        "https://www.scdata.ai/public/images/user.png"
+                        "https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/default.png"
                     }
                     alt=""
                     width="200"
@@ -81,7 +84,11 @@ const ChangeAvatar = ({...props}: ChangeAvatarProps) => {
 
                 <Button
                     className="border-0 bottom-0 bg-neutral-900 text-white left-36 absolute w-50 h-50 rounded-full"
-                    onClick={() => showDeleteConfirm(props.customerId, props.avatar)}
+                    onClick={() => showDeleteConfirm({
+                        customerId: props.customerId,
+                        avatar: props.avatar,
+                        setPreview: setPreview
+                    })}
                 >
                     <RiDeleteBin6Line/>
                 </Button>
@@ -100,7 +107,7 @@ const ChangeAvatar = ({...props}: ChangeAvatarProps) => {
                         flex items-center w-fit hover:scale-105`}
                     htmlFor={"uploadBtn"}
                 >
-                   <FaUpload/><span className={"ms-3 hidden lg:block"}>Tải ảnh lên</span>
+                    <FaUpload/><span className={"ms-3 hidden lg:block"}>Tải ảnh lên</span>
                 </label>
 
                 <br/>

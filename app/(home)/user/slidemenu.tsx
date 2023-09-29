@@ -43,7 +43,7 @@ const items: MenuItem[] = [
     getItem('Vé đã mua', '4', <FaTicket/>, '/user/booked-ticket'),
 ];
 
-const Slidemenu = () => {
+const SlideMenu = () => {
     const [collapsed, setCollapsed] = useState(false);
     // const [customerName, setCustomerName] = useState<string>();
     const [customer, setCustomer] = useState<customer>();
@@ -56,17 +56,15 @@ const Slidemenu = () => {
         if (customerId) {
             const init = async () => {
                 await customerAPI.findId(customerId).then((response) => {
-                    // setCustomerName(response.name);
-                    // setAvatar(response.avatar || '')
                     setCustomer(response);
-                    response.keyfacebook ? setAvatar(response.avatar || '')
-                        : setAvatar(`https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/${customer?.avatar}`)
+                    response.keyfacebook ? setAvatar(response.avatar)
+                        : setAvatar(customer?.avatar)
                 })
             }
 
             init();
         }
-    }, [customerId, customer?.avatar]);
+    }, [customerId, customer]);
 
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);
@@ -90,8 +88,8 @@ const Slidemenu = () => {
                                 src={<img
                                     src=
                                         {
-                                            avatar ||
-                                            "https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/default.png"
+                                            avatar ? `https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/${avatar}`
+                                                : "https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/default.png"
                                         }
                                     alt="avatar"/>}
                                 className='hover:scale-110'
@@ -125,4 +123,4 @@ const Slidemenu = () => {
     );
 }
 
-export default Slidemenu;
+export default SlideMenu;

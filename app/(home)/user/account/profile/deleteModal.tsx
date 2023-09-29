@@ -4,10 +4,17 @@ import {errorNotification, successNotification} from "@/util/Notification";
 
 const {confirm} = Modal;
 
-const showDeleteConfirm = (customerId: number, avatar: string) => {
+interface ShowDeleteConfirmProps {
+    customerId: number,
+    avatar: string,
+    setPreview: React.Dispatch<React.SetStateAction<string | null>>
+}
+
+const showDeleteConfirm = ({...props}: ShowDeleteConfirmProps) => {
     const handleClick = async (customerId: number, avatarDelete: string) => {
         await customerAPI.deleteAvatar(customerId, avatarDelete).then(() => {
             successNotification("Xóa ảnh đại diện thành công")
+            props.setPreview("https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/default.png");
         }).catch(() => {
             errorNotification("Xóa ảnh đại diện thất bại. Vui lòng thử lại")
         })
@@ -20,7 +27,7 @@ const showDeleteConfirm = (customerId: number, avatar: string) => {
         okType: 'danger',
         cancelText: '取消',
         onOk() {
-            handleClick(customerId, avatar)
+            handleClick(props.customerId, props.avatar)
         },
         onCancel() {
             () => {

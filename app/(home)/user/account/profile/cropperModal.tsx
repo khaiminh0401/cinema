@@ -1,10 +1,18 @@
 import React, {useEffect, useRef, useState} from "react";
 import AvatarEditor from "react-avatar-editor";
 import {Modal, Slider, Button, Input} from "antd";
-import {CropperModalProps} from "@/util/Props/CropperModalProps";
 import {fetchAPI} from "@/util/API/axios";
 import {customerAPI} from "@/util/API/Customer";
 import {errorNotification, successNotification} from "@/util/Notification";
+
+interface CropperModalProps {
+    src: string | null;
+    modalOpen: boolean;
+    setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setPreview: React.Dispatch<React.SetStateAction<string | null>>;
+    avatar: string;
+    userId: number
+}
 
 const CropperModal = ({...props}: CropperModalProps) => {
     const [slideValue, setSlideValue] = useState<number>(10);
