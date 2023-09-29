@@ -1,7 +1,6 @@
 import React, {useEffect, useRef, useState} from "react";
 import AvatarEditor from "react-avatar-editor";
 import {Modal, Slider, Button, Input} from "antd";
-import {fetchAPI} from "@/util/API/axios";
 import {customerAPI} from "@/util/API/Customer";
 import {errorNotification, successNotification} from "@/util/Notification";
 

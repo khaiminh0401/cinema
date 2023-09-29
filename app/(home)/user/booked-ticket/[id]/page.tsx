@@ -214,7 +214,7 @@ const BillDetail = () => {
                                         </span>
                         </p>
                         <hr className={"my-1"}/>
-                        <p className={"mb-1"}>Thanh toán với ...
+                        <p className={"mb-1"}>Thanh toán với {billDetails?.paymentMethod}
                             <span className={"float-right text-white text-lg font-semibold"}>
                                             {NumberUtils.formatCurrency((parseFloat(`${billDetails?.ticketTotalPrice}`) + parseFloat(`${billDetails?.toppingTotalPrice}`))
                                                 +

@@ -3,6 +3,7 @@ interface billDetails {
     totalPrice: number,
     exportDate: Date,
     exportStatus: number,
+    paymentMethod: string,
     startTime: Date,
     showDate: Date,
     movieName: string,
