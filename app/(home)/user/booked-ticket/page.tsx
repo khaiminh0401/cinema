@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from 'react';
 import {Card, Form} from 'antd';
-import Navbar from "../navbar";
+import Slidemenu from "../slidemenu";
 import Link from "next/link";
 import Input from "@components/Input/page";
 import {Validation} from "@/common/validation/page/registration";
@@ -15,12 +15,12 @@ const BookedTicket = () => {
     const [billHistories, setBillHistories] = useState<billHistory[]>();
     let content: JSX.Element;
     const { data: session } = useSession();
-    const  userId  = Number(session?.user.id);
+    const  customerId  = Number(session?.user.id);
 
     useEffect(() => {
         if (session) {
             const init = async () => {
-                const bh = await billAPI.getBillHistory(userId);
+                const bh = await billAPI.getBillHistory(customerId);
                 setBillHistories(bh);
             }
 
@@ -46,16 +46,16 @@ const BookedTicket = () => {
 
     return (
         <div className="container mx-auto p-4">
-            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3">
-                {/* Cột 1: Navbar */}
-                <div className="col-span-1 sm:col-span-2 md:col-span-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-9 gap-4">
+                {/* Cột 1: Slidemenu */}
+                <div className="col-span-1 sm:col-span-2 md:col-span-2">
                     <div className="p-4">
-                        <Navbar/>
+                        <Slidemenu customerId={customerId}/>
                     </div>
                 </div>
 
                 {/* Cột 2: Bill History */}
-                <div className="col-span-1 sm:col-span-1 md:col-span-2">
+                <div className="col-span-2 sm:col-span-2 md:col-span-7">
                     <div className="p-4">
                         {
                             billHistories?.map((billHistory, index) => {

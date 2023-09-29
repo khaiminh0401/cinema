@@ -11,6 +11,7 @@ interface billDetails {
     country: string,
     roomName: string,
     branchName: string,
+    branchAddress: string,
     customerName: string,
     customerPhone: string,
     customerEmail: string,

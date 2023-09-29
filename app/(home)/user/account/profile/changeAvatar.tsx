@@ -6,13 +6,27 @@ import {FaUpload} from "react-icons/fa6";
 import {useSession} from "next-auth/react";
 import {User} from "next-auth";
 import {RiDeleteBin6Line} from "react-icons/ri";
-// Container
-const ChangeAvatar = (props: any) => {
+
+interface ChangeAvatarProps {
+    customerId: number,
+    keyfacebook?: string,
+    avatar: string
+}
+
+const ChangeAvatar = ({...props}: ChangeAvatarProps) => {
     // image src
     const [src, setSrc] = useState<string | null>(null);
 
     // preview
-    const [preview, setPreview] = useState<string | null>(null);
+    const [preview, setPreview] =
+        useState<string | null>
+        (() => {
+            if (props.keyfacebook) {
+                return props.avatar;
+            }
+
+            return `https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/${props.avatar}`;
+        });
 
     // modal state
     const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -23,9 +37,10 @@ const ChangeAvatar = (props: any) => {
     // file name
     const [fileName, setFileName] = useState<string | null>(null);
 
-    const {data: session} = useSession();
-
-    const {userId} = props;
+    useEffect(() => {
+        setPreview(`https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/${props.avatar}`)
+    }, [props.avatar]);
+    console.log(preview)
 
     // handle Click
     const handleInputClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -42,19 +57,17 @@ const ChangeAvatar = (props: any) => {
             setFileName(e.target.files[0].name);
             setModalOpen(true);
         }
-
-        // console.log(session?.user?.id);
     };
-
+    console.log(preview);
     return (
-        <>
+        <section className={"flex justify-center items-center md:block"}>
             <CropperModal
                 modalOpen={modalOpen}
                 src={src || ''}
                 setPreview={setPreview}
                 setModalOpen={setModalOpen}
                 avatar={fileName || ''}
-                userId={userId}
+                userId={props.customerId}
             />
             <div className="relative mb-10">
                 <img
@@ -68,7 +81,7 @@ const ChangeAvatar = (props: any) => {
                     className={"rounded-full"}
                 />
 
-                <button className="absolute bottom-0 left-40 rounded-full">
+                <button className="bottom-0 left-36 absolute w-50 h-50 rounded-full">
                     <RiDeleteBin6Line/>
                 </button>
             </div>
@@ -86,7 +99,7 @@ const ChangeAvatar = (props: any) => {
                         flex items-center w-fit hover:scale-105`}
                     htmlFor={"uploadBtn"}
                 >
-                    <FaUpload/><span className={"ms-3"}>Tải ảnh lên</span>
+                   <FaUpload/><span className={"ms-3 hidden lg:block"}>Tải ảnh lên</span>
                 </label>
 
                 <br/>
@@ -95,7 +108,7 @@ const ChangeAvatar = (props: any) => {
                     Định dạng:.JPEG, .PNG, .JPG
                 </small>
             </div>
-        </>
+        </section>
     );
 };
 

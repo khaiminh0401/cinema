@@ -6,6 +6,7 @@ interface customer {
     phone: string,
     address: string,
     gender: boolean,
-    idfb?: string,
-    imagefb?: string
+    avatar?: string,
+    keyfacebook?: string,
+    created_at: Date
 }

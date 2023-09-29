@@ -19,7 +19,11 @@ type EditProfileProps = {
     gender: boolean
 }
 
-const EditProfile = (props: any) => {
+interface EditProfileCustomer {
+    editCustomer?: customer
+}
+
+const EditProfile = (props: EditProfileCustomer) => {
     const {
         register,
         handleSubmit,
@@ -28,39 +32,19 @@ const EditProfile = (props: any) => {
         setValue
     } = useForm<EditProfileProps>();
 
-    const [customer, setCustomer] = useState<customer>();
-
     const [gender, setGender] = useState<string>();
 
-    const {userId} = props;
-
-    console.log()
     useEffect(() => {
-        async function fetchData() {
-            try {
-                await customerAPI.findId(userId).then((response) => {
-                    setCustomer(response);
-                });
-
-            } catch (error) {
-                console.error("Error fetching customer:", error);
-            }
+        if (props.editCustomer) {
+            setValue("name", props.editCustomer.name);
+            setValue("phone", props.editCustomer.phone);
+            setGender(`${props.editCustomer.gender}`);
         }
-
-        fetchData();
-    }, [userId]);
-
-    useEffect(() => {
-        if (customer) {
-            setValue("name", customer.name);
-            setValue("phone", customer.phone);
-            setGender(`${customer.gender}`);
-        }
-    }, [customer]);
+    }, [props.editCustomer]);
 
     const onSubmit: SubmitHandler<EditProfileProps> = async (data) => {
         const newCustomer = {
-            id: userId,
+            id: props.editCustomer?.id,
             ...data,
             gender: gender
         }
@@ -99,7 +83,7 @@ const EditProfile = (props: any) => {
                     type="email"
                     className="w-full bg-inherit border-none rounded-sm text-white"
                     disabled={true}
-                    value={customer?.email}
+                    value={props.editCustomer?.email}
                 />
             </Form.Item>
 

@@ -8,7 +8,7 @@ import {errorNotification, successNotification} from "@/util/Notification";
 import {useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Form} from 'antd';
-import Navbar from "../../navbar";
+import Slidemenu from "../../slidemenu";
 import {useSession} from "next-auth/react";
 import {checkStatus} from "@/common/validation/status";
 
@@ -33,11 +33,11 @@ const ChangePassword = () => {
     } = useForm<ChangePasswordProps>();
     const formData = new FormData();
 
-    const userId = session?.user.id;
+    const customerId = Number(session?.user.id);
 
     const onSubmit: SubmitHandler<ChangePasswordProps> = async (data) => {
         const account = {
-            customerId: userId,
+            customerId: customerId,
             ...data
         }
 
@@ -66,16 +66,16 @@ const ChangePassword = () => {
 
     return (
         <div className="container mx-auto p-4">
-            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3">
-                {/* Cột 1: Navbar */}
-                <div className="md:col-span-1">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-9 gap-4">
+                {/* Cột 1: Slidemenu */}
+                <div className="col-span-1 sm:col-span-2 md:col-span-2">
                     <div className="p-4">
-                        <Navbar/>
+                        <Slidemenu customerId={customerId} />
                     </div>
                 </div>
 
                 {/* Cột 2: Change password */}
-                <div className="sm:col-span-1 md:col-span-2">
+                <div className="col-span-2 sm:col-span-2 md:col-span-7">
                     <div className="p-4">
                         <Form
                             name="basic"

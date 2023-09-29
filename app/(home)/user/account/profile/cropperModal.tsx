@@ -28,7 +28,7 @@ const CropperModal = ({...props}: CropperModalProps) => {
             formData.append('customerId', `${props.userId}`);
             formData.append('multipartFile', file);
 
-            customerAPI.updateAvatar(formData, {
+            await customerAPI.updateAvatar(formData, {
                 headers: {
                     "Content-Type": "multipart/form-data",
                     "Access-Control-Allow-Origin": "*",

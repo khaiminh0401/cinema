@@ -1,29 +1,33 @@
 'use client'
 
-import Navbar from "@/app/(home)/user/navbar";
+import Slidemenu from "@/app/(home)/user/slidemenu";
 import {Button, Card, QRCode} from "antd";
 import React, {useEffect, useState} from "react";
-import {useParams} from "next/navigation";
+import {useParams, useRouter} from "next/navigation";
 import "./index.css"
 import Ticket from "@/app/(home)/user/booked-ticket/ticket";
 import {billAPI} from "@/util/API/Bill";
-import {DateUtils} from "@/util/DateUtils";
 import {NumberUtils} from "@/util/NumberUtils";
 import {useSession} from "next-auth/react";
-import {AxiosRequestConfig} from "axios";
+import {errorNotification} from "@/util/Notification";
 
 const BillDetail = () => {
     const param = useParams();
+    const router = useRouter();
     const [billDetails, setBillDetails] = useState<billDetails>();
     let content: JSX.Element;
-    const { data: session } = useSession();
-    const  userId  = session?.user.id;
-    console.log(userId)
+    const {data: session} = useSession();
+    const customerId = Number(session?.user.id);
+    console.log(customerId)
     useEffect(() => {
         if (session) {
             const init = async () => {
-                const billDetailsFromAPI = await billAPI.getBillDetails(Number(param.id), Number(userId));
-                setBillDetails(billDetailsFromAPI);
+                await billAPI.getBillDetails(Number(param.id), Number(customerId)).then((response) => {
+                    setBillDetails(response);
+                }).catch(() => {
+                    errorNotification("Đơn hàng không tồn tại hoặc không được phép truy cập");
+                    router.push("/user/booked-ticket");
+                });
             }
 
             init();
@@ -50,16 +54,16 @@ const BillDetail = () => {
     return (
         <>
             <div className="container mx-auto p-4">
-                <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3">
-                    {/* Cột 1: Navbar */}
-                    <div className="md:col-span-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-9 gap-4">
+                    {/* Cột 1: Slidemenu */}
+                    <div className="col-span-1 sm:col-span-2 md:col-span-2">
                         <div className="p-4">
-                            <Navbar/>
+                            <Slidemenu customerId={customerId}/>
                         </div>
                     </div>
 
-                    {/* Cột 2: Change password */}
-                    <div className="md:col-span-2">
+                    {/* Cột 2: Thông tin */}
+                    <div className="col-span-2 sm:col-span-2 md:col-span-7">
                         <div className="p-4">
                             {/* Thông tin khách hàng */}
                             <section className={"bg-neutral-900 rounded p-4 mb-4"}>
@@ -149,7 +153,7 @@ const BillDetail = () => {
                                         </p>
                                         <p className={"mb-1"}>Rạp
                                             <span
-                                                className={"float-right text-white"}>Chi nhánh {billDetails?.branchName}</span>
+                                                className={"float-right text-white"}>Chi nhánh {billDetails?.branchName} - {billDetails?.branchAddress}</span>
                                         </p>
                                         <p className={"mb-1"}>Phòng
                                             <span className={"float-right text-white"}>{billDetails?.roomName}</span>
@@ -159,7 +163,8 @@ const BillDetail = () => {
                                                 className={"float-right text-green-600"}>{`${billDetails?.startTime} ${billDetails?.showDate}`}</span>
                                         </p>
                                         <p className={"mb-1"}>Số lượng ghế
-                                            <span className={"float-right text-white"}>{billDetails?.tickets.length}</span>
+                                            <span
+                                                className={"float-right text-white"}>{billDetails?.tickets.length}</span>
                                         </p>
                                         <p className={"mb-1"}>Số ghế
                                             <span className={"float-right text-green-600"}>{billDetails?.seats}</span>
