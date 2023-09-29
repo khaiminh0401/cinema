@@ -1,5 +1,5 @@
-import { AxiosRequestConfig } from "axios";
-import { fetchAPI } from "./axios";
+import {AxiosRequestConfig} from "axios";
+import {fetchAPI} from "./axios";
 
 const findAll = async () => {
     return (await fetchAPI.get("/customer/getAll")).data as customer[];
@@ -32,6 +32,18 @@ const updatePassword = async (customer: Object) => {
     return (await fetchAPI.put(`/customer/update-password`, customer)).data;
 }
 
+const deleteAvatar = async (customerId: number, avatar: string) => {
+    return (await fetchAPI.post(`/customer/delete-avatar`, null,
+            {
+                params: {
+                    customerId,
+                    avatar
+                }
+            }
+        )
+    ).data;
+}
+
 export const customerAPI = {
     registration,
     registrationConfirm,
@@ -41,5 +53,6 @@ export const customerAPI = {
     updateAvatar,
     editProfile,
     updatePassword,
+    deleteAvatar,
 }
 
