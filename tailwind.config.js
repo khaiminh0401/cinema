@@ -5,7 +5,12 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    color:{
+      // "seat": "bloack"
+    },
+    token:{
+      "colorPrimary":"#F44336"
+    }
   },
   plugins: [],
 }
