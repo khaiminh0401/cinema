@@ -4,7 +4,6 @@ import {customerAPI} from "@/util/API/Customer";
 import {useEffect, useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Form, Select} from 'antd';
-import {useSession} from "next-auth/react";
 import {checkStatus} from "@/common/validation/status";
 import {errorNotification, successNotification} from "@/util/Notification";
 import {Option} from "rc-select";
@@ -28,7 +27,6 @@ const EditProfile = (props: EditProfileCustomer) => {
         register,
         handleSubmit,
         formState: {errors},
-        reset,
         setValue
     } = useForm<EditProfileProps>();
 

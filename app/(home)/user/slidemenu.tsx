@@ -43,17 +43,14 @@ const items: MenuItem[] = [
     getItem('Vé đã mua', '4', <FaTicket/>, '/user/booked-ticket'),
 ];
 
-interface SlidemenuProps {
-    customerId: number,
-}
-
-const Slidemenu = (props: SlidemenuProps) => {
+const Slidemenu = () => {
     const [collapsed, setCollapsed] = useState(false);
     // const [customerName, setCustomerName] = useState<string>();
     const [customer, setCustomer] = useState<customer>();
     const [avatar, setAvatar] = useState<string>();
+    const { data: session } = useSession();
 
-    const customerId = props.customerId;
+    const customerId = Number(session?.user.id);
 
     useEffect(() => {
         if (customerId) {

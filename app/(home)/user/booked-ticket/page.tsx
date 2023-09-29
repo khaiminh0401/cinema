@@ -14,8 +14,8 @@ import {DateUtils} from "@/util/DateUtils";
 const BookedTicket = () => {
     const [billHistories, setBillHistories] = useState<billHistory[]>();
     let content: JSX.Element;
-    const { data: session } = useSession();
-    const  customerId  = Number(session?.user.id);
+    const {data: session} = useSession();
+    const customerId = Number(session?.user.id);
 
     useEffect(() => {
         if (session) {
@@ -28,7 +28,7 @@ const BookedTicket = () => {
         }
     }, [session])
 
-    if (!session){
+    if (!session) {
         return <Login/>;
     }
 
@@ -45,66 +45,52 @@ const BookedTicket = () => {
     }
 
     return (
-        <div className="container mx-auto p-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-9 gap-4">
-                {/* Cột 1: Slidemenu */}
-                <div className="col-span-1 sm:col-span-2 md:col-span-2">
-                    <div className="p-4">
-                        <Slidemenu customerId={customerId}/>
-                    </div>
-                </div>
-
-                {/* Cột 2: Bill History */}
-                <div className="col-span-2 sm:col-span-2 md:col-span-7">
-                    <div className="p-4">
-                        {
-                            billHistories?.map((billHistory, index) => {
-                                return (
-                                    <Card
-                                        bordered={false}
-                                        className={"w-full bg-neutral-800 text-white mb-5"}
-                                        key={index}
-                                    >
-                                        <div className="grid grid-cols-10 gap-2">
-                                            <div className="col-span-3 border-r-4 border-r-red-600 pe-1">
-                                                <div className="text-center">
-                                                    <p>Thời gian chiếu</p>
-                                                    <p className={"text-red-600 font-semibold"}>{`${billHistory.startTime}`}</p>
-                                                    <p>{DateUtils.formatDate(new Date(billHistory.showDate))}</p>
-                                                    <p className={"font-semibold"}>
-                                                        {paymentStatus(billHistory.exportStatus)}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div className="col-span-7">
-                                                <div className={"ms-4"}>
-                                                    <p>
+        <div className="p-4">
+            {
+                billHistories?.map((billHistory, index) => {
+                    return (
+                        <Card
+                            bordered={false}
+                            className={"w-full bg-neutral-800 text-white mb-5"}
+                            key={index}
+                        >
+                            <div className="grid grid-cols-10 gap-2">
+                                <div className="col-span-3 border-r-4 border-r-red-600 pe-1">
+                                    <div className="text-center">
+                                        <p>Thời gian chiếu</p>
+                                        <p className={"text-red-600 font-semibold"}>{`${billHistory.startTime}`}</p>
+                                        <p>{DateUtils.formatDate(new Date(billHistory.showDate))}</p>
+                                        <p className={"font-semibold"}>
+                                            {paymentStatus(billHistory.exportStatus)}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="col-span-7">
+                                    <div className={"ms-4"}>
+                                        <p>
                                                         <span>Mã hóa đơn: <span
                                                             className={"text-red-600"}>{billHistory.id}</span></span>
-                                                        <span>, Phim: {billHistory.movieName}</span>
-                                                    </p>
-                                                    <p>Rạp: Chi nhánh {`${billHistory.branchName}`}</p>
-                                                    <p>{billHistory.roomName}, Ghế: {billHistory.seats}</p>
-                                                    <p>
-                                                        <span>Thời lượng phim: {billHistory.movieTime} phút</span>
-                                                        <span className={"float-right"}>
+                                            <span>, Phim: {billHistory.movieName}</span>
+                                        </p>
+                                        <p>Rạp: Chi nhánh {`${billHistory.branchName}`}</p>
+                                        <p>{billHistory.roomName}, Ghế: {billHistory.seats}</p>
+                                        <p>
+                                            <span>Thời lượng phim: {billHistory.movieTime} phút</span>
+                                            <span className={"float-right"}>
                                         <Link
                                             href={`/user/booked-ticket/${billHistory.id}`}
                                         >
                                             Xem chi tiết
                                         </Link>
                                     </span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Card>
-                                );
-                            })
-                        }
-                    </div>
-                </div>
-            </div>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Card>
+                    );
+                })
+            }
         </div>
     );
 }

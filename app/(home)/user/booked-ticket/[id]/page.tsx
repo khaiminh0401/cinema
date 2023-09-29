@@ -5,7 +5,7 @@ import {Button, Card, QRCode} from "antd";
 import React, {useEffect, useState} from "react";
 import {useParams, useRouter} from "next/navigation";
 import "./index.css"
-import Ticket from "@/app/(home)/user/booked-ticket/ticket";
+import Ticket from "@/app/(home)/user/booked-ticket/[id]/ticket";
 import {billAPI} from "@/util/API/Bill";
 import {NumberUtils} from "@/util/NumberUtils";
 import {useSession} from "next-auth/react";
@@ -18,7 +18,7 @@ const BillDetail = () => {
     let content: JSX.Element;
     const {data: session} = useSession();
     const customerId = Number(session?.user.id);
-    console.log(customerId)
+
     useEffect(() => {
         if (session) {
             const init = async () => {
@@ -53,196 +53,186 @@ const BillDetail = () => {
 
     return (
         <>
-            <div className="container mx-auto p-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-9 gap-4">
-                    {/* Cột 1: Slidemenu */}
-                    <div className="col-span-1 sm:col-span-2 md:col-span-2">
-                        <div className="p-4">
-                            <Slidemenu customerId={customerId}/>
+
+            {/* Cột 2: Thông tin */}
+            <div className="col-span-2 sm:col-span-2 md:col-span-7">
+                <div className="p-4">
+                    {/* Thông tin khách hàng */}
+                    <section className={"bg-neutral-900 rounded p-4 mb-4"}>
+                        <h2 className={"font-bold text-xl mb-4 text-white uppercase"}>Thông tin khách hàng</h2>
+                        <div className={"text-gray-300"}>
+                            <p className={"mb-1"}>Họ và tên
+                                <span className={"float-right text-white"}>{billDetails?.customerName}</span>
+                            </p>
+                            <p className={"mb-1"}>Số điện thoại
+                                <span className={"float-right text-white"}>{billDetails?.customerPhone}</span>
+                            </p>
+                            <p className={"mb-1"}>Email
+                                <span className={"float-right text-white"}>{billDetails?.customerEmail}</span>
+                            </p>
                         </div>
-                    </div>
+                    </section>
 
-                    {/* Cột 2: Thông tin */}
-                    <div className="col-span-2 sm:col-span-2 md:col-span-7">
-                        <div className="p-4">
-                            {/* Thông tin khách hàng */}
-                            <section className={"bg-neutral-900 rounded p-4 mb-4"}>
-                                <h2 className={"font-bold text-xl mb-4 text-white uppercase"}>Thông tin khách hàng</h2>
-                                <div className={"text-gray-300"}>
-                                    <p className={"mb-1"}>Họ và tên
-                                        <span className={"float-right text-white"}>{billDetails?.customerName}</span>
+                    {/* Thông tin phim */}
+                    <section className={"bg-neutral-900 rounded p-4 mb-4"}>
+                        <h2 className={"font-bold text-xl mb-4 text-white uppercase"}>Thông tin phim</h2>
+                        <div className="grid grid-cols-10 gap-x-4 lg:grid-cols-5">
+                            <div className="col-span-3 lg:col-span-1">
+                                <img
+                                    src={"https://th.bing.com/th/id/R.0a469b27f977da0314447d0605103e1d?rik=wvR%2fZMI2jfgtkA&riu=http%3a%2f%2fwww.paragsankhe.com%2fwp-content%2fuploads%2f2012%2f07%2fofficial-poster-for-london-olympic-games-1948-by-walter-herz.jpeg&ehk=Xqw4YSW6YG7s%2bWMws1MStvjrupUlD4flraICaGHcM9k%3d&risl=&pid=ImgRaw&r=0"}
+                                    className={"w-28 h-40"}
+                                />
+                            </div>
+                            <div className="col-span-7 lg:col-span-4">
+                                <div className={""}>
+                                    <h2 className={"font-bold text-xl mb-4"}>{billDetails?.movieName}</h2>
+                                    <p className={"text-gray-300"}>Đất nước:
+                                        <span className={"text-white"}> {billDetails?.country}</span>
                                     </p>
-                                    <p className={"mb-1"}>Số điện thoại
-                                        <span className={"float-right text-white"}>{billDetails?.customerPhone}</span>
+                                    <p className={"text-gray-300"}>Ngôn ngữ:
+                                        <span className={"text-white"}> Tiếng Việt</span>
                                     </p>
-                                    <p className={"mb-1"}>Email
-                                        <span className={"float-right text-white"}>{billDetails?.customerEmail}</span>
+                                    <p className={"text-gray-300"}>Năm sản xuất:
+                                        <span className={"text-white"}> {billDetails?.yearOfManufacture}</span>
+                                    </p>
+                                    <p className={"text-gray-300"}>Độ tuổi:
+                                        <span
+                                            className={"text-white"}> {billDetails?.limitAge !== 0 ? billDetails?.limitAge : 'Không giới hạn'}</span>
                                     </p>
                                 </div>
-                            </section>
+                            </div>
+                        </div>
+                    </section>
 
-                            {/* Thông tin phim */}
-                            <section className={"bg-neutral-900 rounded p-4 mb-4"}>
-                                <h2 className={"font-bold text-xl mb-4 text-white uppercase"}>Thông tin phim</h2>
-                                <div className="grid grid-cols-10 gap-x-4 lg:grid-cols-5">
-                                    <div className="col-span-3 lg:col-span-1">
-                                        <img
-                                            src={"https://th.bing.com/th/id/R.0a469b27f977da0314447d0605103e1d?rik=wvR%2fZMI2jfgtkA&riu=http%3a%2f%2fwww.paragsankhe.com%2fwp-content%2fuploads%2f2012%2f07%2fofficial-poster-for-london-olympic-games-1948-by-walter-herz.jpeg&ehk=Xqw4YSW6YG7s%2bWMws1MStvjrupUlD4flraICaGHcM9k%3d&risl=&pid=ImgRaw&r=0"}
-                                            className={"w-28 h-40"}
-                                        />
-                                    </div>
-                                    <div className="col-span-7 lg:col-span-4">
-                                        <div className={""}>
-                                            <h2 className={"font-bold text-xl mb-4"}>{billDetails?.movieName}</h2>
-                                            <p className={"text-gray-300"}>Đất nước:
-                                                <span className={"text-white"}> {billDetails?.country}</span>
-                                            </p>
-                                            <p className={"text-gray-300"}>Ngôn ngữ:
-                                                <span className={"text-white"}> Tiếng Việt</span>
-                                            </p>
-                                            <p className={"text-gray-300"}>Năm sản xuất:
-                                                <span className={"text-white"}> {billDetails?.yearOfManufacture}</span>
-                                            </p>
-                                            <p className={"text-gray-300"}>Độ tuổi:
-                                                <span
-                                                    className={"text-white"}> {billDetails?.limitAge !== 0 ? billDetails?.limitAge : 'Không giới hạn'}</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </section>
-
-                            <section className={"bg-neutral-900 rounded p-4 mb-4"}>
-                                {/* Thông tin vé */}
-                                <div className={"mb-8"}>
-                                    <h2 className={"font-bold text-xl mb-4 text-white uppercase"}>Thông tin vé & lượt
-                                        chiếu</h2>
-                                    <Card
-                                        bordered={false}
-                                        className={"w-fit bg-inherit border border-2 border-neutral-800 text-white my-5"}
-                                    >
-                                        <div className="grid grid-cols-10 gap-x-4">
-                                            <div className="col-span-3">
-                                                <div className="text-center">
-                                                    <QRCode
-                                                        value={"localhost:3000/user/booked-ticket/1"}
-                                                        color={"white"}
-                                                        size={100}
-                                                    />
-                                                </div>
-                                            </div>
-                                            <div className="col-span-7">
-                                                <div className={"ms-4"}>
-                                                    <h2 className={"font-bold text-xl mb-4"}>Mã hóa
-                                                        đơn: {billDetails?.id}</h2>
-                                                    <p className={"text-gray-300"}>Ghế:
-                                                        <span className={"text-white"}> {billDetails?.seats}</span>
-                                                    </p>
-                                                    <p className={"text-gray-300"}>Tổng giá:
-                                                        <span
-                                                            className={"text-white"}> {NumberUtils.formatCurrency(Number(billDetails?.ticketTotalPrice))}</span>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </Card>
-
-                                    <div className={"text-gray-300"}>
-                                        <p className={"mb-1"}>Trạng thái
-                                            <span className={"float-right text-green-500"}>Thành công</span>
-                                        </p>
-                                        <p className={"mb-1"}>Rạp
-                                            <span
-                                                className={"float-right text-white"}>Chi nhánh {billDetails?.branchName} - {billDetails?.branchAddress}</span>
-                                        </p>
-                                        <p className={"mb-1"}>Phòng
-                                            <span className={"float-right text-white"}>{billDetails?.roomName}</span>
-                                        </p>
-                                        <p className={"mb-1"}>Thời gian:
-                                            <span
-                                                className={"float-right text-green-600"}>{`${billDetails?.startTime} ${billDetails?.showDate}`}</span>
-                                        </p>
-                                        <p className={"mb-1"}>Số lượng ghế
-                                            <span
-                                                className={"float-right text-white"}>{billDetails?.tickets.length}</span>
-                                        </p>
-                                        <p className={"mb-1"}>Số ghế
-                                            <span className={"float-right text-green-600"}>{billDetails?.seats}</span>
-                                        </p>
-                                        <p className={"mb-1"}>Tổng giá vé
-                                            <span
-                                                className={"float-right"}>{NumberUtils.formatCurrency(Number(billDetails?.ticketTotalPrice))}</span>
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <Ticket tickets={billDetails?.tickets || []}/>
-
-                                {/* Thông tin topping */}
-                                {/* Kiểm tra khách hàng có đặt thức ăn không */}
-                                {!billDetails?.toppingName ? <></> :
-                                    <div>
-                                        <h2 className={"font-bold text-xl mb-4 text-white uppercase"}>Thông tin
-                                            topping</h2>
-                                        <div className={"text-gray-300"}>
-                                            <p className={"mb-1"}>Topping
-                                                <span
-                                                    className={"float-right text-white"}>{billDetails.toppingName}</span>
-                                            </p>
-                                            <p className={"mb-1"}>Giá tiền
-                                                <span
-                                                    className={"float-right text-white"}>{billDetails.toppingTotalPrice}</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                }
-                            </section>
-
+                    <section className={"bg-neutral-900 rounded p-4 mb-4"}>
+                        {/* Thông tin vé */}
+                        <div className={"mb-8"}>
+                            <h2 className={"font-bold text-xl mb-4 text-white uppercase"}>Thông tin vé & lượt
+                                chiếu</h2>
                             <Card
                                 bordered={false}
-                                className={"bg-neutral-800 text-white my-5"}
+                                className={"w-fit bg-inherit border border-2 border-neutral-800 text-white my-5"}
                             >
-                                <div className={"text-gray-300"}>
-                                    <p className={"mb-1"}>Giá vé xem phim
-                                        <span
-                                            className={"float-right text-white"}>{NumberUtils.formatCurrency(Number(billDetails?.ticketTotalPrice))}</span>
-                                    </p>
-
-                                    {/* Giá topping */}
-                                    {
-                                        !billDetails?.toppingName ? <></> :
-                                            <p className={"mb-1"}>Giá topping
-                                                <span
-                                                    className={"float-right text-white"}>{NumberUtils.formatCurrency(Number(billDetails?.toppingTotalPrice))}</span>
+                                <div className="grid grid-cols-10 gap-x-4">
+                                    <div className="col-span-3">
+                                        <div className="text-center">
+                                            <QRCode
+                                                value={"localhost:3000/user/booked-ticket/1"}
+                                                color={"white"}
+                                                size={100}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="col-span-7">
+                                        <div className={"ms-4"}>
+                                            <h2 className={"font-bold text-xl mb-4"}>Mã hóa
+                                                đơn: {billDetails?.id}</h2>
+                                            <p className={"text-gray-300"}>Ghế:
+                                                <span className={"text-white"}> {billDetails?.seats}</span>
                                             </p>
-                                    }
-                                    <p className={"mb-1"}>Phí thanh toán
-                                        <span className={"float-right text-white"}>
+                                            <p className={"text-gray-300"}>Tổng giá:
+                                                <span
+                                                    className={"text-white"}> {NumberUtils.formatCurrency(Number(billDetails?.ticketTotalPrice))}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </Card>
+
+                            <div className={"text-gray-300"}>
+                                <p className={"mb-1"}>Trạng thái
+                                    <span className={"float-right text-green-500"}>Thành công</span>
+                                </p>
+                                <p className={"mb-1"}>Rạp
+                                    <span
+                                        className={"float-right text-white"}>Chi nhánh {billDetails?.branchName} - {billDetails?.branchAddress}</span>
+                                </p>
+                                <p className={"mb-1"}>Phòng
+                                    <span className={"float-right text-white"}>{billDetails?.roomName}</span>
+                                </p>
+                                <p className={"mb-1"}>Thời gian:
+                                    <span
+                                        className={"float-right text-green-600"}>{`${billDetails?.startTime} ${billDetails?.showDate}`}</span>
+                                </p>
+                                <p className={"mb-1"}>Số lượng ghế
+                                    <span
+                                        className={"float-right text-white"}>{billDetails?.tickets.length}</span>
+                                </p>
+                                <p className={"mb-1"}>Số ghế
+                                    <span className={"float-right text-green-600"}>{billDetails?.seats}</span>
+                                </p>
+                                <p className={"mb-1"}>Tổng giá vé
+                                    <span
+                                        className={"float-right"}>{NumberUtils.formatCurrency(Number(billDetails?.ticketTotalPrice))}</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <Ticket tickets={billDetails?.tickets || []}/>
+
+                        {/* Thông tin topping */}
+                        {/* Kiểm tra khách hàng có đặt thức ăn không */}
+                        {!billDetails?.toppingName ? <></> :
+                            <div>
+                                <h2 className={"font-bold text-xl mb-4 text-white uppercase"}>Thông tin
+                                    topping</h2>
+                                <div className={"text-gray-300"}>
+                                    <p className={"mb-1"}>Topping
+                                        <span
+                                            className={"float-right text-white"}>{billDetails.toppingName}</span>
+                                    </p>
+                                    <p className={"mb-1"}>Giá tiền
+                                        <span
+                                            className={"float-right text-white"}>{billDetails.toppingTotalPrice}</span>
+                                    </p>
+                                </div>
+                            </div>
+                        }
+                    </section>
+
+                    <Card
+                        bordered={false}
+                        className={"bg-neutral-800 text-white my-5"}
+                    >
+                        <div className={"text-gray-300"}>
+                            <p className={"mb-1"}>Giá vé xem phim
+                                <span
+                                    className={"float-right text-white"}>{NumberUtils.formatCurrency(Number(billDetails?.ticketTotalPrice))}</span>
+                            </p>
+
+                            {/* Giá topping */}
+                            {
+                                !billDetails?.toppingName ? <></> :
+                                    <p className={"mb-1"}>Giá topping
+                                        <span
+                                            className={"float-right text-white"}>{NumberUtils.formatCurrency(Number(billDetails?.toppingTotalPrice))}</span>
+                                    </p>
+                            }
+                            <p className={"mb-1"}>Phí thanh toán
+                                <span className={"float-right text-white"}>
                                             {NumberUtils.formatCurrency(
                                                 (parseFloat(`${billDetails?.ticketTotalPrice}`) + parseFloat(`${billDetails?.toppingTotalPrice}`))
                                                 * parseFloat(`${billDetails?.tickets[0].vat}`)
                                             )}
                                         </span>
-                                    </p>
-                                    <hr className={"my-1"}/>
-                                    <p className={"mb-1"}>Thanh toán với ...
-                                        <span className={"float-right text-white text-lg font-semibold"}>
+                            </p>
+                            <hr className={"my-1"}/>
+                            <p className={"mb-1"}>Thanh toán với ...
+                                <span className={"float-right text-white text-lg font-semibold"}>
                                             {NumberUtils.formatCurrency((parseFloat(`${billDetails?.ticketTotalPrice}`) + parseFloat(`${billDetails?.toppingTotalPrice}`))
                                                 +
                                                 ((parseFloat(`${billDetails?.ticketTotalPrice}`) + parseFloat(`${billDetails?.toppingTotalPrice}`))
                                                     * parseFloat(`${billDetails?.tickets[0].vat}`))
                                             )}
                                         </span>
-                                    </p>
-                                </div>
-                            </Card>
-
-                            {/* Thanh toán lại */}
-                            <section>
-                                {paymentStatus(Number(billDetails?.exportStatus))}
-                            </section>
+                            </p>
                         </div>
-                    </div>
+                    </Card>
+
+                    {/* Thanh toán lại */}
+                    <section>
+                        {paymentStatus(Number(billDetails?.exportStatus))}
+                    </section>
                 </div>
             </div>
         </>
