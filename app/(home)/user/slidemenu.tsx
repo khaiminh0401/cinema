@@ -57,14 +57,17 @@ const SlideMenu = () => {
             const init = async () => {
                 await customerAPI.findId(customerId).then((response) => {
                     setCustomer(response);
-                    response.keyfacebook ? setAvatar(response.avatar)
-                        : setAvatar(customer?.avatar)
                 })
             }
 
             init();
         }
-    }, [customerId, customer]);
+    }, [customerId]);
+    
+    useEffect(() => {
+        setAvatar(customer?.avatar)
+        console.log(customer?.avatar)
+    }, [customer?.avatar]);
 
     const toggleCollapsed = () => {
         setCollapsed(!collapsed);

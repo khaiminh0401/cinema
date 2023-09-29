@@ -15,6 +15,7 @@ type EditProfileProps = {
     name: string,
     email: string,
     phone: string,
+    address: string,
     gender: boolean
 }
 
@@ -36,6 +37,7 @@ const EditProfile = (props: EditProfileCustomer) => {
         if (props.editCustomer) {
             setValue("name", props.editCustomer.name);
             setValue("phone", props.editCustomer.phone);
+            setValue("address", props.editCustomer?.address)
             setGender(`${props.editCustomer.gender}`);
         }
     }, [props.editCustomer]);
@@ -110,17 +112,17 @@ const EditProfile = (props: EditProfileCustomer) => {
                 <div className="text-red-600 mt-1">{errors.phone?.message}</div>
             </Form.Item>
 
-            {/*<Form.Item*/}
-            {/*    label={<span className="text-white">Địa chỉ</span>}*/}
-            {/*    colon={false}*/}
-            {/*>*/}
-            {/*    <Input*/}
-            {/*        type="text"*/}
-            {/*        className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"*/}
-            {/*        register={register("", Validation.phone)}*/}
-            {/*    />*/}
-            {/*    <div className="text-red-600 mt-1">{errors.phone?.message}</div>*/}
-            {/*</Form.Item>*/}
+            <Form.Item
+                label={<span className="text-white">Địa chỉ</span>}
+                colon={false}
+            >
+                <Input
+                    type="text"
+                    className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                    register={register("address", Validation.address)}
+                />
+                <div className="text-red-600 mt-1">{errors.address?.message}</div>
+            </Form.Item>
 
             <Form.Item
                 label={<span className="text-white">Giới tính</span>}
