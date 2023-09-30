@@ -1,4 +1,4 @@
-import { ObjectValidate } from "@/common/validation/validation";
+import {ObjectValidate} from "@/common/validation/validation";
 
 export const NAME: ObjectValidate = { key: "name", name: "Tên" };
 export const PHONE: ObjectValidate = { key: "phone", name: "Số điện thoại" };

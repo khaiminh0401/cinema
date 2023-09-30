@@ -1,9 +1,9 @@
-import { Validation } from "@/common/validation/page/registration";
+import {Validation} from "@/common/validation/page/registration";
 import Input from "@/components/Input/page";
-import { customerAPI } from "@/util/API/Customer";
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { Form } from 'antd';
+import {customerAPI} from "@/util/API/Customer";
+import {SubmitHandler, useForm} from "react-hook-form";
+import {Form} from 'antd';
+import {useSession} from "next-auth/react";
 
 /**
  * Object of Register
@@ -15,9 +15,9 @@ type EditProfileProps = {
     gender: boolean
 }
 
-const EditProfile = ({...props} : customer) => {
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<EditProfileProps>();
-
+const EditProfile = ({...props}: customer) => {
+    const {register, handleSubmit, formState: {errors}, reset} = useForm<EditProfileProps>();
+    const {data: session} = useSession();
     const onSubmit: SubmitHandler<EditProfileProps> = async (data) => {
         const newCustomer = {
             id: 1,
@@ -32,12 +32,13 @@ const EditProfile = ({...props} : customer) => {
     return (
         <Form
             name="basic"
-            labelCol={{ span: 7 }}
-            wrapperCol={{ span: 17 }}
+            labelCol={{span: 7}}
+            wrapperCol={{span: 17}}
             labelAlign="left"
-            initialValues={{ remember: true }}
+            initialValues={{remember: true}}
             onFinish={handleSubmit(onSubmit)}
-            onFinishFailed={() => { }}
+            onFinishFailed={() => {
+            }}
             autoComplete="off"
         >
             <section className="mb-10 text-white text-left">
@@ -120,7 +121,7 @@ const EditProfile = ({...props} : customer) => {
                 <div className="text-red-600 mt-1">{errors.gender?.message}</div>
             </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Form.Item wrapperCol={{offset: 8, span: 16}}>
                 <button
                     className="w-1/3 py-2 rounded-md bg-red-500 text-white shadow-none
                         hover:scale-105 hover:shadow-none hover:bg-red-600 focus:scale-105

@@ -1,30 +1,30 @@
 "use client"
-import { useSearchParams } from "next/navigation";
+import {useSearchParams} from "next/navigation";
 import "./index.css";
 import dynamic from "next/dynamic";
-import { RingLoader } from "react-spinners";
-import { useState } from "react"
+import {RingLoader} from "react-spinners";
+import {useEffect, useState} from "react"
+import SeatRow from "./SeatRow";
+import {seatAPI} from "@/util/API/Seat";
+import SeatIcon from "@/common/Icon/SeatIcon";
+import {Steps} from "antd";
+import {movieAPI} from "@/util/API/Movie";
+import {showtimeAPI} from "@/util/API/Showtime";
+import {DateUtils} from "@/util/DateUtils";
+import {ArrayUtils} from "@/util/ArrayUtils";
+import {NumberUtils} from "@/util/NumberUtils";
+import {getSession, useSession} from "next-auth/react";
+
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
     ssr: true,
-    loading: () => <p className="text-center" style={{ width: 300 }}>Loading...</p>,
+    loading: () => <p className="text-center" style={{width: 300}}>Loading...</p>,
 });
-import SeatRow from "./SeatRow";
-import { useEffect } from "react";
-import { seatAPI } from "@/util/API/Seat";
-import SeatIcon from "@/common/Icon/SeatIcon";
-import { Steps } from "antd";
-import { movieAPI } from "@/util/API/Movie";
-import { showtimeAPI } from "@/util/API/Showtime";
-import { DateUtils } from "@/util/DateUtils";
-import { ArrayUtils } from "@/util/ArrayUtils";
-import { NumberUtils } from "@/util/NumberUtils";
 
 interface SeatPageProps {
     seat: Object[],
     movie: any,
     showtime: any
 }
-
 
 
 const Seat = () => {
@@ -36,6 +36,7 @@ const Seat = () => {
     const [data, setData] = useState<SeatPageProps>();
     const [price, setPrice] = useState<any>([]);
     const [total, setTotal] = useState<any>();
+    const {data: session, update} = useSession();
     const getTotal = async (seat: any) => {
         if (ArrayUtils.checkExist(seats, seat)) {
             ArrayUtils.remove(seats, seat);
@@ -46,8 +47,16 @@ const Seat = () => {
         }
         setTotal({
             cost: price.length > 0 ? price.map((s: any) => s.total).reduce((a: number, b: number) => a + b) : price.total,
-            name_seat: seats.length > 0 ? seats.map((s: any) => s.name).reduce((a: string, b: string) => a+", "+b) : seats.name
+            name_seat: seats.length > 0 ? seats.map((s: any) => s.name).reduce((a: string, b: string) => a + ", " + b) : seats.name
         });
+        await update({
+            ...session,
+            user: {
+                ...session?.user,
+                seat: total
+            }
+
+        })
     }
 
     useEffect(() => {
@@ -67,86 +76,87 @@ const Seat = () => {
         })
 
     }, []);
-
     return (
         <div className="md:mx-28 md:my-14 mx-10">
 
-            {data ? <> <div className="w-1/2 mx-auto my-10">
-                <Steps
-                    current={0}
-                    items={[
-                        {
-                            title: <span className="text-white">Chọn ghế</span>,
-                            status: 'process',
-                            // colorPrimary: "black"
-                        },
-                        {
-                            title: <span className="text-white">Chọn topping</span>,
-                            status: 'wait',
-                        },
-                        {
-                            title: <span className="text-white">Thanh toán</span>,
-                            status: 'wait',
-
-                        },
-                    ]}
-                    className="text-white"
-                />
-            </div>
-                <div className="grid md:grid-cols-2 gap-5 grid-cols-1">
-                    <div className="col-start-1 col-span-2">
-                        <div className="w-full mx-auto my-10 ">
-                            {/* <img src="/assert/seat/screen.png" className="w-1/5 mx-auto" alt="" /> */}
-                            <div className="hidden md:block">
-                                <h4 className="text-center">Chú thích</h4>
-                                <div className="flex justify-around gap-40 w-4/5 mx-auto">
-                                    <div className="flex items-center">
-                                        <SeatIcon.ItemChoose />
-                                        <span className="p-5">Ghế được chọn</span>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <SeatIcon.ItemDefault />
-                                        <span className="p-5">Ghế chưa chọn</span>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <SeatIcon.ItemHasBooked />
-                                        <span className="p-5">Ghế đã có người mua</span>
-                                    </div>
-                                </div>
-                                <div className="flex justify-around gap-40 w-4/5 mx-auto">
-                                    <div className="flex items-center">
-                                        <SeatIcon.ItemCoupleChoose />
-                                        <span className="p-5">Ghế đôi được chọn</span>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <SeatIcon.ItemCoupleDefault />
-                                        <span className="p-5">Ghế đôi chưa chọn</span>
-                                    </div>
-                                    <div className="flex items-center">
-                                        <SeatIcon.ItemCoupleHasBooked />
-                                        <span className="p-5">Ghế đôi đã có người mua</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="border mx-auto mt-5 md:w-3/4 w-full">
+            {data ? <>
+                    <div className="w-1/2 mx-auto my-10">
+                        <Steps
+                            current={0}
+                            items={[
                                 {
-                                    data.seat.map((s: any) => {
-                                        return <SeatRow onClickButton={getTotal} data={s.seats} row={s.row} key={s.row} />
-                                    })
-                                }
+                                    title: <span className="text-white">Chọn ghế</span>,
+                                    status: 'process',
+                                    // colorPrimary: "black"
+                                },
+                                {
+                                    title: <span className="text-white">Chọn topping</span>,
+                                    status: 'wait',
+                                },
+                                {
+                                    title: <span className="text-white">Thanh toán</span>,
+                                    status: 'wait',
+
+                                },
+                            ]}
+                            className="text-white"
+                        />
+                    </div>
+                    <div className="grid md:grid-cols-2 gap-5 grid-cols-1">
+                        <div className="col-start-1 col-span-2">
+                            <div className="w-full mx-auto my-10 ">
+                                {/* <img src="/assert/seat/screen.png" className="w-1/5 mx-auto" alt="" /> */}
+                                <div className="hidden md:block">
+                                    <h4 className="text-center">Chú thích</h4>
+                                    <div className="flex justify-around gap-40 w-4/5 mx-auto">
+                                        <div className="flex items-center">
+                                            <SeatIcon.ItemChoose/>
+                                            <span className="p-5">Ghế được chọn</span>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <SeatIcon.ItemDefault/>
+                                            <span className="p-5">Ghế chưa chọn</span>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <SeatIcon.ItemHasBooked/>
+                                            <span className="p-5">Ghế đã có người mua</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex justify-around gap-40 w-4/5 mx-auto">
+                                        <div className="flex items-center">
+                                            <SeatIcon.ItemCoupleChoose/>
+                                            <span className="p-5">Ghế đôi được chọn</span>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <SeatIcon.ItemCoupleDefault/>
+                                            <span className="p-5">Ghế đôi chưa chọn</span>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <SeatIcon.ItemCoupleHasBooked/>
+                                            <span className="p-5">Ghế đôi đã có người mua</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="border mx-auto mt-5 md:w-3/4 w-full">
+                                    {
+                                        data.seat.map((s: any) => {
+                                            return <SeatRow onClickButton={getTotal} data={s.seats} row={s.row}
+                                                            key={s.row}/>
+                                        })
+                                    }
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="col-end-4">
-                        <Card
-                            title="Thông tin đặt chỗ"
-                            className="book-information-sticky hidden lg:block"
-                            headStyle={{ textAlign: "center" }}
-                            style={{ width: 300 }}
-                            cover={<img src={`/assert/home/${data.movie.poster}`} alt="" />}
-                        >
-                            <table className="w-full">
-                                <tbody>
+                        <div className="col-end-4">
+                            <Card
+                                title="Thông tin đặt chỗ"
+                                className="book-information-sticky hidden lg:block"
+                                headStyle={{textAlign: "center"}}
+                                style={{width: 300}}
+                                cover={<img src={`/assert/home/${data.movie.poster}`} alt=""/>}
+                            >
+                                <table className="w-full">
+                                    <tbody>
                                     <tr className="w-full">
                                         <td colSpan={2}>Tên phim:</td>
                                         <td className="text-right"><strong>{data.movie.name}</strong></td>
@@ -164,21 +174,25 @@ const Seat = () => {
                                         <td className="text-right">Gò vấp</td>
                                     </tr>
                                     <tr className="w-full">
-                                        <td colSpan={2}>Ghế:</td>
-                                        <td className="text-right">{total?.name_seat || "Chưa chọn"}</td>
+                                        <td colSpan={2}>Ghế: {total?.name_seat}</td>
+                                        <td className="text-right">{session?.user?.seat?.name_seat || "Chưa chọn"}</td>
                                     </tr>
                                     <tr className="border-t-2 border-black">
                                         <td colSpan={2}>Tạm tính:</td>
                                         <td className="text-right">{NumberUtils.formatCurrency(total?.cost || 0)}</td>
                                     </tr>
-                                </tbody>
-                            </table>
-                            <button className="w-full bg-black text-white rounded border-black border-2 hover:bg-black hover:text-white p-3">Đi tiếp</button>
-                        </Card>
+                                    </tbody>
+                                </table>
+                                <button
+                                    className="w-full bg-black text-white rounded border-black border-2 hover:bg-black hover:text-white p-3">Đi
+                                    tiếp
+                                </button>
+                            </Card>
 
+                        </div>
                     </div>
-                </div></>
-                : <div className="flex justify-center"><RingLoader color="rgba(255, 78, 0, 1)" /></div>}
+                </>
+                : <div className="flex justify-center"><RingLoader color="rgba(255, 78, 0, 1)"/></div>}
         </div>
     );
 }

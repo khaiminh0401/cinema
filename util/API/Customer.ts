@@ -1,5 +1,5 @@
-import { AxiosRequestConfig } from "axios";
-import { fetchAPI } from "./axios";
+import {AxiosRequestConfig} from "axios";
+import {fetchAPI} from "./axios";
 
 const findAll = async () => {
     return (await fetchAPI.get("/customer/getAll")).data as customer[];

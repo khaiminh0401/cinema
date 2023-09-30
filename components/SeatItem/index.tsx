@@ -1,5 +1,6 @@
-import { ReactNode, useState } from "react";
+import {useState} from "react";
 import SeatIcon from "@/common/Icon/SeatIcon";
+
 interface SeatItem{
     obj:any,
     onClick: (name:string) => any

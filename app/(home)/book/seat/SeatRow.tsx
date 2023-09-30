@@ -1,6 +1,5 @@
 import SeatCoupleItem from "@/components/SeatCoupleItem";
 import SeatItem from "@/components/SeatItem";
-import { ReactNode } from "react";
 
 interface SRow {
     data: any,

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import CropperModal from './cropperModal';
 import {Input, InputRef} from "antd";
 import "./index.css";
