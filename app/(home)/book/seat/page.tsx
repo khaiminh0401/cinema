@@ -45,20 +45,24 @@ const Seat = () => {
             ArrayUtils.add(seats, seat);
             ArrayUtils.add(price, await seatAPI.getTotalPrice(parseInt(showTimeId || "1"), seat.name));
         }
-        setTotal({
-            cost: price.length > 0 ? price.map((s: any) => s.total).reduce((a: number, b: number) => a + b) : price.total,
-            name_seat: seats.length > 0 ? seats.map((s: any) => s.name).reduce((a: string, b: string) => a + ", " + b) : seats.name
-        });
+        const totalTemp = {
+            cost: price.length > 0 ? price.map((s: any) => s.total)
+                                            .reduce((a: number, b: number) => a + b) 
+                                    : price.total,
+            name_seat: seats.length > 0 ? seats.map((s: any) => s.name)
+                                                .reduce((a: string, b: string) => a + ", " + b) 
+                                        : seats.name
+        };
         await update({
             ...session,
             user: {
                 ...session?.user,
-                seat: total
+                seat: totalTemp
             }
-
         })
-    }
+        setTotal(totalTemp);
 
+    }
     useEffect(() => {
         let myPromise = new Promise(async function (myResolve, myReject) {
             const seat = await seatAPI.getSeatHasCheckTicket(showTimeId);
@@ -175,7 +179,7 @@ const Seat = () => {
                                     </tr>
                                     <tr className="w-full">
                                         <td colSpan={2}>Ghế: {total?.name_seat}</td>
-                                        <td className="text-right">{session?.user?.seat?.name_seat || "Chưa chọn"}</td>
+                                        <td className="text-right">{total?.name_seat || "Chưa chọn"}</td>
                                     </tr>
                                     <tr className="border-t-2 border-black">
                                         <td colSpan={2}>Tạm tính:</td>
