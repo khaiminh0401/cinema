@@ -117,6 +117,7 @@ const BillDetail = () => {
                                             value={"localhost:3000/user/booked-ticket/1"}
                                             color={"white"}
                                             size={100}
+                                            bordered={false}
                                         />
                                     </div>
                                 </div>
