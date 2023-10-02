@@ -11,6 +11,25 @@ import {useSession} from "next-auth/react";
 import Login from "@/app/(login)/login/page";
 import {DateUtils} from "@/util/DateUtils";
 
+const STATUS = [
+    {
+        key: 0,
+        element: <span className={"text-red-600"}>Thất bại</span>
+    },
+    {
+        key: 1,
+        element: <span className={"text-green-600"}>Thành công</span>
+    },
+    {
+        key: 2,
+        element: <span className={"text-yellow-600"}>Đang thanh toán</span>
+    },
+    {
+        key: 3,
+        element: <span className={"text-yellow-600"}>Thanh toán hết hạn</span>
+    },
+]
+
 const BookedTicket = () => {
     const [billHistories, setBillHistories] = useState<billHistory[]>();
     let content: JSX.Element;
@@ -33,15 +52,7 @@ const BookedTicket = () => {
     }
 
     const paymentStatus = (status: number) => {
-        if (status === 0) {
-            return content = <span className={"text-red-600"}>Thất bại</span>;
-        } else if (status === 1) {
-            return content = <span className={"text-green-600"}>Thành công</span>;
-        } else if (status === 2) {
-            return content = <span className={"text-yellow-600"}>Đang thanh toán</span>;
-        } else {
-            return content = <span className={"text-yellow-600"}>Thanh toán hết hạn</span>;
-        }
+        return STATUS.find(value => value.key == status)?.element
     }
 
     return (

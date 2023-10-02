@@ -31,14 +31,14 @@ const EditProfile = (props: EditProfileCustomer) => {
         setValue
     } = useForm<EditProfileProps>();
 
-    const [gender, setGender] = useState<string>();
+    const [gender, setGender] = useState<boolean>();
 
     useEffect(() => {
         if (props.editCustomer) {
             setValue("name", props.editCustomer.name);
             setValue("phone", props.editCustomer.phone);
             setValue("address", props.editCustomer?.address)
-            setGender(`${props.editCustomer.gender}`);
+            setGender(props.editCustomer.gender);
         }
     }, [props.editCustomer]);
 
@@ -54,7 +54,7 @@ const EditProfile = (props: EditProfileCustomer) => {
         }
     };
 
-    const handleGenderChange = (value: string) => {
+    const handleGenderChange = (value: boolean) => {
         setGender(value);
     };
 
@@ -79,7 +79,7 @@ const EditProfile = (props: EditProfileCustomer) => {
                 label={<span className="text-white">Email</span>}
                 colon={false}
             >
-                <input
+                <Input
                     type="email"
                     className="w-full bg-inherit border-none rounded-sm text-white"
                     disabled={true}
@@ -132,8 +132,8 @@ const EditProfile = (props: EditProfileCustomer) => {
                 <Select
                     value={gender} onChange={handleGenderChange}
                 >
-                    <Option value="true">Nam</Option>
-                    <Option value="false">Nữ</Option>
+                    <Option value={true}>Nam</Option>
+                    <Option value={false}>Nữ</Option>
                 </Select>
                 <div className="text-red-600 mt-1">{errors.gender?.message}</div>
             </Form.Item>

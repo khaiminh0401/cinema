@@ -15,14 +15,8 @@ const Profile = () => {
     useEffect(() => {
         if (session) {
             const init = async () => {
-                try {
-                    await customerAPI.findId(customerId).then((response) => {
-                        setCustomer(response);
-                    });
-
-                } catch (error) {
-                    console.error("Error fetching customer:", error);
-                }
+                const customerFromAPI = await customerAPI.findId(customerId);
+                setCustomer(customerFromAPI);
             }
 
             init();

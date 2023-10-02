@@ -50,25 +50,26 @@ const Ticket = (props: TicketProps) => {
                                         <span className="price mt-2 pb-4 mb-4">
 								{NumberUtils.formatCurrency(ticket.totalPrice)}<sup></sup>
 							</span>
-                                        <span className="section dots">
-								<span></span>
-								<span></span>
-								<span></span>
-								<span></span>
-								<span></span>
-								<span></span>
-								<span></span>
-								<span></span>
-								<span></span>
-								<span></span>
-								<span></span>
-								<span></span>
-								<span></span>
-								<span></span>
-								<span></span>
-								<span></span>
-								<span></span>
-							</span>
+                                        <span className="section dot">
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+								{/*<span></span>*/}
+							<div></div>
+                                        </span>
                                         <span className="section pt-6 text-neutral-900 font-bold">
 								Vị trí: {ticket.seat}
 							</span>

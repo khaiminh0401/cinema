@@ -23,9 +23,9 @@ const showDeleteConfirm = ({...props}: ShowDeleteConfirmProps) => {
     confirm({
         title: 'Xóa ảnh',
         content: 'Bạn có chắc muốn xóa ảnh đại diện hiện tại không?',
-        okText: '确认',
+        okText: 'Có',
         okType: 'danger',
-        cancelText: '取消',
+        cancelText: 'Hủy',
         onOk() {
             handleClick(props.customerId, props.avatar)
         },

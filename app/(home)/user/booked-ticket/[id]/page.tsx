@@ -11,6 +11,29 @@ import {NumberUtils} from "@/util/NumberUtils";
 import {useSession} from "next-auth/react";
 import {errorNotification} from "@/util/Notification";
 
+const STATUS = [
+    {
+        key: 0,
+        element: <></>
+    },
+    {
+        key: 1,
+        element: <></>
+    },
+    {
+        key: 2,
+        element: <Button
+            className={"w-full h-14 text-white bg-red-600 border-none"}
+        >
+            Thanh toán lại
+        </Button>
+    },
+    {
+        key: 3,
+        element: <span className={"text-yellow-600"}>Thanh toán hết hạn</span>
+    },
+]
+
 const BillDetail = () => {
     const param = useParams();
     const router = useRouter();
@@ -22,33 +45,19 @@ const BillDetail = () => {
     useEffect(() => {
         if (session) {
             const init = async () => {
-                await billAPI.getBillDetails(Number(param.id), Number(customerId)).then((response) => {
-                    setBillDetails(response);
-                }).catch(() => {
-                    errorNotification("Đơn hàng không tồn tại hoặc không được phép truy cập");
-                    router.push("/user/booked-ticket");
-                });
+                const billFromAPI = await billAPI.getBillDetails(Number(param.id), Number(customerId));
+                setBillDetails(billFromAPI);
             }
 
             init();
         }
     }, [session]);
-
+    
+    if (billDetails?.ticketTotalPrice) {
+        console.log(billDetails?.ticketTotalPrice + billDetails?.ticketTotalPrice)
+    }
     const paymentStatus = (status: number) => {
-        if (status === 0) {
-            return content = <></>;
-        } else if (status === 1) {
-            return content = <></>;
-        } else if (status === 2) {
-            return content =
-                <Button
-                    className={"w-full h-14 text-white bg-red-600 border-none"}
-                >
-                    Thanh toán lại
-                </Button>;
-        } else {
-            return content = <span className={"text-yellow-600"}>Thanh toán hết hạn</span>;
-        }
+        return STATUS.find(value => value.key == status)?.element
     }
 
     return (
@@ -130,7 +139,7 @@ const BillDetail = () => {
                                         </p>
                                         <p className={"text-gray-300"}>Tổng giá:
                                             <span
-                                                className={"text-white"}> {NumberUtils.formatCurrency(Number(billDetails?.ticketTotalPrice))}</span>
+                                                className={"text-white"}> {NumberUtils.formatCurrency(billDetails?.ticketTotalPrice || 0)}</span>
                                         </p>
                                     </div>
                                 </div>
@@ -161,7 +170,7 @@ const BillDetail = () => {
                             </p>
                             <p className={"mb-1"}>Tổng giá vé
                                 <span
-                                    className={"float-right"}>{NumberUtils.formatCurrency(Number(billDetails?.ticketTotalPrice))}</span>
+                                    className={"float-right"}>{NumberUtils.formatCurrency(billDetails?.ticketTotalPrice || 0)}</span>
                             </p>
                         </div>
                     </div>
@@ -195,7 +204,7 @@ const BillDetail = () => {
                     <div className={"text-gray-300"}>
                         <p className={"mb-1"}>Giá vé xem phim
                             <span
-                                className={"float-right text-white"}>{NumberUtils.formatCurrency(Number(billDetails?.ticketTotalPrice))}</span>
+                                className={"float-right text-white"}>{billDetails?.ticketTotalPrice}</span>
                         </p>
 
                         {/* Giá topping */}
@@ -203,25 +212,30 @@ const BillDetail = () => {
                             !billDetails?.toppingName ? <></> :
                                 <p className={"mb-1"}>Giá topping
                                     <span
-                                        className={"float-right text-white"}>{NumberUtils.formatCurrency(Number(billDetails?.toppingTotalPrice))}</span>
+                                        className={"float-right text-white"}>{NumberUtils.formatCurrency(billDetails?.toppingTotalPrice)}</span>
                                 </p>
                         }
                         <p className={"mb-1"}>Phí thanh toán
                             <span className={"float-right text-white"}>
-                                            {NumberUtils.formatCurrency(
-                                                (parseFloat(`${billDetails?.ticketTotalPrice}`) + parseFloat(`${billDetails?.toppingTotalPrice}`))
-                                                * parseFloat(`${billDetails?.tickets[0].vat}`)
-                                            )}
+                                            {
+                                                billDetails?.ticketTotalPrice || billDetails?.toppingTotalPrice ?
+                                                    NumberUtils.formatCurrency(
+                                                        (billDetails?.ticketTotalPrice + billDetails?.toppingTotalPrice)
+                                                        * billDetails?.tickets[0].vat) : 0
+                                            }
                                         </span>
                         </p>
                         <hr className={"my-1"}/>
                         <p className={"mb-1"}>Thanh toán với {billDetails?.paymentMethod}
                             <span className={"float-right text-white text-lg font-semibold"}>
-                                            {NumberUtils.formatCurrency((parseFloat(`${billDetails?.ticketTotalPrice}`) + parseFloat(`${billDetails?.toppingTotalPrice}`))
-                                                +
-                                                ((parseFloat(`${billDetails?.ticketTotalPrice}`) + parseFloat(`${billDetails?.toppingTotalPrice}`))
-                                                    * parseFloat(`${billDetails?.tickets[0].vat}`))
-                                            )}
+                                {
+                                    billDetails?.ticketTotalPrice || billDetails?.toppingTotalPrice ?
+                                        NumberUtils.formatCurrency((billDetails?.ticketTotalPrice + billDetails?.toppingTotalPrice)
+                                            +
+                                            (billDetails?.ticketTotalPrice + billDetails?.toppingTotalPrice)
+                                            * billDetails?.tickets[0].vat)
+                                        : 0
+                                }
                                         </span>
                         </p>
                     </div>

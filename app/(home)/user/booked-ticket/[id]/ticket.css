@@ -166,7 +166,14 @@ h2{
 .bottom-dots {
     top: 100%;
 }
-
+.dot {
+    border: dotted black;
+    width: 6px;
+    height: 6px;
+    display: block;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
 .dots span {
     position: absolute;
     width: 6px;
