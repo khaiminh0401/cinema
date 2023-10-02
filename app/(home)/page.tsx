@@ -16,6 +16,7 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {FaAngleLeft, FaAngleRight} from "react-icons/fa";
 import "./index.css";
 import {BiSolidSearch} from "react-icons/bi";
+import supabase from "../../lib/supabase";
 
 const {Search} = Input;
 type SelectedType = {

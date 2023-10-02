@@ -14,6 +14,7 @@ import {DateUtils} from "@/util/DateUtils";
 import {ArrayUtils} from "@/util/ArrayUtils";
 import {NumberUtils} from "@/util/NumberUtils";
 import {getSession, useSession} from "next-auth/react";
+import supabase from "@/lib/supabase";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
     ssr: true,
@@ -28,6 +29,7 @@ interface SeatPageProps {
 
 
 const Seat = () => {
+
     // key of show time id
     const SHOWTIME_ID = "stid";
     const search = useSearchParams();
@@ -73,6 +75,19 @@ const Seat = () => {
         })
 
     }, []);
+    const channel = supabase
+        .channel('changes')
+        .on(
+            'postgres_changes',
+            {
+                event: '*',
+                schema: 'public',
+                table: 'ticket',
+                filter: `showtimeid=eq.1`,
+            },
+            (payload) => console.log(payload)
+        )
+        .subscribe()
     return (
         <div className="md:mx-28 md:my-14 mx-10">
 
