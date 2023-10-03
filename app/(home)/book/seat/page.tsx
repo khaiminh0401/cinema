@@ -13,7 +13,7 @@ import {showtimeAPI} from "@/util/API/Showtime";
 import {DateUtils} from "@/util/DateUtils";
 import {ArrayUtils} from "@/util/ArrayUtils";
 import {NumberUtils} from "@/util/NumberUtils";
-import {getSession, useSession} from "next-auth/react";
+import {useSession} from "next-auth/react";
 import supabase from "@/lib/supabase";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
@@ -69,28 +69,28 @@ const Seat = () => {
                 showtime: showtime
             });
         });
-
         myPromise.then(function (value: any) {
             setData(value);
         })
+        const channel = supabase
+            .channel('changes')
+            .on(
+                'postgres_changes',
+                {
+                    event: '*',
+                    schema: 'public',
+                    table: 'ticket',
+                    filter: `showtimeid=eq.${showTimeId}`
+                },
+                async (payload) => {
+                    setSeats(await seatAPI.getSeatHasCheckTicket(showTimeId))
+                }
+            )
+            .subscribe()
+    }, [seats]);
 
-    }, []);
-    const channel = supabase
-        .channel('changes')
-        .on(
-            'postgres_changes',
-            {
-                event: '*',
-                schema: 'public',
-                table: 'ticket',
-                filter: `showtimeid=eq.1`,
-            },
-            (payload) => console.log(payload)
-        )
-        .subscribe()
     return (
         <div className="md:mx-28 md:my-14 mx-10">
-
             {data ? <>
                     <div className="w-1/2 mx-auto my-10">
                         <Steps

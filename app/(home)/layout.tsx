@@ -14,10 +14,8 @@ export const metadata = {
 
 export default function HomeLayout({
   children,
-  session
 }: {
   children: React.ReactNode,
-  session: any
 }) {
   return (
     <html lang="en">
@@ -27,7 +25,7 @@ export default function HomeLayout({
       <body>
         <div className="container-fluid bg-dark">
           <ConfigProvider theme={theme}>
-            <SessionProvider session={session}>
+            <SessionProvider>
               <Navbar />
               {children}
               <Footer />
