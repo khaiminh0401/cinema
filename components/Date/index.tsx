@@ -19,8 +19,6 @@ const WeekDate = (prop: any) => {
   const [showtimeDetail, setShowtimeDetail] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const getWeekDates = () => {
-
-
     const dates = [];
     for (let i = 0; i < 7; i++) {
       let date = new Date(currentDate)
@@ -29,17 +27,12 @@ const WeekDate = (prop: any) => {
     }
     return dates;
   };
-
-
-
   let setDateOnClick = (date: any) => {
     setDateClick(format(date));
   };
-
   const handlePageChange = (newPage: any) => {
     setCurrentPage(newPage);
   };
-
   useEffect(() => {
     const init = async () => {
       const showtime = await showtimeAPI.findShowtimeByMovieAndDate(dateClick, prop.movieId, (currentPage - 1));
@@ -47,9 +40,6 @@ const WeekDate = (prop: any) => {
     }
     init();
   }, [dateClick, currentPage]);
-
-
-
   return (
     <>
       <div className="grid grid-cols-1 pb-2 border-b-2 border-red-950">
