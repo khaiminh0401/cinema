@@ -20,7 +20,7 @@ const ShowTime = ({ children, prop }: any) => {
                                         </p>
                                     </div>
                                     <div className="px-6 pb-2">
-                                        <Link href={`/book/seat?stid=${showtime.id}`} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-black mr-2 mb-2 hover:bg-amber-400">{showtime.dimensionName}</Link>
+                                        <Link href={`/book/seat?stid=${showtime.id}&branchid=${showtime.branchId}`} className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-black mr-2 mb-2 hover:bg-amber-400">{showtime.dimensionName}</Link>
                                     </div>
                                 </div>
                             </div>

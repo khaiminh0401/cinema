@@ -51,6 +51,7 @@ export const authconfig: NextAuthOptions = {
         async jwt({user, token, session, trigger}) {
             if (trigger === "update") {
                 token.seat = session.seat
+                token.topping = session.topping
             }
             return {...token, ...user};
         },
@@ -58,7 +59,8 @@ export const authconfig: NextAuthOptions = {
             session.user = {
                 ...session.user,
                 id: String(token.sub),
-                seat: token.seat
+                seat: token.seat,
+                topping: token.topping
             };
             return session;
         },

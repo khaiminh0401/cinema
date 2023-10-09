@@ -15,6 +15,7 @@ import {ArrayUtils} from "@/util/ArrayUtils";
 import {NumberUtils} from "@/util/NumberUtils";
 import {useSession} from "next-auth/react";
 import supabase from "@/lib/supabase";
+import Link from "next/link";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
     ssr: true,
@@ -34,6 +35,7 @@ const Seat = () => {
     const SHOWTIME_ID = "stid";
     const search = useSearchParams();
     const showTimeId = search.get(SHOWTIME_ID);
+    const branchId = search.get("branchid");
     const [seats, setSeats] = useState<any>([]);
     const [data, setData] = useState<SeatPageProps>();
     const [price, setPrice] = useState<any>([]);
@@ -99,7 +101,6 @@ const Seat = () => {
                                 {
                                     title: <span className="text-white">Chọn ghế</span>,
                                     status: 'process',
-                                    // colorPrimary: "black"
                                 },
                                 {
                                     title: <span className="text-white">Chọn topping</span>,
@@ -195,10 +196,11 @@ const Seat = () => {
                                     </tr>
                                     </tbody>
                                 </table>
-                                <button
-                                    className="w-full bg-black text-white rounded border-black border-2 hover:bg-black hover:text-white p-3">Đi
-                                    tiếp
+                                {total?.name_seat && <button
+                                    className="w-full bg-black text-white rounded border-black border-2 hover:bg-black hover:text-white p-3">
+                                    <Link href={`/book/seat/topping?stid=${showTimeId}&branchid=${branchId}`}>Đi tiếp</Link>
                                 </button>
+                                }
                             </Card>
 
                         </div>

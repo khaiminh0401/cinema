@@ -2,6 +2,7 @@ import {DefaultUser} from "next-auth"
 
 interface IUser extends DefaultUser {
     seat?: Object;
+    topping?: Object;
 }
 
 declare module "next-auth" {
