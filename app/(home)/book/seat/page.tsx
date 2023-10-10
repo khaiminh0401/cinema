@@ -141,7 +141,7 @@ const Seat = () => {
                                             <span className="p-5">Ghế đã có người mua</span>
                                         </div>
                                     </div>
-                                    <div className="flex justify-around gap-40 w-4/5 mx-auto">
+                                    {/* <div className="flex justify-around gap-40 w-4/5 mx-auto">
                                         <div className="flex items-center">
                                             <SeatIcon.ItemCoupleChoose/>
                                             <span className="p-5">Ghế đôi được chọn</span>
@@ -154,9 +154,9 @@ const Seat = () => {
                                             <SeatIcon.ItemCoupleHasBooked/>
                                             <span className="p-5">Ghế đôi đã có người mua</span>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
-                                <div className="border mx-auto mt-5 md:w-3/4 w-full">
+                                <div className="bg-white rounded-2xl text-black mx-auto mt-5 md:w-3/4 w-full">
                                     {
                                         data.seat.map((s: any) => {
                                             return <SeatRow onClickButton={getTotal} data={s.seats} row={s.row}
@@ -172,7 +172,7 @@ const Seat = () => {
                                 className="book-information-sticky hidden lg:block"
                                 headStyle={{textAlign: "center"}}
                                 style={{width: 300}}
-                                cover={<img src={`${constants.URL_IMAGES}${data.movie.poster}`} alt=""/>}
+                                cover={<img src={`${constants.URL_IMAGES}${data.movie.poster}`} className="w-4/5" alt=""/>}
                             >
                                 <table className="w-full">
                                     <tbody>
@@ -190,7 +190,7 @@ const Seat = () => {
                                     </tr>
                                     <tr className="w-full">
                                         <td colSpan={2}>Địa điểm:</td>
-                                        <td className="text-right">Gò vấp</td>
+                                        <td className="text-right">{data.showtime.branchAddress}</td>
                                     </tr>
                                     <tr className="w-full">
                                         <td colSpan={2}>Ghế:</td>

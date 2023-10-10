@@ -1,6 +1,9 @@
 import { Button, Result } from "antd";
+import { useRouter } from "next/navigation";
 
 const BookComplete = () => {
+    const router = useRouter();
+
     return (
         <Result
             status="success"
@@ -10,7 +13,7 @@ const BookComplete = () => {
                 <Button type="primary" key="console">
                     Đi tới hóa đơn
                 </Button>,
-                <Button key="buy">Trở về trang chủ</Button>,
+                <Button onClick={()=>router.push("/")} key="buy">Trở về trang chủ</Button>,
             ]}
         />
     )

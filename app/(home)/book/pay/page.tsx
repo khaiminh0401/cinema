@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import { NumberUtils } from "@/util/NumberUtils";
 import { constants } from "@/common/constants";
 import { useRouter } from "next/navigation";
+import { DateUtils } from "@/util/DateUtils";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
     ssr: false,
@@ -69,7 +70,7 @@ const PayPage = () => {
                             <img src={`${constants.URL_IMAGES}${data?.showtime.movie.poster}`} className="" alt="Photo film" />
                             <div className="col-span-2">
                                 <h3 className="text-lg font-bold">{data?.showtime.movie.name}</h3>
-                                <h3>Xuất chiếu: {data?.showtime.showtime.showDate + " " + data?.showtime.showtime.startTime}</h3>
+                                <h3>Xuất chiếu: {DateUtils.formatDate(new Date(data?.showtime.showtime.showDate)) + " " + data?.showtime.showtime.startTime}</h3>
                                 <h3>Địa điểm: {data?.showtime.showtime.branchAddress}</h3>
                                 <h3>Ghế: {data?.seat.name_seat}</h3>
                                 <span className="mt-3 inline-flex items-center rounded-md  px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"><Badge color={"green"} text={<span className="text-green-600">Đang công chiếu</span>} /></span>
