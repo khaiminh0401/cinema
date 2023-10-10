@@ -6,6 +6,7 @@ import {toppingAPI} from "@/util/API/Topping";
 import {InputNumber} from 'antd';
 import {NumberUtils} from "@/util/NumberUtils";
 import {useSession} from "next-auth/react";
+import {constants} from "@/common/constants";
 
 type Topping = {
     id: string,
@@ -36,7 +37,7 @@ const Topping = () => {
         setSum(cost)
         init();
     }, [branchId, sum, topping]);
-    const onChange = async (value: any, id: number, price: any, name: string) => {
+    const onChange = (value: any, id: number, price: any, name: string) => {
         const newData = {id: id, name: name, quantity: value, sum: Number(value) * Number(price)};
         if (value === 0) {
             setTopping(prevData => prevData.filter(data => data.id !== id));
@@ -49,7 +50,9 @@ const Topping = () => {
             }
         }
     }
+    const onSubmit = async () => {
 
+    }
     return (
         <div className="md:mx-28 md:my-14 mx-10">
             <div className="w-1/2 mx-auto my-10">
@@ -94,8 +97,8 @@ const Topping = () => {
                                 <div className="flex w-2/5">
                                     <div className="w-20">
                                         <img
-                                            className="h-24"
-                                            src="https://i.pinimg.com/564x/e0/29/cf/e029cf9fee5f3caa2f36c65660e2e146.jpg"
+                                            className="object-fill h-24 "
+                                            src={`${constants.URL_TOPPING}${topping.logo}`}
                                             alt=""
                                         />
                                     </div>
@@ -126,7 +129,7 @@ const Topping = () => {
                             </div>
                         ))}
                         <div className="border-t mt-8 border-black">
-                            <div className="flex font-semibold justify-between py-6 text-sm uppercase text-black" >
+                            <div className="flex font-semibold justify-between py-6 text-sm uppercase text-black">
                                 <span>Tổng</span>
                                 <span>{topping.length === 0 ? NumberUtils.formatCurrency(0) : NumberUtils.formatCurrency(sum)}</span>
                             </div>
