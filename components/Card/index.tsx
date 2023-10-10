@@ -1,8 +1,8 @@
-
-import { constants } from "@/common/constants";
-import { Card } from "antd";
+import {constants} from "@/common/constants";
+import {Card} from "antd";
 import Link from "next/link";
-import { FaRegCalendar, FaRegClock } from "react-icons/fa";
+import {FaRegCalendar, FaRegClock} from "react-icons/fa";
+
 export function CardDefault({ ...props }: CardProps) {
   return (
     <Card className="w-64 h-fit m-3 hover:scale-110 transition-transform border-none hover:bg-red-700"

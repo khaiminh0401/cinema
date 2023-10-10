@@ -1,15 +1,16 @@
 'use client'
-import { checkError } from "@/common/validation/error";
-import { Validation } from "@/common/validation/page/registration";
-import { checkStatus } from "@/common/validation/status";
+import {checkError} from "@/common/validation/error";
+import {Validation} from "@/common/validation/page/registration";
+import {checkStatus} from "@/common/validation/status";
 import Input from "@/components/Input/page";
 import Logo from '@/public/assert/img/logo.png';
-import { customerAPI } from "@/util/API/Customer";
-import { errorNotification, successNotification } from "@/util/Notification";
+import {customerAPI} from "@/util/API/Customer";
+import {errorNotification, successNotification} from "@/util/Notification";
 import Image from "next/image";
 import Link from 'next/link';
-import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import {useState} from "react";
+import {SubmitHandler, useForm} from "react-hook-form";
+
 /**
  * Object of Register
  */

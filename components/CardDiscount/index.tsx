@@ -1,5 +1,5 @@
-import { constants } from "@/common/constants"
-import { QRCode } from "antd"
+import {constants} from "@/common/constants"
+import {QRCode} from "antd"
 import Link from "next/link"
 
 type CardDiscount = {

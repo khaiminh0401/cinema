@@ -5,7 +5,6 @@ import {Validation} from "@/common/validation/page/registration";
 import Input from "@/components/Input/page";
 import {customerAPI} from "@/util/API/Customer";
 import {errorNotification, successNotification} from "@/util/Notification";
-import Link from 'next/link';
 import {useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {Form} from 'antd';

@@ -1,11 +1,7 @@
-import React, { useState } from 'react';
-import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
-} from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Avatar, Button, Menu } from 'antd';
-import { FaClipboard, FaKey, FaCreditCard, FaTicket, FaUser, FaPencil } from 'react-icons/fa6';
+import React, {useState} from 'react';
+import type {MenuProps} from 'antd';
+import {Avatar, Button, Menu} from 'antd';
+import {FaClipboard, FaCreditCard, FaKey, FaPencil, FaTicket, FaUser} from 'react-icons/fa6';
 import Link from 'next/link';
 
 type MenuItem = Required<MenuProps>['items'][number];

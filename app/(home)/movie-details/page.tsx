@@ -1,14 +1,13 @@
-
 "use client"
-import { constants } from "@/common/constants";
-import { CardDiscount } from "@/components/CardDiscount";
+import {constants} from "@/common/constants";
+import {CardDiscount} from "@/components/CardDiscount";
 import WeekDate from "@/components/Date";
-import { movieDetailPageAPI } from '@/util/API/MovieDetailPage';
+import {movieDetailPageAPI} from '@/util/API/MovieDetailPage';
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import Link from "next/link";
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import {useSearchParams} from 'next/navigation';
+import {useEffect, useState} from 'react';
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 import '../../globals.css';

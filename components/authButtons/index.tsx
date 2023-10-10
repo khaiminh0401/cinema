@@ -1,6 +1,6 @@
 'use client'
-import { signIn, signOut } from "next-auth/react";
-import { FaFacebook, FaGoogle } from "react-icons/fa6";
+import {signIn, signOut} from "next-auth/react";
+import {FaFacebook, FaGoogle} from "react-icons/fa6";
 
 export function GoogleSignInButton() {
     const handleClick = () => {

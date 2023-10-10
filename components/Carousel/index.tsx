@@ -1,5 +1,6 @@
 import CarouselMutil from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+
 const responsive = {
     superLargeDesktop: {
         // the naming can be any, depends on you.

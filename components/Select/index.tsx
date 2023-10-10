@@ -1,5 +1,6 @@
 'use client'
-import { UseFormRegisterReturn } from "react-hook-form";
+import {UseFormRegisterReturn} from "react-hook-form";
+
 interface SelectProps {
     id: string,
     className: string,
