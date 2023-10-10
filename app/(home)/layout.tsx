@@ -32,7 +32,6 @@ export default function HomeLayout({
                     <Footer/>
                 </SessionProvider>
             </ConfigProvider>
-
         </div>
         </body>
         </html>

@@ -16,6 +16,7 @@ import {NumberUtils} from "@/util/NumberUtils";
 import {useSession} from "next-auth/react";
 import supabase from "@/lib/supabase";
 import Link from "next/link";
+import {constants} from "@/common/constants";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
     ssr: true,
@@ -166,7 +167,7 @@ const Seat = () => {
                                 className="book-information-sticky hidden lg:block"
                                 headStyle={{textAlign: "center"}}
                                 style={{width: 300}}
-                                cover={<img src={`/assert/home/${data.movie.poster}`} alt=""/>}
+                                cover={<img src={`${constants.URL_IMAGES}${data.movie.poster}`} alt=""/>}
                             >
                                 <table className="w-full">
                                     <tbody>
@@ -197,7 +198,7 @@ const Seat = () => {
                                     </tbody>
                                 </table>
                                 {total?.name_seat && <button
-                                    className="w-full bg-black text-white rounded border-black border-2 hover:bg-black hover:text-white p-3">
+                                    className="w-full bg-black text-white rounded uppercase hover:bg-red-600 hover:text-white p-3">
                                     <Link href={`/book/seat/topping?stid=${showTimeId}&branchid=${branchId}`}>Đi tiếp</Link>
                                 </button>
                                 }
