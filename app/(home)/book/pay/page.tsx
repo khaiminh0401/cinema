@@ -103,15 +103,15 @@ const PayPage = () => {
                             </tr>
                             <tr>
                                 <td>Thuế (5%):</td>
-                                <td className="text-right">+ 3.000đ</td>
+                                <td className="text-right">{NumberUtils.formatCurrency(Number(data?.seat?.cost * 0.05 || 0))}</td>
                             </tr>
                             <tr>
                                 <td>Topping:</td>
-                                <td className="text-right">{data?.topping.length > 1 ? NumberUtils.formatCurrency(data?.topping.map((s: any) => s.sum).reduce((a: any, b: any) => Number(a + b))) : NumberUtils.formatCurrency(Number(data?.topping[0].sum))}</td>
+                                <td className="text-right">{data?.topping.length > 1 ? NumberUtils.formatCurrency(data?.topping.map((s: any) => s.sum).reduce((a: any, b: any) => Number(a + b))) : NumberUtils.formatCurrency(Number(data?.topping[0].sum || 0))}</td>
                             </tr>
                             <tr>
                                 <td>Voucher giảm giá:</td>
-                                <td className="text-right">- 15.000đ</td>
+                                <td className="text-right">{NumberUtils.formatCurrency(Number(0))}</td>
                             </tr>
                             <tr>
                                 <td>Tổng cộng:</td>
