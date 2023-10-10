@@ -1,6 +1,6 @@
 "use client"
 import {Steps} from "antd";
-import {useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import {useEffect, useState} from "react";
 import {toppingAPI} from "@/util/API/Topping";
 import {InputNumber} from 'antd';
@@ -24,6 +24,7 @@ const Topping = () => {
     const [topping, setTopping] = useState<any[]>([]);
     const [sum, setSum] = useState<number>(0);
     const {data: session, update} = useSession();
+    const router = useRouter();
     useEffect(() => {
         const init = async () => {
             const toppingofbranch = await toppingAPI.getToppingByBranch(branchId);
@@ -51,7 +52,7 @@ const Topping = () => {
         }
     }
     const onSubmit = async () => {
-
+        router.push("/book/pay");
     }
     return (
         <div className="md:mx-28 md:my-14 mx-10">
@@ -134,6 +135,7 @@ const Topping = () => {
                                 <span>{topping.length === 0 ? NumberUtils.formatCurrency(0) : NumberUtils.formatCurrency(sum)}</span>
                             </div>
                             <button
+                                onClick={onSubmit}
                                 className="bg-black font-semibold hover:bg-red-600 py-3 text-sm text-white uppercase w-full">
                                 Thanh Toán
                             </button>

@@ -56,7 +56,12 @@ const Seat = () => {
         }
         await update({
             ...session?.user,
-            seat: totalTemp
+            seat: totalTemp,
+            showtime: {
+                movie: data?.movie,
+                showtime: data?.showtime
+            }
+            
         })
         setTotal(totalTemp);
     }
