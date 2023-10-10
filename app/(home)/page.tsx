@@ -16,6 +16,9 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {FaAngleLeft, FaAngleRight} from "react-icons/fa";
 import "./index.css";
 import {BiSolidSearch} from "react-icons/bi";
+import {useSession} from "next-auth/react";
+import {NumberUtils} from "@/util/NumberUtils";
+
 const {Search} = Input;
 type SelectedType = {
     movieType: movieType[],
@@ -63,10 +66,7 @@ const Home = () => {
         if (cookie.statusId == undefined) {
             handleCookie('1');
         }
-        ;
     }, [cookie.statusId])
-
-
     const handleCookie = (value: string, event?: any) => {
         if (event != undefined) event.preventDefault();
         setCookie("statusId", value);
