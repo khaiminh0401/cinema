@@ -27,7 +27,7 @@ const CropperModal = ({...props}: CropperModalProps) => {
 
             props.setPreview(URL.createObjectURL(blob));
             props.setModalOpen(false);
-
+            console.log(URL.createObjectURL(blob))
 
             const options = {type: blob.type, lastModified: Date.now()};
             const file = new File([blob], props.avatar, options);

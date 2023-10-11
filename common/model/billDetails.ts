@@ -20,5 +20,6 @@ interface billDetails {
     toppingName: string,
     toppingTotalPrice: number,
     ticketTotalPrice: number,
+    poster: string,
     tickets: ticketBillDetailsPage[]
 }

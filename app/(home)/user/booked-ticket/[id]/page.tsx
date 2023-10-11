@@ -52,7 +52,7 @@ const BillDetail = () => {
             init();
         }
     }, [session]);
-    
+
     if (billDetails?.ticketTotalPrice) {
         console.log(billDetails?.ticketTotalPrice + billDetails?.ticketTotalPrice)
     }
@@ -85,7 +85,7 @@ const BillDetail = () => {
                     <div className="grid grid-cols-10 gap-x-4 lg:grid-cols-5">
                         <div className="col-span-3 lg:col-span-1">
                             <img
-                                src={"https://th.bing.com/th/id/R.0a469b27f977da0314447d0605103e1d?rik=wvR%2fZMI2jfgtkA&riu=http%3a%2f%2fwww.paragsankhe.com%2fwp-content%2fuploads%2f2012%2f07%2fofficial-poster-for-london-olympic-games-1948-by-walter-herz.jpeg&ehk=Xqw4YSW6YG7s%2bWMws1MStvjrupUlD4flraICaGHcM9k%3d&risl=&pid=ImgRaw&r=0"}
+                                src={`${billDetails?.poster}`}
                                 className={"w-28 h-40"}
                             />
                         </div>
