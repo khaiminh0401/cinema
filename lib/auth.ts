@@ -1,15 +1,14 @@
 import {checkError} from "@/common/validation/error";
 import {customerAPI} from "@/util/API/Customer";
-import {NextAuthOptions, User} from "next-auth";
+import {NextAuthOptions} from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
-import {useSession} from "next-auth/react";
-import {redirect} from "next/navigation";
 
 export const authconfig: NextAuthOptions = {
     session: {
         strategy: "jwt",
+        maxAge: 3 * 24 * 60 * 60,
     },
     providers: [
         CredentialsProvider({
@@ -17,15 +16,15 @@ export const authconfig: NextAuthOptions = {
                 email: {label: "Email", type: "text"},
                 password: {label: "Password", type: "password"}
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 try {
                     const cus = await customerAPI.login({email: credentials?.email, password: credentials?.password})
                     if (cus) {
                         return {
                             id: cus.id,
+                            name: cus.name,
                             email: cus.email,
                             image: "https://png.pngtree.com/png-clipart/20200701/original/pngtree-black-default-avatar-png-image_5407174.jpg",
-                            name: cus.name
                         };
                     }
                 } catch (error: any) {
@@ -49,22 +48,22 @@ export const authconfig: NextAuthOptions = {
         signIn: '/login'
     },
     callbacks: {
-         session: ({session, token}) => ({
-            ...session,
-            user: {
+        async jwt({user, token, session, trigger}) {
+            if (trigger === "update") {
+                token.seat = session.seat
+                token.topping = session.topping
+            }
+            return {...token, ...user};
+        },
+        async session({session, token}) {
+            session.user = {
                 ...session.user,
-                id: token.sub,
-            },
-        }),
+                id: String(token.sub),
+                seat: token.seat,
+                topping: token.topping
+            };
+            return session;
+        },
     },
 
-}
-
-export function LoginIsRequiredClient() {
-    const {status} = useSession({
-        required: true,
-        onUnauthenticated() {
-            redirect("/login")
-        },
-    })
 }

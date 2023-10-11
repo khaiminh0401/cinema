@@ -1,4 +1,5 @@
-import { UseFormRegisterReturn } from "react-hook-form";
+import {UseFormRegisterReturn} from "react-hook-form";
+
 export interface InputProps {
     type: string,
     className?: string,

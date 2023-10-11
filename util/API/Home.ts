@@ -1,4 +1,5 @@
-import { fetchAPI } from "./axios";
+import {fetchAPI} from "./axios";
+
 const findAll = async () => {
     return (await fetchAPI.get("/home/getData")).data;
 }

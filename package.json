@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/auth-helpers-nextjs": "^0.8.1",
+    "@supabase/supabase-js": "^2.37.0",
     "@types/react-dom": "18.2.6",
     "antd": "^5.9.0",
     "axios": "^1.4.0",
@@ -16,6 +18,7 @@
     "date-fns": "^2.30.0",
     "eslint": "8.43.0",
     "eslint-config-next": "13.4.7",
+    "iron-session": "^6.3.1",
     "jquery": "^3.7.0",
     "moment": "^2.29.4",
     "next": "^13.4.7",

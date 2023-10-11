@@ -1,10 +1,10 @@
 'use client'
-import { useSession } from "next-auth/react";
+import {useSession} from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import { FaBars } from "react-icons/fa";
-import { SignOutButton } from "../authButtons";
+import {useState} from "react";
+import {FaBars} from "react-icons/fa";
+import {SignOutButton} from "../authButtons";
 
 const Navbar = () => {
     const [openNav, setOpennav] = useState(false);

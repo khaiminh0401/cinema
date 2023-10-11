@@ -1,4 +1,4 @@
-import { InputProps } from "@/util/Props/InputProps";
+import {InputProps} from "@/util/Props/InputProps";
 
 const Input = ({ ...props }: InputProps) => {
     return (

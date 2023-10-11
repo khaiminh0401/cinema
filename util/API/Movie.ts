@@ -1,4 +1,5 @@
-import { fetchAPI } from "./axios";
+import {fetchAPI} from "./axios";
+
 const findAll = async () => {
     return (await fetchAPI.get("/movie")).data as movie[];
 }
@@ -12,7 +13,7 @@ const findMoviesNowShowing = async () => {
     return (await fetchAPI.get(`/movie/nowshowing`)).data as movie[];
 }
 const getByShowTime = async (id: any) =>{
-    return (await fetchAPI.get(`/api/movie/getByShowTime?showtimeid=${id}`)).data as movie; 
+    return (await fetchAPI.get(`/movie/getByShowTime?showtimeid=${id}`)).data as movie;
 }
 
 export const movieAPI = {
