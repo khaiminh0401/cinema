@@ -20,8 +20,13 @@ const registrationConfirm = async (inputs: string) => {
     return (await fetchAPI.get("/customer/active?userToken=" + inputs)).data;
 }
 
-const updateAvatar = async (formData: FormData, config?: AxiosRequestConfig<FormData>) => {
-    return (await fetchAPI.put(`/customer/update-avatar`, formData, config)).data;
+const updateAvatar = async (formData: FormData) => {
+    return (await fetchAPI.put(`/customer/update-avatar`, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "*",
+        },
+    })).data;
 }
 
 const editProfile = async (customer: Object) => {
@@ -30,6 +35,18 @@ const editProfile = async (customer: Object) => {
 
 const updatePassword = async (customer: Object) => {
     return (await fetchAPI.put(`/customer/update-password`, customer)).data;
+}
+
+const deleteAvatar = async (customerId: number, avatar: string) => {
+    return (await fetchAPI.post(`/customer/delete-avatar`, null,
+            {
+                params: {
+                    customerId,
+                    avatar
+                }
+            }
+        )
+    ).data;
 }
 
 export const customerAPI = {
@@ -41,5 +58,6 @@ export const customerAPI = {
     updateAvatar,
     editProfile,
     updatePassword,
+    deleteAvatar,
 }
 
