@@ -2,13 +2,13 @@
 import {Validation} from '@/common/validation/page/login';
 import Input from '@/components/Input/page';
 import {FacebookSignInButton, GoogleSignInButton} from '@/components/authButtons';
-import Logo from '@/public/assert/img/logo.png';
 import {errorNotification} from '@/util/Notification';
 import {signIn, useSession} from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {redirect} from 'next/navigation';
 import {useForm} from 'react-hook-form';
+import {constants} from "@/common/constants";
 
 const Login = () => {
     const {
@@ -36,7 +36,7 @@ const Login = () => {
                 <div className="hidden bg-cover lg:block lg:w-1/2" style={{ backgroundImage: `url('https://i.pinimg.com/originals/74/40/99/744099d1b5b3ecc1d3bad87431dd2aa9.png')` }} />
                 <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
                     <div className="flex justify-center mx-auto">
-                        <Link href="/"><Image src={Logo} alt='' width={100} height={100} /></Link>
+                        <Link href="/"><Image src={`${constants.URL_LOGO}`} alt='' width={100} height={100} /></Link>
                     </div>
                     <p className="mt-3 text-xl text-center text-gray-200">
                         Chào mừng!

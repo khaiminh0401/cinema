@@ -5,6 +5,7 @@ import Link from "next/link";
 import {useState} from "react";
 import {FaBars} from "react-icons/fa";
 import {SignOutButton} from "../authButtons";
+import {constants} from "@/common/constants";
 
 const Navbar = () => {
     const [openNav, setOpennav] = useState(false);
@@ -65,7 +66,8 @@ const Navbar = () => {
                     <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                         <div className="flex flex-shrink-0 items-center">
                             <a href="/" className="flex items-center">
-                                <img className="h-8 w-auto float-right" src="/assert/img/logo.png" alt="Your Company" />
+                                <Image className="float-right" width={80} height={50}
+                                       src={`${constants.URL_LOGO}`} alt="Your Company" />
                             </a>
                         </div>
                         <div className="hidden md:block mx-auto">

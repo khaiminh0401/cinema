@@ -1,10 +1,11 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import CropperModal from './cropperModal';
 import {Button, Input, InputRef} from "antd";
 import "./index.css";
 import {FaUpload} from "react-icons/fa6";
 import {RiDeleteBin6Line} from "react-icons/ri";
 import showDeleteConfirm from "@/app/(home)/user/account/profile/deleteModal";
+import Image from "next/image";
 
 interface ChangeAvatarProps {
     customerId: number,
@@ -71,7 +72,7 @@ const ChangeAvatar = ({...props}: ChangeAvatarProps) => {
                 userId={props.customerId}
             />
             <div className="relative mb-10">
-                <img
+                <Image
                     src={
                         preview ||
                         "https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/default.png"

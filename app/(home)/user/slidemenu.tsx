@@ -9,6 +9,7 @@ import {FaClipboard, FaKey, FaCreditCard, FaTicket, FaUser, FaPencil} from 'reac
 import Link from 'next/link';
 import {useSession} from "next-auth/react";
 import {customerAPI} from "@/util/API/Customer";
+import Image from "next/image";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -84,7 +85,7 @@ const SlideMenu = () => {
                     <div className='grid grid-rows-2 grid-flow-col gap-x-4 text-white px-2'>
                         <section className='row-span-2 my-auto'>
                             <Avatar
-                                src={<img
+                                src={<Image
                                     src=
                                         {
                                             avatar ? `https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/${avatar}`

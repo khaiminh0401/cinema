@@ -17,6 +17,7 @@ import {useSession} from "next-auth/react";
 import supabase from "@/lib/supabase";
 import Link from "next/link";
 import {constants} from "@/common/constants";
+import Image from "next/image";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
     ssr: true,
@@ -167,7 +168,8 @@ const Seat = () => {
                                 className="book-information-sticky hidden lg:block"
                                 headStyle={{textAlign: "center"}}
                                 style={{width: 300}}
-                                cover={<img src={`${constants.URL_IMAGES}${data.movie.poster}`} alt=""/>}
+                                cover={<Image src={`${constants.URL_IMAGES}${data.movie.poster}`}
+                                              width={100} height={100} alt=""/>}
                             >
                                 <table className="w-full">
                                     <tbody>

@@ -7,6 +7,7 @@ import {InputNumber} from 'antd';
 import {NumberUtils} from "@/util/NumberUtils";
 import {useSession} from "next-auth/react";
 import {constants} from "@/common/constants";
+import Image from "next/image";
 
 type Topping = {
     id: string,
@@ -96,7 +97,7 @@ const Topping = () => {
                             <div className="flex items-center -mx-8 px-6 py-5" key={i}>
                                 <div className="flex w-2/5">
                                     <div className="w-20">
-                                        <img
+                                        <Image
                                             className="object-fill h-24 "
                                             src={`${constants.URL_TOPPING}${topping.logo}`}
                                             alt=""
