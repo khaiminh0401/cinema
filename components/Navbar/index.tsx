@@ -65,7 +65,8 @@ const Navbar = () => {
                     <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                         <div className="flex flex-shrink-0 items-center">
                             <a href="/" className="flex items-center">
-                                <Image className="h-8 w-auto float-right" src="/assert/img/logo.png" alt="Your Company" />
+                                <Image className="float-right" width={"3"} height={"8"}
+                                       src="/assert/img/logo.png" alt="Your Company" />
                             </a>
                         </div>
                         <div className="hidden md:block mx-auto">

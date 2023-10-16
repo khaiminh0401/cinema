@@ -168,7 +168,8 @@ const Seat = () => {
                                 className="book-information-sticky hidden lg:block"
                                 headStyle={{textAlign: "center"}}
                                 style={{width: 300}}
-                                cover={<Image src={`${constants.URL_IMAGES}${data.movie.poster}`} alt=""/>}
+                                cover={<Image src={`${constants.URL_IMAGES}${data.movie.poster}`}
+                                              width={100} height={100} alt=""/>}
                             >
                                 <table className="w-full">
                                     <tbody>

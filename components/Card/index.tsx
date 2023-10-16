@@ -6,12 +6,14 @@ import Image from "next/image";
 
 export function CardDefault({...props}: CardProps) {
     return (
-        <Card className="w-64 h-fit m-3 hover:scale-110 transition-transform border-none hover:bg-red-700"
+        <Card className="w-64 h-fit m-3 mb-8 hover:scale-110 transition-transform border-none hover:bg-red-700"
               cover={
                   <div className="h-72 w-fit">
                       <Image
                           src={`${constants.URL_IMAGES}${props.data.poster}`}
-                          className="object-cover h-full w-full transition-transform"
+                          className="object-cover !w-full !h-full transition-transform"
+                          width={1000}
+                          height={300}
                           alt={`${props.data.name}}`}
                       />
                   </div>

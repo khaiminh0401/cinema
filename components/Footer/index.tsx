@@ -10,7 +10,8 @@ const Footer = () => {
                     <div className="md:flex md:justify-between">
                         <div className="mb-6 md:mb-0">
                             <a href="/" className="flex items-center">
-                                <Image src="/assert/img/logo.png" className="h-8 mr-3" alt="Zuhot Logo"/>
+                                <Image src="/assert/img/logo.png" width={100} height={100}
+                                       className="mr-3" alt="Zuhot Logo"/>
                             </a><br/>
                             <span className="text-gray-500"> Theo dõi bản tin của chúng tôi để nhận được cập nhật và tin tức sớm nhất. </span>
                         </div>
