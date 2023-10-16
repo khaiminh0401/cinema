@@ -1,4 +1,5 @@
 import {FaFacebook, FaGoogle, FaTwitter, FaYoutube} from "react-icons/fa6";
+import Image from "next/image";
 
 const Footer = () => {
     return (
@@ -9,7 +10,7 @@ const Footer = () => {
                     <div className="md:flex md:justify-between">
                         <div className="mb-6 md:mb-0">
                             <a href="/" className="flex items-center">
-                                <img src="/assert/img/logo.png" className="h-8 mr-3" alt="Zuhot Logo"/>
+                                <Image src="/assert/img/logo.png" className="h-8 mr-3" alt="Zuhot Logo"/>
                             </a><br/>
                             <span className="text-gray-500"> Theo dõi bản tin của chúng tôi để nhận được cập nhật và tin tức sớm nhất. </span>
                         </div>

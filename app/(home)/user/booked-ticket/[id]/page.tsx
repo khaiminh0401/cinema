@@ -10,6 +10,7 @@ import {billAPI} from "@/util/API/Bill";
 import {NumberUtils} from "@/util/NumberUtils";
 import {useSession} from "next-auth/react";
 import {errorNotification} from "@/util/Notification";
+import Image from "next/image";
 
 const STATUS = [
     {
@@ -84,9 +85,10 @@ const BillDetail = () => {
                     <h2 className={"font-bold text-xl mb-4 text-white uppercase"}>Thông tin phim</h2>
                     <div className="grid grid-cols-10 gap-x-4 lg:grid-cols-5">
                         <div className="col-span-3 lg:col-span-1">
-                            <img
+                            <Image
                                 src={`${billDetails?.poster}`}
                                 className={"w-28 h-40"}
+                                alt={`${billDetails?.movieName}}`}
                             />
                         </div>
                         <div className="col-span-7 lg:col-span-4">
