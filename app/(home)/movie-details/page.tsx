@@ -45,12 +45,12 @@ const MovieDetails = () => {
 
     return (
         <>
-            <div className="w-full bg-black">
+            <div className="w-full">
                 <div className="px-10">
                     <div className="text-white p-4">
                         <h4>Trang chủ &gt; Đặt vé &gt; {movieDetailPage?.movieDetail.name}</h4>
                     </div>
-                    <div className="bg-black text-white p-4">
+                    <div className="text-white p-4">
                         <div className="grid grid-cols-12 gap-2">
                             <div className="lg:col-span-10 md:col-span-8 sm:col-span-12 col-span-12">
                                 <div className="grid grid-cols-12 gap-6">
