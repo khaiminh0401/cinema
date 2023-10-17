@@ -1,4 +1,5 @@
 import {
+    ADDRESS,
     EMAIL,
     FORMAT_EMAIL,
     FORMAT_PHONE,
@@ -11,7 +12,7 @@ import {
     PASSWORD,
     PHONE
 } from '@/common/validation/types';
-import {validation} from '@/common/validation/validation';
+import { validation } from '@/common/validation/validation';
 
 export const Validation = {
     name: {
@@ -29,6 +30,9 @@ export const Validation = {
         ...validation.pattern(FORMAT_PHONE),
         ...validation.minLength(MIN_PHONE),
         ...validation.maxLength(MAX_PHONE)
+    },
+    address: {
+        ...validation.required(ADDRESS),
     },
     password: {
         ...validation.required(PASSWORD),

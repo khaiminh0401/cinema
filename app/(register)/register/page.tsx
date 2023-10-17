@@ -3,13 +3,13 @@ import {checkError} from "@/common/validation/error";
 import {Validation} from "@/common/validation/page/registration";
 import {checkStatus} from "@/common/validation/status";
 import Input from "@/components/Input/page";
-import Logo from '@/public/assert/img/logo.png';
 import {customerAPI} from "@/util/API/Customer";
 import {errorNotification, successNotification} from "@/util/Notification";
 import Image from "next/image";
 import Link from 'next/link';
 import {useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
+import {constants} from "@/common/constants";
 
 /**
  * Object of Register
@@ -56,7 +56,7 @@ const Register = () => {
                 <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
                     <div className="w-full">
                         <div className="flex justify-start mx-auto mb-10">
-                            <Link href="/"><Image src={Logo} alt='' width={200} height={200} /></Link>
+                            <Link href="/"><Image src={`${constants.URL_LOGO}`} alt='' width={200} height={200} /></Link>
                         </div>
                         <h1 className="text-2xl font-semibold tracking-wider  capitalize text-white">
                             Đăng kí tài khoản ngay

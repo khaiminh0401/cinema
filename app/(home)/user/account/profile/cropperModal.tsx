@@ -1,9 +1,17 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import AvatarEditor from "react-avatar-editor";
-import {Modal, Slider} from "antd";
-import {CropperModalProps} from "@/util/Props/CropperModalProps";
+import {Modal, Slider, Button, Input} from "antd";
 import {customerAPI} from "@/util/API/Customer";
 import {errorNotification, successNotification} from "@/util/Notification";
+
+interface CropperModalProps {
+    src: string | null;
+    modalOpen: boolean;
+    setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setPreview: React.Dispatch<React.SetStateAction<string | null>>;
+    avatar: string;
+    userId: number
+}
 
 const CropperModal = ({...props}: CropperModalProps) => {
     const [slideValue, setSlideValue] = useState<number>(10);
@@ -19,20 +27,15 @@ const CropperModal = ({...props}: CropperModalProps) => {
 
             props.setPreview(URL.createObjectURL(blob));
             props.setModalOpen(false);
-
+            console.log(URL.createObjectURL(blob))
 
             const options = {type: blob.type, lastModified: Date.now()};
             const file = new File([blob], props.avatar, options);
 
-            formData.append('customerId', '3');
+            formData.append('customerId', `${props.userId}`);
             formData.append('multipartFile', file);
 
-            customerAPI.updateAvatar(formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data",
-                    "Access-Control-Allow-Origin": "*",
-                },
-            }).then(() => {
+            await customerAPI.updateAvatar(formData).then(() => {
                 successNotification("Thay đổi ảnh đại diện thành công!")
             }).catch(() => {
                 errorNotification("Không lưu được ảnh!");
