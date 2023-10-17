@@ -22,7 +22,7 @@ const PayPage = () => {
     const router = useRouter();
     const {data: session, update} = useSession();
     const data = session?.user;
-    console.log(session)
+
     const [value, setValue] = useState({
         payment: 1,
         wallet: 'jack'
@@ -36,6 +36,12 @@ const PayPage = () => {
         setValue({...value, payment: e.target.value});
     }
 
+    const price = {
+        temp: data?.seat?.cost || 0,
+        vat: data?.seat?.cost * 0.05 || 0,
+        topping: data?.topping.length > 1 ? data?.topping.map((s: any) => s.sum).reduce((a: any, b: any) => Number(a + b)) : Number(data?.topping[0].sum || 0),
+        discount: 0
+    }
     const submit = () => {
         router.push("/book/complete");
     }
@@ -84,7 +90,7 @@ const PayPage = () => {
                                                   component={<SelectWallet value={value.wallet}
                                                                            setWallet={handleChangeSelect}/>}/>
                                 </Card>
-                                <Card title="Voucher" bordered={false} extra={"- 15.000đ"}
+                                <Card title="Voucher" bordered={false} extra={"0đ"}
                                       bodyStyle={{backgroundColor: "white", color: "black", boxShadow: "none"}}>
                                     <RadioDiscount/>
                                 </Card>
@@ -99,23 +105,23 @@ const PayPage = () => {
                             <tbody>
                             <tr>
                                 <td>Tiền vé:</td>
-                                <td className="text-right">{NumberUtils.formatCurrency(data?.seat?.cost || 0)}</td>
+                                <td className="text-right">{NumberUtils.formatCurrency(price.temp)}</td>
                             </tr>
                             <tr>
                                 <td>Thuế (5%):</td>
-                                <td className="text-right">{NumberUtils.formatCurrency(Number(data?.seat?.cost * 0.05 || 0))}</td>
+                                <td className="text-right">{NumberUtils.formatCurrency(Number(price.vat))}</td>
                             </tr>
                             <tr>
                                 <td>Topping:</td>
-                                <td className="text-right">{data?.topping.length > 1 ? NumberUtils.formatCurrency(data?.topping.map((s: any) => s.sum).reduce((a: any, b: any) => Number(a + b))) : NumberUtils.formatCurrency(Number(data?.topping[0].sum || 0))}</td>
+                                <td className="text-right">{NumberUtils.formatCurrency(price.topping)}</td>
                             </tr>
                             <tr>
                                 <td>Voucher giảm giá:</td>
-                                <td className="text-right">{NumberUtils.formatCurrency(Number(0))}</td>
+                                <td className="text-right">{NumberUtils.formatCurrency(price.discount)}</td>
                             </tr>
                             <tr>
                                 <td>Tổng cộng:</td>
-                                <td className="text-right">100.000đ</td>
+                                <td className="text-right">{NumberUtils.formatCurrency(Number(price.temp+price.topping+price.vat))}</td>
                             </tr>
                             <tr>
                                 <td colSpan={2} className="p-5">
