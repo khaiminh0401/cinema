@@ -46,7 +46,7 @@ const PayPage = () => {
     const price = {
         temp: data?.seat?.cost || 0,
         vat: data?.seat?.cost * 0.05 || 0,
-        topping: data?.topping.length > 1 ? data?.topping.map((s: any) => s.sum).reduce((a: any, b: any) => Number(a + b)) : Number(data?.topping[0].sum || 0),
+        topping: data?.topping.length > 1 ? data?.topping.map((s: any) => s.sum).reduce((a: any, b: any) => Number(a + b)) : Number(data?.topping[0]?.sum || 0),
         discount: 0 as number
     }
     const submit = async () => {
