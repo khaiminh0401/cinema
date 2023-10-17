@@ -1,4 +1,10 @@
-import NextAuth, { DefaultSession } from "next-auth"
+import {DefaultUser} from "next-auth"
+
+interface IUser extends DefaultUser {
+    seat?: any;
+    topping?: any;
+    showtime?: any
+}
 
 declare module "next-auth" {
 

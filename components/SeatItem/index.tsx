@@ -22,7 +22,7 @@ const SeatItem : React.FC<SeatItem> = ({obj,onClick}) => {
             onClick={handleClick}
         > 
             {!choose ? <Item/>: <SeatIcon.ItemChoose/>}
-            <p>{obj.name}</p>
+            <p className="">{obj.name.substring(1)}</p>
       </button>
     );
 }

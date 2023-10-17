@@ -52,15 +52,17 @@ export const authconfig: NextAuthOptions = {
             if (trigger === "update") {
                 token.seat = session.seat
                 token.topping = session.topping
+                token.showtime = session.showtime
             }
             return {...token, ...user};
         },
         async session({session, token}) {
-            session.user = {
+        session.user = {
                 ...session.user,
                 id: String(token.sub),
                 seat: token.seat,
-                topping: token.topping
+                topping: token.topping,
+                showtime: token.showtime
             };
             return session;
         },
