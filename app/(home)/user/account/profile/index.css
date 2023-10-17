@@ -3,10 +3,10 @@ input[type = "file"] {
 }
 
 .lblUpload {
-    color: #fff;
-    background: #c0392b;
+    color: whitesmoke;
+    background: inherit;
     user-select: none;
     cursor: pointer;
-    box-shadow: 5px 15px 25px rgba(0, 0, 0, 0.35);
+    box-shadow: 5px 15px 25px rgba(0, 0, 0, 0.8);
     border-radius: 3px;
 }

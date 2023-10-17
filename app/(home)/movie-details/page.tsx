@@ -12,16 +12,11 @@ import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 import '../../globals.css';
 
-const DynamicHeader = dynamic(() => import('react-multi-carousel'), {
-    ssr: false
-})
-
 const MovieDetails = () => {
     const [movieDetailPage, setMovieDetailPage] = useState<movieDetailPage>();
     const searchParams = useSearchParams();
     const movieId = searchParams.get("id");
 
-    const currentDate = useState(new Date());
     const responsive = {
         desktop: {
             breakpoint: { max: 3000, min: 1024 },
@@ -30,21 +25,6 @@ const MovieDetails = () => {
         tablet: {
             breakpoint: { max: 1024, min: 464 },
             items: 2,
-        },
-        mobile: {
-            breakpoint: { max: 464, min: 0 },
-            items: 1,
-        },
-    };
-
-    const responsiveShowdate = {
-        desktop: {
-            breakpoint: { max: 3000, min: 1024 },
-            items: 10,
-        },
-        tablet: {
-            breakpoint: { max: 1024, min: 464 },
-            items: 3,
         },
         mobile: {
             breakpoint: { max: 464, min: 0 },

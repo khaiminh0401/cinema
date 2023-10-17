@@ -6,8 +6,6 @@ interface SRow {
     row: string,
     onClickButton: (name:string) => any
 }
-
-
 const SeatRow = ({ data, row,onClickButton }: SRow) => {
     let seats = data.map((x: any, i: number) => {
         return <SeatItem onClick={onClickButton} key={i} obj={x}/>

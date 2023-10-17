@@ -16,7 +16,6 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {FaAngleLeft, FaAngleRight} from "react-icons/fa";
 import "./index.css";
 import {BiSolidSearch} from "react-icons/bi";
-
 const {Search} = Input;
 type SelectedType = {
     movieType: movieType[],
@@ -25,6 +24,7 @@ type SelectedType = {
 }
 
 const Home = () => {
+
     const [data, setData] = useState<movie[]>();
     const [dataSelect, setSelect] = useState<SelectedType | undefined>();
     const [moviesNowShowing, setMoviesNowShowing] = useState<movie[]>();

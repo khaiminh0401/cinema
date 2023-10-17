@@ -13,7 +13,11 @@ import {showtimeAPI} from "@/util/API/Showtime";
 import {DateUtils} from "@/util/DateUtils";
 import {ArrayUtils} from "@/util/ArrayUtils";
 import {NumberUtils} from "@/util/NumberUtils";
-import {getSession, useSession} from "next-auth/react";
+import {useSession} from "next-auth/react";
+import supabase from "@/lib/supabase";
+import Link from "next/link";
+import {constants} from "@/common/constants";
+import Image from "next/image";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
     ssr: true,
@@ -28,10 +32,12 @@ interface SeatPageProps {
 
 
 const Seat = () => {
+
     // key of show time id
     const SHOWTIME_ID = "stid";
     const search = useSearchParams();
     const showTimeId = search.get(SHOWTIME_ID);
+    const branchId = search.get("branchid");
     const [seats, setSeats] = useState<any>([]);
     const [data, setData] = useState<SeatPageProps>();
     const [price, setPrice] = useState<any>([]);
@@ -46,21 +52,15 @@ const Seat = () => {
             ArrayUtils.add(price, await seatAPI.getTotalPrice(parseInt(showTimeId || "1"), seat.name));
         }
         const totalTemp = {
-            cost: price.length > 0 ? price.map((s: any) => s.total)
-                                            .reduce((a: number, b: number) => a + b) 
-                                    : price.total,
-            name_seat: seats.length > 0 ? seats.map((s: any) => s.name)
-                                                .reduce((a: string, b: string) => a + ", " + b) 
-                                        : seats.name
-        };
+            cost: price.length > 0 ? price.map((s: any) => s.total).reduce((a: number, b: number) => a + b) : price.total,
+            name_seat: seats.length > 0 ? seats.map((s: any) => s.name).reduce((a: string, b: string) => a + ", " + b) : seats.name
+        }
         await update({
-            ...session,
-            user: {
-                ...session?.user,
-                seat: totalTemp
-            }
+            ...session?.user,
+            seat: totalTemp
         })
         setTotal(totalTemp);
+    }
 
     }
     useEffect(() => {
@@ -74,15 +74,28 @@ const Seat = () => {
                 showtime: showtime
             });
         });
-
         myPromise.then(function (value: any) {
             setData(value);
         })
+        const channel = supabase
+            .channel('changes')
+            .on(
+                'postgres_changes',
+                {
+                    event: '*',
+                    schema: 'public',
+                    table: 'ticket',
+                    filter: `showtimeid=eq.${showTimeId}`
+                },
+                async (payload) => {
+                    setSeats(await seatAPI.getSeatHasCheckTicket(showTimeId))
+                }
+            )
+            .subscribe()
+    }, [seats]);
 
-    }, []);
     return (
         <div className="md:mx-28 md:my-14 mx-10">
-
             {data ? <>
                     <div className="w-1/2 mx-auto my-10">
                         <Steps
@@ -91,7 +104,6 @@ const Seat = () => {
                                 {
                                     title: <span className="text-white">Chọn ghế</span>,
                                     status: 'process',
-                                    // colorPrimary: "black"
                                 },
                                 {
                                     title: <span className="text-white">Chọn topping</span>,
@@ -157,7 +169,8 @@ const Seat = () => {
                                 className="book-information-sticky hidden lg:block"
                                 headStyle={{textAlign: "center"}}
                                 style={{width: 300}}
-                                cover={<img src={`/assert/home/${data.movie.poster}`} alt=""/>}
+                                cover={<Image src={`${constants.URL_IMAGES}${data.movie.poster}`}
+                                              width={100} height={100} alt=""/>}
                             >
                                 <table className="w-full">
                                     <tbody>
@@ -178,7 +191,7 @@ const Seat = () => {
                                         <td className="text-right">Gò vấp</td>
                                     </tr>
                                     <tr className="w-full">
-                                        <td colSpan={2}>Ghế: {total?.name_seat}</td>
+                                        <td colSpan={2}>Ghế:</td>
                                         <td className="text-right">{total?.name_seat || "Chưa chọn"}</td>
                                     </tr>
                                     <tr className="border-t-2 border-black">
@@ -187,10 +200,11 @@ const Seat = () => {
                                     </tr>
                                     </tbody>
                                 </table>
-                                <button
-                                    className="w-full bg-black text-white rounded border-black border-2 hover:bg-black hover:text-white p-3">Đi
-                                    tiếp
+                                {total?.name_seat && <button
+                                    className="w-full bg-black text-white rounded uppercase hover:bg-red-600 hover:text-white p-3">
+                                    <Link href={`/book/seat/topping?stid=${showTimeId}&branchid=${branchId}`}>Đi tiếp</Link>
                                 </button>
+                                }
                             </Card>
 
                         </div>

@@ -5,6 +5,7 @@ import Link from "next/link";
 import {useState} from "react";
 import {FaBars} from "react-icons/fa";
 import {SignOutButton} from "../authButtons";
+import {constants} from "@/common/constants";
 
 const Navbar = () => {
     const [openNav, setOpennav] = useState(false);
@@ -65,7 +66,8 @@ const Navbar = () => {
                     <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                         <div className="flex flex-shrink-0 items-center">
                             <a href="/" className="flex items-center">
-                                <img className="h-8 w-auto float-right" src="/assert/img/logo.png" alt="Your Company" />
+                                <Image className="float-right" width={80} height={50}
+                                       src={`${constants.URL_LOGO}`} alt="Your Company" />
                             </a>
                         </div>
                         <div className="hidden md:block mx-auto">
@@ -92,7 +94,7 @@ const Navbar = () => {
                                                     <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">{session?.user?.email}</span>
                                                 </div>
                                                 <hr />
-                                                <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-0">Thông tin cá nhân</a>
+                                                <a href="/user/account/profile" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-0">Thông tin cá nhân</a>
                                                 <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-1">Cài đặt</a>
                                                 <a href="#" className="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabIndex={-1} id="user-menu-item-1">Đơn hàng</a>
                                                 <SignOutButton />
