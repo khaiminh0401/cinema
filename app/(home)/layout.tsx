@@ -7,7 +7,6 @@ import Navbar from '@/components/Navbar';
 import { ConfigProvider } from "antd";
 import { theme } from "./theme";
 import { Suspense } from "react";
-import Loading from "./loading";
 
 export const metadata = {
     title: 'Zuhot',
