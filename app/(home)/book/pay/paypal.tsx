@@ -1,9 +1,11 @@
 import { paypalAPI } from '@/util/API/Paypal';
-import { errorNotification, successNotification } from '@/util/Notification';
+import { errorNotification } from '@/util/Notification';
 import { PaypalProps, checkoutOrderProps } from '@/util/Props/PaypalProps';
 import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
+import { useRouter } from "next/navigation";
 
 const PaypalButton = ({ ...props }: PaypalProps) => {
+    const router = useRouter();
     const dataOrder: checkoutOrderProps = {
         amount: {
             "currency_code": "USD",
@@ -19,7 +21,7 @@ const PaypalButton = ({ ...props }: PaypalProps) => {
     }
     async function onApprove(data: any) {
         return paypalAPI.completeOrder(data.orderID).then(() => {
-            successNotification("Thanh toán thành công !!")
+            router.push("/book/complete/paypal");
         }).catch((e) => { errorNotification(e) });
     }
     return (
