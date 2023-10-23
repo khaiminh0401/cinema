@@ -31,7 +31,7 @@ const PaypalButton = ({ ...props }: PaypalProps) => {
                 currency: "USD",
                 intent: "capture",
             }} deferLoading={false}>
-                <PayPalButtons style={{ layout: 'horizontal', tagline: false }} createOrder={() => { return paypalAPI.checkoutOrder([dataOrder]).then(rs => { return rs }) }} onApprove={onApprove} />
+                <PayPalButtons style={{height: 55, color: 'black', layout: 'horizontal', tagline: false }} createOrder={() => { return paypalAPI.checkoutOrder([dataOrder]).then(rs => { return rs }) }} onApprove={onApprove} />
             </PayPalScriptProvider>
         </>
     );
