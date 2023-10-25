@@ -9,7 +9,7 @@ const Loading = ({ ...props }: { isLoading?: boolean, message?: string, data?: a
             if (props.data == null) {
                 setFlag(false);
             }
-        }, 10000);
+        }, 5000);
     }, [])
     return (
         <>

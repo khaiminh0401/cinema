@@ -7,6 +7,7 @@ import Navbar from '@/components/Navbar';
 import { ConfigProvider } from "antd";
 import { theme } from "./theme";
 import { Suspense } from "react";
+import Loading from "@/components/Loading";
 
 export const metadata = {
     title: 'Zuhot',
@@ -26,13 +27,15 @@ export default function HomeLayout({
             </head>
             <body>
                 <div className="container-fluid bg-dark">
-                    <ConfigProvider theme={theme}>
-                        <SessionProvider>
-                            <Navbar />
+                    <Suspense fallback={<Loading />}>
+                        <ConfigProvider theme={theme}>
+                            <SessionProvider>
+                                <Navbar />
                                 {children}
-                            <Footer />
-                        </SessionProvider>
-                    </ConfigProvider>
+                                <Footer />
+                            </SessionProvider>
+                        </ConfigProvider>
+                    </Suspense>
                 </div>
             </body>
         </html>

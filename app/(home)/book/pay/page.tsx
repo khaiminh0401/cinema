@@ -11,7 +11,6 @@ import { NumberUtils } from "@/util/NumberUtils";
 import { constants } from "@/common/constants";
 import { useRouter } from "next/navigation";
 import { DateUtils } from "@/util/DateUtils";
-import Loading from "../../loading";
 import { paymentAPI } from "@/util/API/Payment";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
