@@ -11,6 +11,7 @@ import {NumberUtils} from "@/util/NumberUtils";
 import {constants} from "@/common/constants";
 import {useRouter} from "next/navigation";
 import {DateUtils} from "@/util/DateUtils";
+import {vnpayAPI} from "@/util/API/Vnpay";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
     ssr: false,
@@ -36,7 +37,20 @@ const PayPage = () => {
         setValue({...value, payment: e.target.value});
     }
 
+    const payment = async (paymentMethod: number) => {
+        if (paymentMethod === 3) {
+            const vnpayPaymentDto: VnpayPaymentDto = {
+                vnp_Amount: 10000,
+                vnp_OrderInfo: "pay"
+            }
+
+            const urlPaymentByVnpay = await vnpayAPI.pay(vnpayPaymentDto);
+            router.push(urlPaymentByVnpay);
+        }
+    }
+
     const submit = () => {
+        payment(value.payment);
         router.push("/book/complete");
     }
     return (

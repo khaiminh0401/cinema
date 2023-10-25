@@ -49,7 +49,7 @@ const SlideMenu = () => {
     // const [customerName, setCustomerName] = useState<string>();
     const [customer, setCustomer] = useState<customer>();
     const [avatar, setAvatar] = useState<string>();
-    const { data: session } = useSession();
+    const {data: session} = useSession();
 
     const customerId = Number(session?.user.id);
 
@@ -91,7 +91,10 @@ const SlideMenu = () => {
                                             avatar ? `https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/${avatar}`
                                                 : "https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/default.png"
                                         }
-                                    alt="avatar"/>}
+                                    alt="avatar"
+                                    width={200}
+                                    height={200}
+                                />}
                                 className='hover:scale-110'
                             />
                         </section>

@@ -99,9 +99,11 @@ const Topping = () => {
                                 <div className="flex w-2/5">
                                     <div className="w-20">
                                         <Image
-                                            className="object-fill h-24 "
+                                            className="object-fill"
                                             src={`${constants.URL_TOPPING}${topping.logo}`}
                                             alt=""
+                                            width={100}
+                                            height={100}
                                         />
                                     </div>
                                     <div className="flex flex-col justify-between ml-4 flex-grow">
