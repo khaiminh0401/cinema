@@ -1,8 +1,9 @@
-import { RingLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 
-const Loading = () =>{
+export default function Loading() {
     return (
-        <div className="flex justify-center"><RingLoader color="rgba(255, 78, 0, 1)"/></div>
-    )
+        <div className="flex justify-center min-h-screen items-center">
+            <ClipLoader size={50} color="#ff0000" />
+        </div>
+    );
 }
-export default Loading;
