@@ -3,5 +3,6 @@ export const constants = {
     ROOT_API: "http://localhost:8080/",
     ROOT_FE: "http://localhost:3000/",
     URL_TOPPING: "https://zuhot-cinema-images.s3.amazonaws.com/topping/",
-    URL_LOGO: "https://zuhot-cinema-images.s3.amazonaws.com/logo.png"
+    URL_LOGO: "https://zuhot-cinema-images.s3.amazonaws.com/logo.png",
+    USD: 23000
 }
