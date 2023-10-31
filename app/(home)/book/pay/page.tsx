@@ -11,8 +11,9 @@ import { NumberUtils } from "@/util/NumberUtils";
 import { constants } from "@/common/constants";
 import { useRouter } from "next/navigation";
 import { DateUtils } from "@/util/DateUtils";
-import Loading from "../../loading";
 import { paymentAPI } from "@/util/API/Payment";
+import { listOrder } from "@/util/Props/PaypalProps";
+import PaypalButton from "./paypal";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
     ssr: false,
@@ -58,6 +59,32 @@ const PayPage = () => {
         // window.location.href = data;
         // router.push("/book/complete");
     }
+    // PAYPAL
+    const item: listOrder[] = []
+    item.push({
+        name: `Vé: ${data?.seat?.name_seat}`,
+        description: "Vé xem phim tại Zuhot Cinema",
+        quantity: '1',
+        unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(data?.seat?.cost) }
+    })
+    if (data?.topping.length > 0) {
+        data?.topping.map((s: any) => {
+            item.push({
+                name: `${s.name}`,
+                description: "Topping tại Zuhot Cinema",
+                quantity: `${s.quantity}`,
+                unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(s.sum) }
+            })
+        })
+    }
+    item.push({
+        name: "Thuế",
+        description: "Thuế 5% tại Zuhot Cinema",
+        quantity: '1',
+        unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(data?.seat?.cost * 0.05) }
+    })
+    let amount = 0;
+    item.map((s: any) => amount += Number(s.unit_amount.value));
     return (
         <>
 
@@ -141,8 +168,7 @@ const PayPage = () => {
                                 </tr>
                                 <tr>
                                     <td colSpan={2} className="p-5">
-                                        <button onClick={submit} className="bg-black text-white w-full p-5">Thanh toán
-                                        </button>
+                                        {value.payment != 2 ? (<button onClick={submit} className="bg-black text-white w-full p-5">Thanh toán</button>) : (<PaypalButton amount={amount.toFixed(2)} item={item} />)}
                                     </td>
                                 </tr>
                             </tbody>
