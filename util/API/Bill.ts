@@ -9,7 +9,7 @@ const getBillDetails = async (billId: number, customerId: number) => {
 }
 
 const updateExportStatus = async (id:number, exportstatus:boolean) =>{
-    return (await fetchAPI.post(`/bill/updateExportStatus`,{id,exportstatus})).data; 
+    return (await fetchAPI.get(`/bill/updateExportStatus`,{params:{id,exportstatus}})).data; 
 }
 
 export const billAPI = {
