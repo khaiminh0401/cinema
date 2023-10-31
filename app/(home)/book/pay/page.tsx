@@ -39,7 +39,7 @@ const PayPage = () => {
         return (s: string) => {
             setValue({ ...value, wallet: s });
         }
-    }, [value.wallet]);
+    }, [value]);
     const handleChangeRadio = (e: RadioChangeEvent) => {
         setValue({ ...value, payment: e.target.value });
     }
