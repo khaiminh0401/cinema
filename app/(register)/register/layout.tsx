@@ -12,6 +12,9 @@ export default function RegisterLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <title>Zuhot Cinema</title>
+      </head>
       <body>{children}</body>
     </html>
   )

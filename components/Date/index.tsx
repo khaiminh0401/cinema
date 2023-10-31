@@ -31,9 +31,9 @@ const WeekDate = (prop: any) => {
       date.setDate(currentDate.getDate() - i);
       dates.push(date);
     }
-    for (let i = 1; i <4; i++) {
+    for (let i = 1; i < 4; i++) {
       let date = new Date(currentDate)
-      date.setDate(currentDate.getDate() +i);
+      date.setDate(currentDate.getDate() + i);
       dates.push(date);
     }
     return dates;
@@ -54,7 +54,7 @@ const WeekDate = (prop: any) => {
       setShowtimeDetail(showtime);
     }
     init();
-  }, [search,currentPage]);
+  }, [search, currentPage]);
   return (
     <>
       <div className="grid grid-cols-1 pb-2 border-b-2 border-red-950">

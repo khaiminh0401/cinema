@@ -71,10 +71,10 @@ const Navbar = () => {
                             </div>
                             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                                 <div className="flex flex-shrink-0 items-center">
-                                    <a href="/" className="flex items-center">
+                                    <Link href="/" className="flex items-center">
                                         <Image className="float-right" width={80} height={50}
                                                src={`${constants.URL_LOGO}`} alt="Your Company"/>
-                                    </a>
+                                    </Link>
                                 </div>
                                 <div className="hidden md:block mx-auto">
                                     <div className="flex space-x-4">
@@ -108,13 +108,13 @@ const Navbar = () => {
                                                                 className="block text-sm  text-gray-500 truncate dark:text-gray-400">{session?.user?.email}</span>
                                                         </div>
                                                         <hr/>
-                                                        <a href="/user/account/profile"
+                                                        <Link href="/user/account/profile"
                                                            className="block px-4 py-2 text-sm text-gray-700" role="menuitem"
-                                                           tabIndex={-1} id="user-menu-item-0">Thông tin cá nhân</a>
-                                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700"
-                                                           role="menuitem" tabIndex={-1} id="user-menu-item-1">Cài đặt</a>
-                                                        <a href="#" className="block px-4 py-2 text-sm text-gray-700"
-                                                           role="menuitem" tabIndex={-1} id="user-menu-item-1">Đơn hàng</a>
+                                                           tabIndex={-1} id="user-menu-item-0">Thông tin cá nhân</Link>
+                                                        <Link href="#" className="block px-4 py-2 text-sm text-gray-700"
+                                                           role="menuitem" tabIndex={-1} id="user-menu-item-1">Cài đặt</Link>
+                                                        <Link href="#" className="block px-4 py-2 text-sm text-gray-700"
+                                                           role="menuitem" tabIndex={-1} id="user-menu-item-1">Đơn hàng</Link>
                                                         <SignOutButton/>
                                                     </div>
                                                 )}
