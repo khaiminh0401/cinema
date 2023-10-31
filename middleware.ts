@@ -1,3 +1,8 @@
-export { default } from "next-auth/middleware"
+import withAuth from "next-auth/middleware";
 
-export const config = { matcher: ["/book/:path*","/user/:path*"] }
+export default withAuth(
+    {
+        secret: process.env.NEXTAUTH_SECRET,
+    }
+);
+export const config = {matcher: ["/book/:path*", "/user/:path*"]}
