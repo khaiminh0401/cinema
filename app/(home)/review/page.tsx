@@ -6,23 +6,36 @@ import { constants } from "@/common/constants";
 import { useEffect, useState } from "react";
 import { movieAPI } from "@/util/API/Movie";
 import { Comment } from "@/components/Comment";
+import Template from "@/components/Comment/template";
 const ReviewPage = () => {
-    const search = useSearchParams();
-    const [data, setData] = useState<any>({
-        movie: {}
-    })
-    const id = search.get('id');
-    const RATE_DEFAULT_VALUE = 2.5;
-    useEffect(() => {
-        const init = async () => {
-            const movie = await movieAPI.getByBill(id);
-            setData({ ...data, movie: movie });
-        }
-        // init();
-    }, []);
+    // const search = useSearchParams();
+    // const [data, setData] = useState<any>({
+    //     movie: {}
+    // })
+    // const RATE_DEFAULT_VALUE = 2.5;
+    // useEffect(() => {
+    //     const init = async () => {
+    //         const movie = await movieAPI.getByBill(id);
+    //         setData({ ...data, movie: movie });
+    //     }
+    //     // init();
+    // }, []);
+    const data = [{
+        rate: 3,
+        comment: 'hehe',
+        username: 'Thiên Ân',
+        date: '01/11/2023'
+    },
+    {
+        rate: 3,
+        comment: 'hehe',
+        username: 'Thiên Ân',
+        date: '01/11/2023'
+    }]
     return (
         <>
-            <section className="bg-white dark:bg-gray-900 mx-auto px-10 w-4/5 block">
+            <Template data={data} />
+            {/* <section className="bg-white dark:bg-gray-900 mx-auto px-10 w-4/5 block">
                 <div className="container px-6 py-10 mx-auto">
                     <h1 className="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">Review phim: Hạ Cánh Nơi Anh</h1>
 
@@ -47,7 +60,7 @@ const ReviewPage = () => {
                     <p>Một phần đóng góp ý kiến của bạn sẽ giúp chúng tôi cải thiện hơn trong từng ngày.</p>
                     <Comment />
                 </div>
-            </section>
+            </section> */}
         </>
     );
 }

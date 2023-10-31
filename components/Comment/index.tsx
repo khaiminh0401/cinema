@@ -2,6 +2,8 @@ import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
 import ReactQuill from 'react-quill';
+import { successNotification } from '@/util/Notification';
+import { redirect } from 'next/dist/server/api-utils';
 
 const modules = {
     toolbar: [
@@ -18,7 +20,10 @@ export const Comment = ({ ...props }: { className?: string }) => {
     const [value, setValue] = useState("");
     const handleSubmit = () => {
         if (value.length > 0 && value != "<p><br></p>") {
-            alert(value);
+            successNotification("Cảm ơn bạn đã đánh giá 💕")
+            setTimeout(() => {
+                window.location.href = "/"
+            }, 2000)
         }
     };
     return (
