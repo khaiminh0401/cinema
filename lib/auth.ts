@@ -47,6 +47,7 @@ export const authconfig: NextAuthOptions = {
     pages: {
         signIn: '/login'
     },
+    secret: process.env.NEXTAUTH_SECRET as string,
     callbacks: {
         async jwt({user, token, session, trigger}) {
             if (trigger === "update") {
