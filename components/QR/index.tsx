@@ -2,7 +2,7 @@
 import QRCode from "qrcode.react";
 import $ from "jquery";
 
-const QR = (value:string) => {
+const QR = (value:any) => {
     const getBlobData = () => {
         const canvas = document.querySelector("canvas");
         const pngUrl = canvas != null ? canvas

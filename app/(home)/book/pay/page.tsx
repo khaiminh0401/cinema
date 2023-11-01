@@ -39,7 +39,7 @@ const PayPage = () => {
         return (s: string) => {
             setValue({ ...value, wallet: s });
         }
-    }, [value.wallet]);
+    }, [value]);
     const handleChangeRadio = (e: RadioChangeEvent) => {
         setValue({ ...value, payment: e.target.value });
     }
@@ -112,7 +112,7 @@ const PayPage = () => {
                 </Suspense>
             </div>
             <div className="w-4/5 mx-auto grid grid-cols-3 gap-5">
-                <div className="col-span-2 grid grid-rows-3 gap-5">
+                <div className="col-span-2 grid">
                     <Card bodyStyle={{ backgroundColor: "white", color: "black" }}>
                         <div className="grid grid-cols-3 gap-10">
                             <img src={`${constants.URL_IMAGES}${data?.showtime.movie.poster}`} className=""

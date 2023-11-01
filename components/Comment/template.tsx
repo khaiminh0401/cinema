@@ -20,7 +20,7 @@ const Template = ({ ...props }: { data: review[] | undefined }) => {
                                         <div className="bg-white mx-auto w-full rounded-2xl px-10 py-1 shadow-lg hover:shadow-2xl transition duration-500">
                                             <div className="mt-4">
                                                 <div className="flex mt-2">
-                                                    <Rate defaultValue={value.rate} disabled />
+                                                    <Rate value={value.rate} disabled />
                                                 </div>
                                                 <p className="mt-4 text-md text-gray-600">{value.review}</p>
                                                 <div className="flex justify-between items-center">
