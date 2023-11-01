@@ -1,9 +1,9 @@
-import dynamic from 'next/dynamic';
-import React, { useState } from 'react';
-import 'react-quill/dist/quill.snow.css';
+import { billAPI } from '@/util/API/Bill';
+import { errorNotification, successNotification } from '@/util/Notification';
+import { useSearchParams } from "next/navigation";
+import { useState } from 'react';
 import ReactQuill from 'react-quill';
-import { successNotification } from '@/util/Notification';
-import { redirect } from 'next/dist/server/api-utils';
+import 'react-quill/dist/quill.snow.css';
 
 const modules = {
     toolbar: [
@@ -16,14 +16,18 @@ const modules = {
         ["link", "image"]
     ],
 };
-export const Comment = ({ ...props }: { className?: string }) => {
+export const Comment = ({ ...props }: { rate: any, className?: string }) => {
+    const search = useSearchParams();
+    const id = search.get('id');
     const [value, setValue] = useState("");
     const handleSubmit = () => {
-        if (value.length > 0 && value != "<p><br></p>") {
-            successNotification("Cảm ơn bạn đã đánh giá 💕")
-            setTimeout(() => {
-                window.location.href = "/"
-            }, 2000)
+        if (value != "<p><br></p>") {
+            billAPI.updateRateAndReview(Number(id), Number(props.rate), value).then(rs => {
+                successNotification("Cảm ơn bạn đã đánh giá 💕")
+                setTimeout(() => {
+                    window.location.href = "/"
+                }, 2000)
+            }).catch(e => errorNotification(e))
         }
     };
     return (

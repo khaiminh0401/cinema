@@ -1,13 +1,14 @@
 "use client"
-import {constants} from "@/common/constants";
-import {CardDiscount} from "@/components/CardDiscount";
+import { constants } from "@/common/constants";
+import { CardDiscount } from "@/components/CardDiscount";
+import Template from "@/components/Comment/template";
 import WeekDate from "@/components/Date";
-import {movieDetailPageAPI} from '@/util/API/MovieDetailPage';
-import dynamic from 'next/dynamic';
+import { movieDetailPageAPI } from '@/util/API/MovieDetailPage';
+import { Rate } from "antd";
 import Image from 'next/image';
 import Link from "next/link";
-import {useSearchParams} from 'next/navigation';
-import {useEffect, useState} from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 import '../../globals.css';
@@ -42,7 +43,7 @@ const MovieDetails = () => {
 
         init();
     }, [movieId])
-
+    
     return (
         <>
             <div className="w-full">
@@ -64,6 +65,7 @@ const MovieDetails = () => {
                                         <p><strong>Thời gian chiếu:</strong> {movieDetailPage?.movieDetail.time} phút</p>
                                         <p><strong>Quốc gia:</strong> {movieDetailPage?.movieDetail.countryName}</p>
                                         <p><strong>Năm phát hành:</strong> {movieDetailPage?.movieDetail.yearofmanufacture}</p>
+                                        <Rate value={movieDetailPage?.movieDetail.rate} disabled />
                                     </div>
                                     <div className="col-span-12 mb-4">
                                         <h4 className="mt-4"><span className="border-b-2 border-red-500 text-lg pb-2">NỘI DUNG PHIM</span></h4>
@@ -128,6 +130,12 @@ const MovieDetails = () => {
                             )}
                         </Carousel>
                     </div>
+                </div>
+            </div>
+            <div className="md:mx-10 md:px-3 md:mb-5 grid grid-cols-12 gap-2">
+                <div className="col-span-12">
+                    <h3 className="text-center border-b-2 border-white py-2 text-lg font-semibold uppercase">Đánh giá</h3>
+                    <Template data={movieDetailPage?.listReview} />
                 </div>
             </div>
         </>
