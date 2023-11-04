@@ -4,16 +4,17 @@ import { Badge, RadioChangeEvent } from "antd";
 import dynamic from "next/dynamic";
 import RadioPayment from "./radio-payment";
 import RadioDiscount from "./radio-discount";
-import React, { Suspense, useMemo, useState } from "react";
+import React, {Suspense, useEffect, useMemo, useState} from "react";
 import SelectWallet from "./select-wallet";
 import { useSession } from "next-auth/react";
 import { NumberUtils } from "@/util/NumberUtils";
 import { constants } from "@/common/constants";
-import { useRouter } from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import { DateUtils } from "@/util/DateUtils";
 import { paymentAPI } from "@/util/API/Payment";
 import { listOrder } from "@/util/Props/PaypalProps";
 import PaypalButton from "./paypal";
+import {billAPI} from "@/util/API/Bill";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
     ssr: false,
@@ -28,8 +29,24 @@ const Steps = dynamic(() => import("antd").then((s) => s.Steps), {
 
 const PayPage = () => {
     const router = useRouter();
+    const [billDetails, setBillDetails] = useState<BillDetailsDto>()
+    const search = useSearchParams();
+    const billId = search.get("billId");
     const { data: session, update } = useSession();
     const data = session?.user;
+    const customerId = session?.user.id;
+
+    useEffect(() => {
+        const init = async () => {
+            if (billId !== null && customerId !== undefined) {
+                const billDetailsFromAPI = await billAPI.checkout(parseInt(billId), customerId);
+                console.log(billDetailsFromAPI)
+                setBillDetails(billDetailsFromAPI);
+            }
+        }
+
+        init();
+    }, [data])
 
     const [value, setValue] = useState({
         payment: 1,

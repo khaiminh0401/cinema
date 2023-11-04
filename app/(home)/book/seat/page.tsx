@@ -1,9 +1,9 @@
 "use client"
-import {useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import "./index.css";
 import dynamic from "next/dynamic";
 import {RingLoader} from "react-spinners";
-import {useEffect, useState} from "react"
+import {useEffect, useRef, useState} from "react"
 import SeatRow from "./SeatRow";
 import {seatAPI} from "@/util/API/Seat";
 import SeatIcon from "@/common/Icon/SeatIcon";
@@ -17,6 +17,8 @@ import {useSession} from "next-auth/react";
 import Link from "next/link";
 import {constants} from "@/common/constants";
 import Image from "next/image";
+import {billAPI} from "@/util/API/Bill";
+import {response} from "express";
 import pusher from "@/lib/pusher";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
@@ -35,6 +37,7 @@ const Seat = () => {
 
     // key of show time id
     const SHOWTIME_ID = "stid";
+    const router = useRouter();
     const search = useSearchParams();
     const showTimeId = search.get(SHOWTIME_ID);
     const branchId = search.get("branchid");
@@ -43,6 +46,8 @@ const Seat = () => {
     const [price, setPrice] = useState<any>([]);
     const [total, setTotal] = useState<any>();
     const {data: session, update} = useSession();
+    const user = session?.user;
+
     const getTotal = async (seat: any) => {
         if (ArrayUtils.checkExist(seats, seat)) {
             ArrayUtils.remove(seats, seat);
@@ -66,10 +71,31 @@ const Seat = () => {
         })
         setTotal(totalTemp);
     }
+
+    const saveBillAndTicket = async () => {
+        const tickets = [
+            {
+                seatDetailsId: 2,
+                showtimeId: 2,
+                vat: 0.5,
+                totalPrice: 10000
+            }
+        ]
+
+        const billTicket = {
+            customerId: user.id,
+            tickets: tickets
+        }
+
+        const billIdFromAPI = await billAPI.insertBillAndTicket(billTicket);
+        router.push(`/book/seat/topping?stid=${showTimeId}&branchid=${branchId}&billId=${billIdFromAPI}`)
+    }
+
     const channel = pusher.subscribe('my-channel');
     channel.bind('my-event', async function (data: any) {
         setSeats(await seatAPI.getSeatHasCheckTicket(showTimeId));
     });
+
     useEffect(() => {
         let myPromise = new Promise(async function (myResolve, myReject) {
             const seat = await seatAPI.getSeatHasCheckTicket(showTimeId);
@@ -193,8 +219,10 @@ const Seat = () => {
                                     </tbody>
                                 </table>
                                 {total?.name_seat && <button
-                                    className="w-full bg-black text-white rounded uppercase hover:bg-red-600 hover:text-white p-3">
-                                    <Link href={`/book/seat/topping?stid=${showTimeId}&branchid=${branchId}`}>Đi tiếp</Link>
+                                    className="w-full bg-black text-white rounded uppercase hover:bg-red-600 hover:text-white p-3"
+                                    onClick={saveBillAndTicket}
+                                >
+                                        Đi tiếp
                                 </button>
                                 }
                             </Card>
