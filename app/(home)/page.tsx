@@ -61,10 +61,10 @@ const Home = () => {
             setSelect(Selected);
             register("status", {value: cookie.statusId})
         }
-        init()
         if (cookie.statusId == undefined) {
             handleCookie('1');
         }
+        init()
     }, [cookie.statusId])
     const handleCookie = (value: string, event?: any) => {
         if (event != undefined) event.preventDefault();

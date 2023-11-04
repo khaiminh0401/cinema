@@ -43,6 +43,7 @@ const MovieDetails = () => {
 
         init();
     }, [movieId])
+    console.log(movieDetailPage);
     
     return (
         <>

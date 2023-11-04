@@ -20,6 +20,8 @@ const ReviewPage = () => {
         }
         init();
     }, []);
+    console.log(data);
+    
     return (
         <section className="bg-white dark:bg-gray-900 mx-auto px-10 w-4/5 block">
             <div className="container px-6 py-10 mx-auto">

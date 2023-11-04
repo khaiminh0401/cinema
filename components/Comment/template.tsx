@@ -22,13 +22,13 @@ const Template = ({ ...props }: { data: review[] | undefined }) => {
                                                 <div className="flex mt-2">
                                                     <Rate value={value.rate} disabled />
                                                 </div>
-                                                <p className="mt-4 text-md text-gray-600">{value.review}</p>
+                                                <p className="mt-4 text-md text-gray-600" dangerouslySetInnerHTML={{ __html: value.review as string }}></p>
                                                 <div className="flex justify-between items-center">
                                                     <div className="mt-4 flex items-center space-x-4 py-6">
                                                         <img className="w-12 h-12 rounded-full" src="https://i.pinimg.com/564x/d9/d8/8e/d9d88e3d1f74e2b8ced3df051cecb81d.jpg" alt="" />
                                                         <div className="text-black text-sm font-semibold">
                                                             {value.name}
-                                                            <p className="font-normal">{DateUtils.formatDate(new Date(value.exportdate))} {value.exporttime}</p></div>
+                                                            <p className="font-normal">{value.exportdate}</p></div>
                                                     </div>
                                                 </div>
                                             </div>
