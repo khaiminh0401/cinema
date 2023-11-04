@@ -14,12 +14,12 @@ import {DateUtils} from "@/util/DateUtils";
 import {ArrayUtils} from "@/util/ArrayUtils";
 import {NumberUtils} from "@/util/NumberUtils";
 import {useSession} from "next-auth/react";
-import supabase from "@/lib/supabase";
 import Link from "next/link";
 import {constants} from "@/common/constants";
 import Image from "next/image";
 import {billAPI} from "@/util/API/Bill";
 import {response} from "express";
+import pusher from "@/lib/pusher";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
     ssr: true,
@@ -58,7 +58,7 @@ const Seat = () => {
         }
         const totalTemp = {
             cost: price.length > 0 ? price.map((s: any) => s.total).reduce((a: number, b: number) => a + b) : price.total,
-            name_seat: seats.length > 0 ? seats.map((s: any) => s.name).reduce((a: string, b: string) => a + ", " + b) : seats.name
+            name_seat: seats.length > 0 ? seats.map((s: any) => s.name).reduce((a: string, b: string) => a + ", " + b) : seats.name,
         }
         await update({
             ...session?.user,
@@ -91,6 +91,11 @@ const Seat = () => {
         router.push(`/book/seat/topping?stid=${showTimeId}&branchid=${branchId}&billId=${billIdFromAPI}`)
     }
 
+    const channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', async function (data: any) {
+        setSeats(await seatAPI.getSeatHasCheckTicket(showTimeId));
+    });
+
     useEffect(() => {
         let myPromise = new Promise(async function (myResolve, myReject) {
             const seat = await seatAPI.getSeatHasCheckTicket(showTimeId);
@@ -105,21 +110,6 @@ const Seat = () => {
         myPromise.then(function (value: any) {
             setData(value);
         })
-        const channel = supabase
-            .channel('changes')
-            .on(
-                'postgres_changes',
-                {
-                    event: '*',
-                    schema: 'public',
-                    table: 'ticket',
-                    filter: `showtimeid=eq.${showTimeId}`
-                },
-                async (payload) => {
-                    setSeats(await seatAPI.getSeatHasCheckTicket(showTimeId))
-                }
-            )
-            .subscribe()
     }, [seats]);
 
     return (
