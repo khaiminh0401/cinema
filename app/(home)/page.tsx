@@ -44,27 +44,29 @@ const Home = () => {
     ];
     useEffect(() => {
         const init = async () => {
-            $("#next").click(() => {
-                let list = $(".main");
+            if (cookie.statusId == undefined) {
+                handleCookie('1');
+            } else {
+                $("#next").click(() => {
+                    let list = $(".main");
 
-                $("#slide").append(list[0]);
-            })
-            $("#prev").click(() => {
-                let list = $(".main");
-                $("#slide").prepend(list[list.length - 1]);
-            })
-            const movie = await movieAPI.findByStatus(cookie.statusId);
-            setData(movie);
-            const mv = await movieAPI.findByStatus('1');
-            setMoviesNowShowing(mv);
-            const Selected = await homeAPI.findAll();
-            setSelect(Selected);
-            register("status", {value: cookie.statusId})
+                    $("#slide").append(list[0]);
+                })
+                $("#prev").click(() => {
+                    let list = $(".main");
+                    $("#slide").prepend(list[list.length - 1]);
+                })
+                const movie = await movieAPI.findByStatus(cookie.statusId);
+                setData(movie);
+                const mv = await movieAPI.findByStatus('1');
+                setMoviesNowShowing(mv);
+                const Selected = await homeAPI.findAll();
+                setSelect(Selected);
+                register("status", {value: cookie.statusId})
+            }
+            init()
         }
-        init()
-        if (cookie.statusId == undefined) {
-            handleCookie('1');
-        }
+
     }, [cookie.statusId])
     const handleCookie = (value: string, event?: any) => {
         if (event != undefined) event.preventDefault();
