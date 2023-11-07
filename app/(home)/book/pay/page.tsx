@@ -26,6 +26,7 @@ const Steps = dynamic(() => import("antd").then((s) => s.Steps), {
     loading: () => <p className="text-center" style={{ width: 300 }}>Loading...</p>,
 });
 
+const movieStatus = ['Sắp công chiếu', 'Đang công chiếu', 'Đã công chiếu']
 
 const PayPage = () => {
     const router = useRouter();
@@ -40,7 +41,6 @@ const PayPage = () => {
         const init = async () => {
             if (billId !== null && customerId !== undefined) {
                 const billDetailsFromAPI = await billAPI.checkout(parseInt(billId), customerId);
-                console.log(billDetailsFromAPI)
                 setBillDetails(billDetailsFromAPI);
             }
         }
@@ -62,9 +62,9 @@ const PayPage = () => {
     }
 
     const price = {
-        temp: data?.seat?.cost || 0,
-        vat: data?.seat?.cost * 0.05 || 0,
-        topping: data?.topping.length > 1 ? data?.topping.map((s: any) => s.sum).reduce((a: any, b: any) => Number(a + b)) : Number(data?.topping[0]?.sum || 0),
+        temp: billDetails?.ticketTotalPrice || 0,
+        vat: billDetails?.ticketVat || 0,
+        topping: billDetails?.toppingTotalPrice || 0,
         discount: 0 as number
     }
     const submit = async () => {
@@ -104,7 +104,6 @@ const PayPage = () => {
     item.map((s: any) => amount += Number(s.unit_amount.value));
     return (
         <>
-
             <div className="w-1/2 mx-auto my-5">
                 <Suspense fallback={<p>loading...</p>}>
                     <Steps
@@ -131,32 +130,35 @@ const PayPage = () => {
             <div className="w-4/5 mx-auto grid grid-cols-3 gap-5">
                 <div className="col-span-2 grid">
                     <Card bodyStyle={{ backgroundColor: "white", color: "black" }}>
-                        <div className="grid grid-cols-3 gap-10">
-                            <img src={`${constants.URL_IMAGES}${data?.showtime.movie.poster}`} className=""
-                                alt="Photo film" />
+                        {billDetails &&  <div className="grid grid-cols-3 gap-10">
+                            <img src={`${constants.URL_IMAGES}${billDetails?.poster}`} className=""
+                                 alt="Photo film" />
                             <div className="col-span-2">
-                                <h3 className="text-lg font-bold">{data?.showtime.movie.name}</h3>
+                                <h3 className="text-lg font-bold">{billDetails.movieName}</h3>
                                 <h3>Xuất
-                                    chiếu: {DateUtils.formatDate(new Date(data?.showtime.showtime.showDate)) + " " + data?.showtime.showtime.startTime}</h3>
-                                <h3>Địa điểm: {data?.showtime.showtime.branchAddress}</h3>
-                                <h3>Ghế: {data?.seat.name_seat}</h3>
+                                    chiếu: {DateUtils.formatDate(new Date(
+                                        (billDetails.showDate !== undefined) ? billDetails.showDate : ''
+                                    )) + " " + billDetails.startTime}
+                                </h3>
+                                <h3>Địa điểm: {`${billDetails?.branchName} - ${billDetails.branchAddress}`}</h3>
+                                <h3>Ghế: {billDetails.seats}</h3>
                                 <span
                                     className="mt-3 inline-flex items-center rounded-md  px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"><Badge
-                                        color={"green"}
-                                        text={<span className="text-green-600">Đang công chiếu</span>} /></span>
+                                    color={"green"}
+                                    text={<span className="text-green-600">{movieStatus[billDetails.movieStatus]}</span>} />
+                                </span>
                                 <Card title="Phương thức thanh toán" bordered={false}
-                                    bodyStyle={{ backgroundColor: "white", color: "black", border: "none" }}>
+                                      bodyStyle={{ backgroundColor: "white", color: "black", border: "none" }}>
                                     <RadioPayment value={value.payment} onChange={handleChangeRadio}
-                                        component={<SelectWallet value={value.wallet}
-                                            setWallet={handleChangeSelect} />} />
+                                                  component={<SelectWallet value={value.wallet}
+                                                                           setWallet={handleChangeSelect} />} />
                                 </Card>
                                 <Card title="Voucher" bordered={false} extra={"0đ"}
-                                    bodyStyle={{ backgroundColor: "white", color: "black", boxShadow: "none" }}>
+                                      bodyStyle={{ backgroundColor: "white", color: "black", boxShadow: "none" }}>
                                     <RadioDiscount />
                                 </Card>
                             </div>
-                        </div>
-
+                        </div>}
                     </Card>
                 </div>
                 <div className="">
