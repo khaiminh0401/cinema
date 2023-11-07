@@ -67,7 +67,7 @@ const Seat = () => {
         setTotal(totalTemp);
     }
     const channel = pusher.subscribe('seatPage-channel');
-    channel.bind('seatOder-event', async function (data: any) {
+    channel.bind('seatOrder-event', async function (data: any) {
         setSeats(await seatAPI.getSeatHasCheckTicket(showTimeId));
     });
     useEffect(() => {
