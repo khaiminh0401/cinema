@@ -162,7 +162,7 @@ const Seat = () => {
                                 headStyle={{textAlign: "center"}}
                                 style={{width: 300}}
                                 cover={<Image src={`${constants.URL_IMAGES}${data.movie.poster}`}
-                                              width={100} height={100} alt=""/>}
+                                              width={1920} height={1080} alt=""/>}
                             >
                                 <table className="w-full">
                                     <tbody>

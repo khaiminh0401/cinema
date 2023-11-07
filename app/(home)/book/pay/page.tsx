@@ -9,7 +9,7 @@ import SelectWallet from "./select-wallet";
 import { useSession } from "next-auth/react";
 import { NumberUtils } from "@/util/NumberUtils";
 import { constants } from "@/common/constants";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { DateUtils } from "@/util/DateUtils";
 import { paymentAPI } from "@/util/API/Payment";
 import { listOrder } from "@/util/Props/PaypalProps";
@@ -27,6 +27,8 @@ const Steps = dynamic(() => import("antd").then((s) => s.Steps), {
 
 
 const PayPage = () => {
+    const searchParams = useSearchParams();
+    const billId = searchParams.get("billId");
     const router = useRouter();
     const { data: session, update } = useSession();
     const data = session?.user;
@@ -57,7 +59,7 @@ const PayPage = () => {
         });
         console.log(data);
         // window.location.href = data;
-        // router.push("/book/complete");
+        router.push(`/book/complete?billId=${billId}`);
     }
     // PAYPAL
     const item: listOrder[] = []
