@@ -27,7 +27,7 @@ const Login = () => {
         if (result?.error) {
             errorNotification(result.error)
         }
-
+        
     }
     return (
         <>
