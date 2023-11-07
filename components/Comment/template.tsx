@@ -1,12 +1,35 @@
-import { Rate } from "antd";
+import { movieAPI } from "@/util/API/Movie";
+import { Pagination, Rate } from "antd";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
-const Template = ({ ...props }: { data: reviewType[] | undefined }) => {
+const Template = () => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const [review, setReview] = useState<reviewType[]>();
+    const searchParams = useSearchParams();
+    const movieId = searchParams.get("id");
+
+    // Số lượng mục trên mỗi trang và tổng số mục
+    const itemsPerPage = 3;
+    const totalItems = 30;
+
+    // Xử lý sự kiện khi trang thay đổi
+    const handlePageChange = (page: any, pageSize: any) => {
+        setCurrentPage(page);
+    };
+    useEffect(() => {
+        const init = async () => {
+            const data = await movieAPI.getReviewByMovieId(movieId, itemsPerPage, currentPage);
+            setReview(data)
+        }
+        init();
+    }, [currentPage])
     return (
         <>
-            {props.data != undefined && props.data.length > 0
+            {review != undefined && review.length > 0
                 ? <div>
                     {
-                        props.data.map((value, index) => {
+                        review.map((value, index) => {
                             return (
                                 <div className="py-4 flex items-center justify-center" key={index}>
                                     <div className="px-10 w-full">
@@ -34,6 +57,12 @@ const Template = ({ ...props }: { data: reviewType[] | undefined }) => {
                 </div>
                 : <div className="text-center pt-2">Xin lỗi, chưa có đánh giá vào bộ phim này.</div>
             }
+            <Pagination className="text-center pt-2" responsive
+                current={currentPage}
+                pageSize={itemsPerPage}
+                total={totalItems}
+                onChange={handlePageChange}
+            />
         </>
     )
 }

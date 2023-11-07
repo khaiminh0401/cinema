@@ -16,7 +16,6 @@ import { movieAPI } from "@/util/API/Movie";
 
 const MovieDetails = () => {
     const [movieDetailPage, setMovieDetailPage] = useState<movieDetailPage>();
-    const [review, setReview] = useState<reviewType[]>();
     const searchParams = useSearchParams();
     const movieId = searchParams.get("id");
 
@@ -40,8 +39,6 @@ const MovieDetails = () => {
             if (movieId != null) {
                 const result = await movieDetailPageAPI.findMovieDetailPage(movieId);
                 setMovieDetailPage(result);
-                const data = await movieAPI.getReviewByMovieId(movieId);
-                setReview(data)
             }
         };
         
@@ -139,7 +136,7 @@ const MovieDetails = () => {
             <div className="md:mx-10 md:px-3 md:mb-5 grid grid-cols-12 gap-2">
                 <div className="col-span-12">
                     <h3 className="text-center border-b-2 border-white py-2 text-lg font-semibold uppercase">Đánh giá</h3>
-                    <Template data={review} />
+                    <Template />
                 </div>
             </div>
         </>
