@@ -8,8 +8,16 @@ const getBillDetails = async (billId: number, customerId: number) => {
     return (await fetchAPI.get(`/bill/details/${billId}`, { params: { customerId } })).data as billDetails;
 }
 
-const updateExportStatus = async (id:number, exportstatus:boolean) =>{
-    return (await fetchAPI.get(`/bill/updateExportStatus`,{params:{id,exportstatus}})).data; 
+const updateRateAndReview = async (id: number, rate: number, review: string) => {
+    return (await fetchAPI.post(`/bill/updateRateAndReview`, { id, rate, review })).data;
+}
+
+const getByMovie = async (id: any) => {
+    return (await fetchAPI.get(`/bill/getByMovie?id=${id}`)).data;
+}
+
+const updateExportStatus = async (id: number, exportstatus: boolean) => {
+    return (await fetchAPI.get(`/bill/updateExportStatus`, { params: { id, exportstatus } })).data;
 }
 
 const insertBillAndTicket = async (billTicketDto: BillTicketDto) =>{
@@ -27,8 +35,10 @@ const checkout = async (billId: number, customerId: number) =>{
 export const billAPI = {
     getBillHistory,
     getBillDetails,
-    updateExportStatus,
     insertBillAndTicket,
     insertToppingDetailsInBill,
     checkout,
+    updateRateAndReview,
+    getByMovie,
+    updateExportStatus
 }
