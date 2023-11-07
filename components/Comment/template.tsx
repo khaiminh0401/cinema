@@ -1,13 +1,6 @@
-import { DateUtils } from "@/util/DateUtils";
 import { Rate } from "antd";
-type review = {
-    rate: number
-    review: string | null
-    exportdate: string
-    exporttime: string
-    name: string
-}
-const Template = ({ ...props }: { data: review[] | undefined }) => {
+
+const Template = ({ ...props }: { data: reviewType[] | undefined }) => {
     return (
         <>
             {props.data != undefined && props.data.length > 0
@@ -28,7 +21,7 @@ const Template = ({ ...props }: { data: review[] | undefined }) => {
                                                         <img className="w-12 h-12 rounded-full" src="https://i.pinimg.com/564x/d9/d8/8e/d9d88e3d1f74e2b8ced3df051cecb81d.jpg" alt="" />
                                                         <div className="text-black text-sm font-semibold">
                                                             {value.name}
-                                                            <p className="font-normal">{value.exportdate}</p></div>
+                                                            <p className="font-normal">{value.exportdate + ""}</p></div>
                                                     </div>
                                                 </div>
                                             </div>

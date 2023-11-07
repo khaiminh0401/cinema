@@ -21,15 +21,7 @@ type typeofmovies = {
     id: string,
     poster: string
 }
-type review = {
-    rate: number
-    review: string | null
-    exportdate: string
-    exporttime: string
-    name: string
-}
 interface movieDetailPage {
     movieDetail: movieDetail
     listTypeOfMovies: typeofmovies[]
-    listReview: review[]
 }

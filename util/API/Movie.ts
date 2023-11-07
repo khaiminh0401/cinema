@@ -18,8 +18,12 @@ const getByShowTime = async (id: any) =>{
 const getByBill = async (id:any) =>{
     return (await fetchAPI.get(`/movie/getByBill?id=${id}`)).data as movie;
 }
+const getReviewByMovieId = async (id: any) => {
+    return (await fetchAPI.get(`/movie/getReviewByMovieId/${id}`)).data as reviewType[];
+}
 
 export const movieAPI = {
+    getReviewByMovieId,
     findAll,
     findById,
     findByStatus,
