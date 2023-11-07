@@ -9,11 +9,8 @@ const Template = () => {
     const searchParams = useSearchParams();
     const movieId = searchParams.get("id");
 
-    // Số lượng mục trên mỗi trang và tổng số mục
     const itemsPerPage = 3;
     const totalItems = 30;
-
-    // Xử lý sự kiện khi trang thay đổi
     const handlePageChange = (page: any, pageSize: any) => {
         setCurrentPage(page);
     };

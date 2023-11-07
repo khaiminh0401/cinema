@@ -1,18 +1,18 @@
 "use client"
-import { constants } from "@/common/constants";
-import { CardDiscount } from "@/components/CardDiscount";
+import {constants} from "@/common/constants";
+import {CardDiscount} from "@/components/CardDiscount";
 import Template from "@/components/Comment/template";
 import WeekDate from "@/components/Date";
-import { movieDetailPageAPI } from '@/util/API/MovieDetailPage';
-import { Rate } from "antd";
+import {movieDetailPageAPI} from '@/util/API/MovieDetailPage';
+import {Rate} from "antd";
 import Image from 'next/image';
 import Link from "next/link";
-import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import {useSearchParams} from 'next/navigation';
+import {useEffect, useState} from 'react';
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 import '../../globals.css';
-import { movieAPI } from "@/util/API/Movie";
+import {movieAPI} from "@/util/API/Movie";
 
 const MovieDetails = () => {
     const [movieDetailPage, setMovieDetailPage] = useState<movieDetailPage>();
@@ -41,7 +41,6 @@ const MovieDetails = () => {
                 setMovieDetailPage(result);
             }
         };
-        
         init();
     }, [movieId])
 
