@@ -71,28 +71,8 @@ const Seat = () => {
         })
         setTotal(totalTemp);
     }
-
-    const saveBillAndTicket = async () => {
-        const tickets = [
-            {
-                seatDetailsId: 2,
-                showtimeId: 2,
-                vat: 0.5,
-                totalPrice: 10000
-            }
-        ]
-
-        const billTicket = {
-            customerId: user.id,
-            tickets: tickets
-        }
-
-        const billIdFromAPI = await billAPI.insertBillAndTicket(billTicket);
-        router.push(`/book/seat/topping?stid=${showTimeId}&branchid=${branchId}&billId=${billIdFromAPI}`)
-    }
-
-    const channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', async function (data: any) {
+    const channel = pusher.subscribe('seatPage-channel');
+    channel.bind('seatOrder-event', async function (data: any) {
         setSeats(await seatAPI.getSeatHasCheckTicket(showTimeId));
     });
 
