@@ -43,13 +43,12 @@ const Home = () => {
         }
     ];
     useEffect(() => {
-        const init = async () => {
-            if (cookie.statusId == undefined) {
-                handleCookie('1');
-            } else {
+        if (cookie.statusId == undefined) {
+            handleCookie('1');
+        } else {
+            const init = async () => {
                 $("#next").click(() => {
                     let list = $(".main");
-
                     $("#slide").append(list[0]);
                 })
                 $("#prev").click(() => {
