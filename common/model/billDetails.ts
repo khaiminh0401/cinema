@@ -7,6 +7,7 @@ interface billDetails {
     startTime: Date,
     showDate: Date,
     movieName: string,
+    languageName: string,
     limitAge: number,
     yearOfManufacture: number,
     country: string,
