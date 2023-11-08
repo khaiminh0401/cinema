@@ -11,6 +11,7 @@ import {NumberUtils} from "@/util/NumberUtils";
 import {useSession} from "next-auth/react";
 import {errorNotification} from "@/util/Notification";
 import Image from "next/image";
+import {constants} from "@/common/constants";
 
 const STATUS = [
     {
@@ -86,9 +87,11 @@ const BillDetail = () => {
                     <div className="grid grid-cols-10 gap-x-4 lg:grid-cols-5">
                         <div className="col-span-3 lg:col-span-1">
                             <Image
-                                src={`${billDetails?.poster}`}
+                                src={`${constants.URL_IMAGES}${billDetails?.poster}`}
                                 className={"w-28 h-40"}
-                                alt={`${billDetails?.movieName}}`}
+                                alt={`${billDetails?.movieName}`}
+                                width={0}
+                                height={0}
                             />
                         </div>
                         <div className="col-span-7 lg:col-span-4">
@@ -98,7 +101,7 @@ const BillDetail = () => {
                                     <span className={"text-white"}> {billDetails?.country}</span>
                                 </p>
                                 <p className={"text-gray-300"}>Ngôn ngữ:
-                                    <span className={"text-white"}> Tiếng Việt</span>
+                                    <span className={"text-white"}> {billDetails?.languageName}</span>
                                 </p>
                                 <p className={"text-gray-300"}>Năm sản xuất:
                                     <span className={"text-white"}> {billDetails?.yearOfManufacture}</span>

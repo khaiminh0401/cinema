@@ -47,10 +47,6 @@ const BookedTicket = () => {
         }
     }, [session])
 
-    if (!session) {
-        return <Login/>;
-    }
-
     const paymentStatus = (status: number) => {
         return STATUS.find(value => value.key == status)?.element
     }
