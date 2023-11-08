@@ -29,6 +29,8 @@ const Steps = dynamic(() => import("antd").then((s) => s.Steps), {
 const movieStatus = ['Sắp công chiếu', 'Đang công chiếu', 'Đã công chiếu']
 
 const PayPage = () => {
+    const searchParams = useSearchParams();
+    const billId = searchParams.get("billId");
     const router = useRouter();
     const [billDetails, setBillDetails] = useState<BillDetailsDto>()
     const search = useSearchParams();
@@ -74,7 +76,7 @@ const PayPage = () => {
         });
         console.log(data);
         // window.location.href = data;
-        // router.push("/book/complete");
+        router.push(`/book/complete?billId=${billId}`);
     }
     // PAYPAL
     const item: listOrder[] = []

@@ -16,8 +16,6 @@ import {SubmitHandler, useForm} from "react-hook-form";
 import {FaAngleLeft, FaAngleRight} from "react-icons/fa";
 import "./index.css";
 import {BiSolidSearch} from "react-icons/bi";
-import {useSession} from "next-auth/react";
-import {NumberUtils} from "@/util/NumberUtils";
 import Loading from "@/components/Loading";
 
 const {Search} = Input;
@@ -51,7 +49,6 @@ const Home = () => {
             const init = async () => {
                 $("#next").click(() => {
                     let list = $(".main");
-
                     $("#slide").append(list[0]);
                 })
                 $("#prev").click(() => {
@@ -66,9 +63,9 @@ const Home = () => {
                 setSelect(Selected);
                 register("status", {value: cookie.statusId})
             }
-
             init()
         }
+
     }, [cookie.statusId])
     const handleCookie = (value: string, event?: any) => {
         if (event != undefined) event.preventDefault();
@@ -114,13 +111,14 @@ const Home = () => {
                                     {moviesNowShowing?.map((m, i) => {
                                         return (
                                             <div key={m.id} className="main"
-                                                style={{backgroundImage: `url(${constants.URL_IMAGES}${m.poster})`}}>
+                                                 style={{backgroundImage: `url(${constants.URL_IMAGES}${m.poster})`}}>
                                                 <div className="content rounded-md">
                                                     <div className="font-bold text-lg mx-4 ">{m.name}</div>
                                                     <div className="mb-4 m-4 text-white">{m.describe}</div>
                                                     <Link
                                                         key={m.id}
-                                                        className={`font-bold hover:text-red-900 m-4`} id={`nowShowing_${i}`}
+                                                        className={`font-bold hover:text-red-900 m-4`}
+                                                        id={`nowShowing_${i}`}
                                                         href={{
                                                             pathname: `/movie-details`,
                                                             query: {id: m.id}
@@ -147,7 +145,8 @@ const Home = () => {
                                 <hr className="opacity-50"/>
                                 <SelectOption
                                     className="text-white bg-inherit border-3 rounded my-3 p-2 h-10 ring-1 ring-red-500/50"
-                                    register={register("country")} defaultValue={0} id="country" name="Quốc gia" options={
+                                    register={register("country")} defaultValue={0} id="country" name="Quốc gia"
+                                    options={
                                         dataSelect?.country.map((value) => (
                                             {
                                                 value: value.id,
@@ -162,7 +161,8 @@ const Home = () => {
                                 <hr className="opacity-50"/>
                                 <SelectOption
                                     className="text-white bg-inherit border-3 rounded my-3 p-2 h-10 ring-1 ring-red-500/50"
-                                    register={register("movieType")} defaultValue={''} id="movieType" name="Thể loại" options={
+                                    register={register("movieType")} defaultValue={''} id="movieType" name="Thể loại"
+                                    options={
                                         dataSelect?.movieType.map((value) => (
                                             {
                                                 value: value.id,
@@ -177,7 +177,8 @@ const Home = () => {
                                 <hr className="opacity-50"/>
                                 <SelectOption
                                     className="text-white bg-inherit border-3 rounded my-3 p-2 h-10 ring-1 ring-red-500/50"
-                                    register={register("branch")} defaultValue={''} id="branch" name="Chi nhánh" options={
+                                    register={register("branch")} defaultValue={''} id="branch" name="Chi nhánh"
+                                    options={
                                         dataSelect?.branch.map((value) => (
                                             {
                                                 value: value.id,
@@ -189,7 +190,7 @@ const Home = () => {
                             </div>
                             <div className="mt-6 block w-full lg:inline">
                                 <button type="submit"
-                                    className="w-full text-white border-3 rounded p-2 lg:px-6 hover:bg-red-600 ring-1 ring-red-500/50">
+                                        className="w-full text-white border-3 rounded p-2 lg:px-6 hover:bg-red-600 ring-1 ring-red-500/50">
                                     <BiSolidSearch className="hidden md:inline"/>
                                     <label className="inline lg:hidden ">Tìm kiếm</label>
                                 </button>
