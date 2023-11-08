@@ -4,17 +4,17 @@ import { Badge, RadioChangeEvent } from "antd";
 import dynamic from "next/dynamic";
 import RadioPayment from "./radio-payment";
 import RadioDiscount from "./radio-discount";
-import React, {Suspense, useEffect, useMemo, useState} from "react";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
 import SelectWallet from "./select-wallet";
 import { useSession } from "next-auth/react";
 import { NumberUtils } from "@/util/NumberUtils";
 import { constants } from "@/common/constants";
-import {useRouter, useSearchParams} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { DateUtils } from "@/util/DateUtils";
 import { paymentAPI } from "@/util/API/Payment";
 import { listOrder } from "@/util/Props/PaypalProps";
 import PaypalButton from "./paypal";
-import {billAPI} from "@/util/API/Bill";
+import { billAPI } from "@/util/API/Bill";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
     ssr: false,
@@ -34,7 +34,6 @@ const PayPage = () => {
     const router = useRouter();
     const [billDetails, setBillDetails] = useState<BillDetailsDto>()
     const search = useSearchParams();
-    const billId = search.get("billId");
     const { data: session, update } = useSession();
     const data = session?.user;
     const customerId = session?.user.id;
@@ -81,29 +80,24 @@ const PayPage = () => {
     // PAYPAL
     const item: listOrder[] = []
     item.push({
-        name: `Vé: ${data?.seat?.name_seat}`,
-        description: "Vé xem phim tại Zuhot Cinema",
-        quantity: '1',
-        unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(data?.seat?.cost) }
-    })
-    if (data?.topping.length > 0) {
-        data?.topping.map((s: any) => {
-            item.push({
-                name: `${s.name}`,
-                description: "Topping tại Zuhot Cinema",
-                quantity: `${s.quantity}`,
-                unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(s.sum) }
-            })
+            name: `Vé: ${billDetails?.seats}`,
+            description: "Vé xem phim tại Zuhot Cinema",
+            quantity: '1',
+            unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.ticketTotalPrice || 0) }
+        },
+        {
+            name: `${billDetails?.toppingName}`,
+            description: "Topping tại Zuhot Cinema",
+            quantity: "1",
+            unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.toppingTotalPrice || 0) }
+        },
+        {
+            name: "Thuế",
+            description: "Thuế 5% tại Zuhot Cinema",
+            quantity: '1',
+            unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.ticketVat || 0) }
         })
-    }
-    item.push({
-        name: "Thuế",
-        description: "Thuế 5% tại Zuhot Cinema",
-        quantity: '1',
-        unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(data?.seat?.cost * 0.05) }
-    })
-    let amount = 0;
-    item.map((s: any) => amount += Number(s.unit_amount.value));
+    let amount = price.temp + price.vat + price.topping - price.discount;
     return (
         <>
             <div className="w-1/2 mx-auto my-5">
@@ -134,7 +128,7 @@ const PayPage = () => {
                     <Card bodyStyle={{ backgroundColor: "white", color: "black" }}>
                         {billDetails &&  <div className="grid grid-cols-3 gap-10">
                             <img src={`${constants.URL_IMAGES}${billDetails?.poster}`} className=""
-                                 alt="Photo film" />
+                                alt="Photo film" />
                             <div className="col-span-2">
                                 <h3 className="text-lg font-bold">{billDetails.movieName}</h3>
                                 <h3>Xuất
@@ -146,17 +140,17 @@ const PayPage = () => {
                                 <h3>Ghế: {billDetails.seats}</h3>
                                 <span
                                     className="mt-3 inline-flex items-center rounded-md  px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"><Badge
-                                    color={"green"}
-                                    text={<span className="text-green-600">{movieStatus[billDetails.movieStatus]}</span>} />
+                                        color={"green"}
+                                        text={<span className="text-green-600">{movieStatus[billDetails.movieStatus]}</span>} />
                                 </span>
                                 <Card title="Phương thức thanh toán" bordered={false}
-                                      bodyStyle={{ backgroundColor: "white", color: "black", border: "none" }}>
+                                    bodyStyle={{ backgroundColor: "white", color: "black", border: "none" }}>
                                     <RadioPayment value={value.payment} onChange={handleChangeRadio}
-                                                  component={<SelectWallet value={value.wallet}
-                                                                           setWallet={handleChangeSelect} />} />
+                                        component={<SelectWallet value={value.wallet}
+                                            setWallet={handleChangeSelect} />} />
                                 </Card>
                                 <Card title="Voucher" bordered={false} extra={"0đ"}
-                                      bodyStyle={{ backgroundColor: "white", color: "black", boxShadow: "none" }}>
+                                    bodyStyle={{ backgroundColor: "white", color: "black", boxShadow: "none" }}>
                                     <RadioDiscount />
                                 </Card>
                             </div>
@@ -189,7 +183,7 @@ const PayPage = () => {
                                 </tr>
                                 <tr>
                                     <td colSpan={2} className="p-5">
-                                        {value.payment != 2 ? (<button onClick={submit} className="bg-black text-white w-full p-5">Thanh toán</button>) : (<PaypalButton amount={amount.toFixed(2)} item={item} />)}
+                                        {value.payment != 2 ? (<button onClick={submit} className="bg-black text-white w-full p-5">Thanh toán</button>) : (<PaypalButton amount={NumberUtils.ConvertToUSD(amount)} item={item} />)}
                                     </td>
                                 </tr>
                             </tbody>

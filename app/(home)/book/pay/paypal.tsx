@@ -2,9 +2,11 @@ import { paypalAPI } from '@/util/API/Paypal';
 import { errorNotification } from '@/util/Notification';
 import { PaypalProps, checkoutOrderProps } from '@/util/Props/PaypalProps';
 import { PayPalButtons, PayPalScriptProvider } from '@paypal/react-paypal-js';
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const PaypalButton = ({ ...props }: PaypalProps) => {
+    const searchParams = useSearchParams();
+    const billId = searchParams.get("billId")
     const router = useRouter();
     const dataOrder: checkoutOrderProps = {
         amount: {
@@ -21,7 +23,7 @@ const PaypalButton = ({ ...props }: PaypalProps) => {
     }
     async function onApprove(data: any) {
         return paypalAPI.completeOrder(data.orderID).then(() => {
-            router.push("/book/complete/paypal");
+            router.push(`/book/complete/paypal?billId=${billId}`);
         }).catch((e) => { errorNotification(e) });
     }
     return (
