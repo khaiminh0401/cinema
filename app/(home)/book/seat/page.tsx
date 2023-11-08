@@ -19,6 +19,7 @@ import {constants} from "@/common/constants";
 import Image from "next/image";
 import {billAPI} from "@/util/API/Bill";
 import {response} from "express";
+import Ticket from "@/app/(home)/user/booked-ticket/[id]/ticket";
 import pusher from "@/lib/pusher";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
@@ -61,16 +62,37 @@ const Seat = () => {
             name_seat: seats.length > 0 ? seats.map((s: any) => s.name).reduce((a: string, b: string) => a + ", " + b) : seats.name,
         }
         await update({
-            ...session?.user,
-            seat: totalTemp,
-            showtime: {
-                movie: data?.movie,
-                showtime: data?.showtime
-            }
-
+            ...session?.user
         })
+
         setTotal(totalTemp);
     }
+
+    const saveBillAndTicket = async () => {
+        if (showTimeId !== null) {
+            const tickets: Ticket[] = [];
+
+            seats.forEach((seat: any) => {
+                const ticket = {
+                    seatDetailsId: seat.seatDetailsId,
+                    showtimeId: parseInt(showTimeId),
+                    vat: 0.05,
+                    totalPrice: total.cost
+                };
+
+                tickets.push(ticket);
+            });
+
+            const billTicket = {
+                customerId: user.id,
+                tickets: tickets
+            }
+
+            const billIdFromAPI = await billAPI.insertBillAndTicket(billTicket);
+            router.push(`/book/seat/topping?stid=${showTimeId}&branchid=${branchId}&billId=${billIdFromAPI}`)
+        }
+    }
+
     const channel = pusher.subscribe('seatPage-channel');
     channel.bind('seatOrder-event', async function (data: any) {
         setSeats(await seatAPI.getSeatHasCheckTicket(showTimeId));
@@ -199,10 +221,10 @@ const Seat = () => {
                                     </tbody>
                                 </table>
                                 {total?.name_seat && <button
-                                    className="w-full bg-black text-white rounded uppercase hover:bg-red-600 hover:text-white p-3"
+                                    className="w-full bg-black text-white font-bold rounded uppercase hover:bg-red-600 hover:text-white p-3"
                                     onClick={saveBillAndTicket}
                                 >
-                                        Đi tiếp
+                                    Đi tiếp
                                 </button>
                                 }
                             </Card>

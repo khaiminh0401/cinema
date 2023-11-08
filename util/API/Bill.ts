@@ -20,7 +20,7 @@ const updateExportStatus = async (id: number, exportstatus: boolean) => {
     return (await fetchAPI.get(`/bill/updateExportStatus`, { params: { id, exportstatus } })).data;
 }
 
-const insertBillAndTicket = async (billTicketDto: BillTicketDto) =>{
+const insertBillAndTicket = async (billTicketDto: { tickets: Ticket[]; customerId: number }) =>{
     return (await fetchAPI.post(`/bill/ticket`, billTicketDto)).data;
 }
 

@@ -8,9 +8,10 @@ type BillDetailsDto = {
     qrCode?: string;
     customerId?: number;
     paymentMethod?: string;
-    startTime?: string;
-    showDate?: string;
+    startTime?: Date;
+    showDate?: Date;
     movieName?: string;
+    movieStatus: number;
     limitAge?: number;
     yearOfManufacture?: number;
     country?: string;
@@ -25,5 +26,6 @@ type BillDetailsDto = {
     toppingTotalPrice?: number;
     ticketTotalPrice?: number;
     ticketVat?: number;
+    poster?: string;
     tickets?: Ticket[];
 }

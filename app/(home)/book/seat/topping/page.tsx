@@ -35,15 +35,16 @@ const Topping = () => {
             setData(toppingofbranch)
             await update({
                 ...session?.user,
-                topping: topping
             })
         }
         const cost = topping.length > 0 ? topping.map((s: any) => s.sum).reduce((a: number, b: number) => a + b) : sum
         setSum(cost)
         init();
-    }, [branchId, sum, topping]);
-    const onChange = (value: any, id: number, price: any, name: string) => {
-        const newData = {id: id, name: name, quantity: value, sum: Number(value) * Number(price)};
+    }, [branchId, sum]);
+
+    const onChange = (value: any, id: number, price: number, name: string) => {
+        const newData = {toppinngOfBranchId: id, name: name, quantity: value,
+            priceWhenBuy: price, sum: Number(value) * Number(price)};
         if (value === 0) {
             setTopping(prevData => prevData.filter(data => data.id !== id));
         } else {
@@ -59,13 +60,7 @@ const Topping = () => {
         if (billId !== null) {
             const billToppingDetails = {
                 billId: parseInt(billId),
-                toppingDetails: [
-                    {
-                        toppinngOfBranchId: 1,
-                        priceWhenBuy: 100000,
-                        quantity: 1
-                    }
-                ]
+                toppingDetails: [...topping]
             }
 
             const billToppingDetailsFromAPI = await billAPI.insertToppingDetailsInBill(billToppingDetails);
