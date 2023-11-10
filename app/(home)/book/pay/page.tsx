@@ -73,8 +73,6 @@ const PayPage = () => {
             vnp_Amount: price.temp+price.vat+price.topping-price.discount,
             vnp_OrderInfo: "Pay"
         });
-        console.log(data);
-        // window.location.href = data;
         router.push(`/book/complete?billId=${billId}`);
     }
     // PAYPAL

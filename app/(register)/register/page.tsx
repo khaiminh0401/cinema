@@ -10,6 +10,7 @@ import Link from 'next/link';
 import {useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {constants} from "@/common/constants";
+import { useRouter } from "next/navigation";
 
 /**
  * Object of Register
@@ -25,6 +26,7 @@ type RegisterProps = {
 
 
 const Register = () => {
+    const router = useRouter();
     const [flag, setFlag] = useState<boolean>();
     const { register, handleSubmit, formState: { errors } } = useForm<RegisterProps>();
 
@@ -35,7 +37,7 @@ const Register = () => {
                 if (checkStatus(await customerAPI.registration(inputs))) {
                     successNotification("Đăng ký tài khoản thành công, vui lòng kiểm tra email để kích hoạt tài khoản !")
                     setTimeout(() => {
-                        window.location.href = "/login";
+                        router.push("/login");
                     }, 3000);
                 }
             } catch (e: any) {
