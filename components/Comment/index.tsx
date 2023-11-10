@@ -1,8 +1,9 @@
 import { billAPI } from '@/util/API/Bill';
 import { errorNotification, successNotification } from '@/util/Notification';
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from 'react';
-import ReactQuill from 'react-quill';
+import dynamic from 'next/dynamic';
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
 
 const modules = {
@@ -17,6 +18,7 @@ const modules = {
     ],
 };
 export const Comment = ({ ...props }: { rate: any, className?: string }) => {
+    const router = useRouter();
     const search = useSearchParams();
     const id = search.get('id');
     const [value, setValue] = useState("");
@@ -25,7 +27,7 @@ export const Comment = ({ ...props }: { rate: any, className?: string }) => {
             billAPI.updateRateAndReview(Number(id), Number(props.rate), value).then(rs => {
                 successNotification("Cảm ơn bạn đã đánh giá 💕")
                 setTimeout(() => {
-                    window.location.href = "/"
+                    router.push("/");
                 }, 2000)
             }).catch(e => errorNotification(e))
         }
