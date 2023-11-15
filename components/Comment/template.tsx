@@ -1,4 +1,4 @@
-import { movieAPI } from "@/util/API/Movie";
+import { billAPI } from "@/util/API/Bill";
 import { Pagination, Rate } from "antd";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -9,13 +9,13 @@ const Template = () => {
     const searchParams = useSearchParams();
     const movieId = searchParams.get("id");
 
-    const itemsPerPage = 3;
+    const itemsPerPage = 1;
     const handlePageChange = (page: any, pageSize: any) => {
         setCurrentPage(page);
     };
     useEffect(() => {
         const init = async () => {
-            const data = await movieAPI.getReviewByMovieId(movieId, itemsPerPage, currentPage);
+            const data = await billAPI.getReviewByMovieId(movieId, itemsPerPage, currentPage);
             setReview(data)
         }
         init();
@@ -53,7 +53,7 @@ const Template = () => {
                 </div>
                 : <div className="text-center pt-2">Xin lỗi, chưa có đánh giá vào bộ phim này.</div>
             }
-            {review != undefined && review.total_bill_count > 3 &&
+            {review != undefined && review.total_bill_count > itemsPerPage  &&
                 <Pagination className="text-center pt-2" responsive
                     current={currentPage}
                     pageSize={itemsPerPage}
