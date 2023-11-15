@@ -53,7 +53,7 @@ const Template = () => {
                 </div>
                 : <div className="text-center pt-2">Xin lỗi, chưa có đánh giá vào bộ phim này.</div>
             }
-            {review != undefined && review.review.length < 4 &&
+            {review != undefined && review.total_bill_count > 3 &&
                 <Pagination className="text-center pt-2" responsive
                     current={currentPage}
                     pageSize={itemsPerPage}
