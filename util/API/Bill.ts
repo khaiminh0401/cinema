@@ -32,7 +32,12 @@ const checkout = async (billId: number, customerId: number) =>{
     return (await fetchAPI.get(`/bill/checkout`, {params: {billId, customerId}})).data;
 }
 
+const getReviewByMovieId = async (id: any, pageSize: any, page: any) => {
+    return (await fetchAPI.get(`/bill/getReviewByMovieId/${id}?pageSize=${pageSize}&page=${page}`)).data as reviewType;
+}
+
 export const billAPI = {
+    getReviewByMovieId,
     getBillHistory,
     getBillDetails,
     insertBillAndTicket,
