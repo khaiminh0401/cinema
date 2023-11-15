@@ -9,7 +9,7 @@ const Template = () => {
     const searchParams = useSearchParams();
     const movieId = searchParams.get("id");
 
-    const itemsPerPage = 1;
+    const itemsPerPage = 3;
     const handlePageChange = (page: any, pageSize: any) => {
         setCurrentPage(page);
     };
