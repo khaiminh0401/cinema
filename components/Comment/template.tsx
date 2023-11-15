@@ -5,12 +5,11 @@ import { useEffect, useState } from "react";
 
 const Template = () => {
     const [currentPage, setCurrentPage] = useState(1);
-    const [review, setReview] = useState<reviewType[]>();
+    const [review, setReview] = useState<reviewType>();
     const searchParams = useSearchParams();
     const movieId = searchParams.get("id");
 
     const itemsPerPage = 3;
-    const totalItems = 30;
     const handlePageChange = (page: any, pageSize: any) => {
         setCurrentPage(page);
     };
@@ -23,10 +22,10 @@ const Template = () => {
     }, [currentPage])
     return (
         <>
-            {review != undefined && review.length > 0
+            {review != undefined && review.review.length > 0
                 ? <div>
                     {
-                        review.map((value, index) => {
+                        review.review.map((value, index) => {
                             return (
                                 <div className="py-4 flex items-center justify-center" key={index}>
                                     <div className="px-10 w-full">
@@ -54,12 +53,14 @@ const Template = () => {
                 </div>
                 : <div className="text-center pt-2">Xin lỗi, chưa có đánh giá vào bộ phim này.</div>
             }
-            <Pagination className="text-center pt-2" responsive
-                current={currentPage}
-                pageSize={itemsPerPage}
-                total={totalItems}
-                onChange={handlePageChange}
-            />
+            {review != undefined && review.review.length < 4 &&
+                <Pagination className="text-center pt-2" responsive
+                    current={currentPage}
+                    pageSize={itemsPerPage}
+                    total={review.total_bill_count}
+                    onChange={handlePageChange}
+                />
+            }
         </>
     )
 }
