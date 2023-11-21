@@ -14,7 +14,8 @@ type movieDetail = {
     directorsName: string,
     languagesName: string,
     countryName: string,
-    movieTypeId: string
+    movieTypeId: string,
+    rate: number
 }
 type typeofmovies = {
     id: string,

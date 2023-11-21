@@ -8,6 +8,8 @@ import {NumberUtils} from "@/util/NumberUtils";
 import {useSession} from "next-auth/react";
 import {constants} from "@/common/constants";
 import Image from "next/image";
+import {billAPI} from "@/util/API/Bill";
+import {Integer} from "asn1js";
 
 type Topping = {
     id: string,
@@ -21,6 +23,7 @@ type Topping = {
 const Topping = () => {
     const search = useSearchParams();
     const branchId = search.get("branchid");
+    const billId = search.get("billId");
     const [data, setData] = useState<Topping[]>();
     const [topping, setTopping] = useState<any[]>([]);
     const [sum, setSum] = useState<number>(0);
@@ -32,15 +35,16 @@ const Topping = () => {
             setData(toppingofbranch)
             await update({
                 ...session?.user,
-                topping: topping
             })
         }
         const cost = topping.length > 0 ? topping.map((s: any) => s.sum).reduce((a: number, b: number) => a + b) : sum
         setSum(cost)
         init();
-    }, [branchId, sum, topping]);
-    const onChange = (value: any, id: number, price: any, name: string) => {
-        const newData = {id: id, name: name, quantity: value, sum: Number(value) * Number(price)};
+    }, [branchId, sum]);
+
+    const onChange = (value: any, id: number, price: number, name: string) => {
+        const newData = {toppinngOfBranchId: id, name: name, quantity: value,
+            priceWhenBuy: price, sum: Number(value) * Number(price)};
         if (value === 0) {
             setTopping(prevData => prevData.filter(data => data.id !== id));
         } else {
@@ -53,8 +57,18 @@ const Topping = () => {
         }
     }
     const onSubmit = async () => {
-        router.push("/book/pay");
+        if (billId !== null) {
+            const billToppingDetails = {
+                billId: parseInt(billId),
+                toppingDetails: [...topping]
+            }
+
+            const billToppingDetailsFromAPI = await billAPI.insertToppingDetailsInBill(billToppingDetails);
+
+            router.push(`/book/pay?billId=${billToppingDetailsFromAPI}`);
+        }
     }
+
     return (
         <div className="md:mx-28 md:my-14 mx-10">
             <div className="w-1/2 mx-auto my-10">

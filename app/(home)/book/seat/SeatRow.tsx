@@ -6,9 +6,10 @@ interface SRow {
     row: string,
     onClickButton: (name: string) => any
 }
-const SeatRow = ({ data, row, onClickButton }: SRow) => {
+
+const SeatRow = ({data, row, onClickButton}: SRow) => {
     let seats = data.map((x: any, i: number) => {
-        return <SeatItem onClick={onClickButton} key={i} obj={x} />
+        return <SeatItem onClick={onClickButton} key={i} obj={x}/>
     });
     if (row.charAt(0) == 'H') {
         seats = data.reduce((total: any, currentValue: any, currentIndex: any, arr: any) => {
@@ -32,7 +33,8 @@ const SeatRow = ({ data, row, onClickButton }: SRow) => {
                 {seats}
             </div>
             <div className="w-20 flex justify-center items-center my-5">
-            <button className="bg-green-800 text-white rounded w-1/2">{row.charAt(0)}</button>
+                <button
+                    className={`bg-blue-600 text-white rounded w-1/2 ${row.charAt(0) === 'H' && 'bg-pink-600'} ${row.charAt(0) === 'J' || row.charAt(0) === 'K' ? 'bg-yellow-400':''}`}>{row.charAt(0)}</button>
             </div>
         </div>
     );

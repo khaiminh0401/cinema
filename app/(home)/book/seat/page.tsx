@@ -1,9 +1,9 @@
 "use client"
-import {useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import "./index.css";
 import dynamic from "next/dynamic";
 import {RingLoader} from "react-spinners";
-import {useEffect, useState} from "react"
+import {useEffect, useRef, useState} from "react"
 import SeatRow from "./SeatRow";
 import {seatAPI} from "@/util/API/Seat";
 import SeatIcon from "@/common/Icon/SeatIcon";
@@ -14,10 +14,13 @@ import {DateUtils} from "@/util/DateUtils";
 import {ArrayUtils} from "@/util/ArrayUtils";
 import {NumberUtils} from "@/util/NumberUtils";
 import {useSession} from "next-auth/react";
-import supabase from "@/lib/supabase";
 import Link from "next/link";
 import {constants} from "@/common/constants";
 import Image from "next/image";
+import {billAPI} from "@/util/API/Bill";
+import {response} from "express";
+import Ticket from "@/app/(home)/user/booked-ticket/[id]/ticket";
+import pusher from "@/lib/pusher";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
     ssr: true,
@@ -35,6 +38,7 @@ const Seat = () => {
 
     // key of show time id
     const SHOWTIME_ID = "stid";
+    const router = useRouter();
     const search = useSearchParams();
     const showTimeId = search.get(SHOWTIME_ID);
     const branchId = search.get("branchid");
@@ -43,6 +47,8 @@ const Seat = () => {
     const [price, setPrice] = useState<any>([]);
     const [total, setTotal] = useState<any>();
     const {data: session, update} = useSession();
+    const user = session?.user;
+
     const getTotal = async (seat: any) => {
         if (ArrayUtils.checkExist(seats, seat)) {
             ArrayUtils.remove(seats, seat);
@@ -53,19 +59,44 @@ const Seat = () => {
         }
         const totalTemp = {
             cost: price.length > 0 ? price.map((s: any) => s.total).reduce((a: number, b: number) => a + b) : price.total,
-            name_seat: seats.length > 0 ? seats.map((s: any) => s.name).reduce((a: string, b: string) => a + ", " + b) : seats.name
+            name_seat: seats.length > 0 ? seats.map((s: any) => s.name).reduce((a: string, b: string) => a + ", " + b) : seats.name,
         }
         await update({
-            ...session?.user,
-            seat: totalTemp,
-            showtime: {
-                movie: data?.movie,
-                showtime: data?.showtime
-            }
-            
+            ...session?.user
         })
+
         setTotal(totalTemp);
     }
+
+    const saveBillAndTicket = async () => {
+        if (showTimeId !== null) {
+            const tickets: Ticket[] = [];
+
+            seats.forEach((seat: any) => {
+                const ticket = {
+                    seatDetailsId: seat.seatDetailsId,
+                    showtimeId: parseInt(showTimeId),
+                    vat: 0.05,
+                    totalPrice: total.cost
+                };
+
+                tickets.push(ticket);
+            });
+
+            const billTicket = {
+                customerId: user.id,
+                tickets: tickets
+            }
+
+            const billIdFromAPI = await billAPI.insertBillAndTicket(billTicket);
+            router.push(`/book/seat/topping?stid=${showTimeId}&branchid=${branchId}&billId=${billIdFromAPI}`)
+        }
+    }
+
+    const channel = pusher.subscribe('seatPage-channel');
+    channel.bind('seatOrder-event', async function (data: any) {
+        setSeats(await seatAPI.getSeatHasCheckTicket(showTimeId));
+    });
 
     useEffect(() => {
         let myPromise = new Promise(async function (myResolve, myReject) {
@@ -81,21 +112,6 @@ const Seat = () => {
         myPromise.then(function (value: any) {
             setData(value);
         })
-        const channel = supabase
-            .channel('changes')
-            .on(
-                'postgres_changes',
-                {
-                    event: '*',
-                    schema: 'public',
-                    table: 'ticket',
-                    filter: `showtimeid=eq.${showTimeId}`
-                },
-                async (payload) => {
-                    setSeats(await seatAPI.getSeatHasCheckTicket(showTimeId))
-                }
-            )
-            .subscribe()
     }, [seats]);
 
     return (
@@ -174,7 +190,7 @@ const Seat = () => {
                                 headStyle={{textAlign: "center"}}
                                 style={{width: 300}}
                                 cover={<Image src={`${constants.URL_IMAGES}${data.movie.poster}`}
-                                              width={100} height={100} alt=""/>}
+                                              width={1920} height={1080} alt=""/>}
                             >
                                 <table className="w-full">
                                     <tbody>
@@ -205,8 +221,10 @@ const Seat = () => {
                                     </tbody>
                                 </table>
                                 {total?.name_seat && <button
-                                    className="w-full bg-black text-white rounded uppercase hover:bg-red-600 hover:text-white p-3">
-                                    <Link href={`/book/seat/topping?stid=${showTimeId}&branchid=${branchId}`}>Đi tiếp</Link>
+                                    className="w-full bg-black text-white font-bold rounded uppercase hover:bg-red-600 hover:text-white p-3"
+                                    onClick={saveBillAndTicket}
+                                >
+                                    Đi tiếp
                                 </button>
                                 }
                             </Card>

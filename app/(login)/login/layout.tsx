@@ -13,6 +13,9 @@ export default function LoginLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <title>Zuhot Cinema</title>
+      </head>
       <body>
         <div className="min-h-screen flex items-center bg-white ">
           <SessionProvider>

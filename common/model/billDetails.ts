@@ -7,6 +7,7 @@ interface billDetails {
     startTime: Date,
     showDate: Date,
     movieName: string,
+    languageName: string,
     limitAge: number,
     yearOfManufacture: number,
     country: string,
@@ -20,6 +21,7 @@ interface billDetails {
     toppingName: string,
     toppingTotalPrice: number,
     ticketTotalPrice: number,
+    ticketTotalPriceAfterVat: number,
     poster: string,
     tickets: ticketBillDetailsPage[]
 }
