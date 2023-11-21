@@ -113,7 +113,7 @@ const Topping = () => {
                                 <div className="flex w-2/5">
                                     <div className="w-20">
                                         <Image
-                                            className="object-fill h-24 bg-white"
+                                            className="object-fill"
                                             src={`${constants.URL_TOPPING}${topping.logo}`}
                                             alt=""
                                             width={100}
