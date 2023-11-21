@@ -15,7 +15,6 @@ import { paymentAPI } from "@/util/API/Payment";
 import { listOrder } from "@/util/Props/PaypalProps";
 import PaypalButton from "./paypal";
 import { billAPI } from "@/util/API/Bill";
-import {vnpayAPI} from "@/util/API/Vnpay";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
     ssr: false,
@@ -71,18 +70,13 @@ const PayPage = () => {
     }
 
     const payment = async (paymentMethod: number) => {
-        if (paymentMethod === 2) {
-            const data = await paymentAPI.createPayment({
-                vnp_Amount: price.temp+price.vat+price.topping-price.discount,
-                vnp_OrderInfo: "Pay"
-            });
-        } else if (paymentMethod === 3) {
+        if (paymentMethod === 3) {
             const vnpayPaymentDto: VnpayPaymentDto = {
                 vnp_Amount: 10000,
                 vnp_OrderInfo: "pay"
             }
 
-            const urlPaymentByVnpay = await vnpayAPI.pay(vnpayPaymentDto);
+            const urlPaymentByVnpay = await paymentAPI.createVnpayPayment(vnpayPaymentDto);
             router.push(urlPaymentByVnpay);
         }
     }

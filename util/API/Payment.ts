@@ -1,9 +1,9 @@
 import { fetchAPI } from "./axios"
 
-const createPayment = async (data:any) =>{
-    return (await fetchAPI.post("/vnpay/pay",data)).data as string;
+const createVnpayPayment = async (vnpayPayment: VnpayPaymentDto) =>{
+    return (await fetchAPI.post("/vnpay/pay",vnpayPayment)).data;
 }
 
 export const paymentAPI = {
-    createPayment
+    createVnpayPayment
 }
