@@ -12,15 +12,16 @@ import {useSession} from "next-auth/react";
 import {errorNotification} from "@/util/Notification";
 import Image from "next/image";
 import {constants} from "@/common/constants";
+import {DateUtils} from "@/util/DateUtils";
 
 const STATUS = [
     {
         key: 0,
-        element: <></>
+        element: <span className={"text-red-600"}>Thất bại</span>
     },
     {
         key: 1,
-        element: <></>
+        element: <>Thành công</>
     },
     {
         key: 2,
@@ -153,7 +154,12 @@ const BillDetail = () => {
 
                         <div className={"text-gray-300"}>
                             <p className={"mb-1"}>Trạng thái
-                                <span className={"float-right text-green-500"}>Thành công</span>
+                                {
+                                    !billDetails?.exportStatus ?
+                                        <span
+                                            className={"float-right text-green-500"}>{paymentStatus(Number(billDetails?.exportStatus))}</span> :
+                                        <span className={"float-right"}>undefined</span>
+                                }
                             </p>
                             <p className={"mb-1"}>Rạp
                                 <span
@@ -163,8 +169,14 @@ const BillDetail = () => {
                                 <span className={"float-right text-white"}>{billDetails?.roomName}</span>
                             </p>
                             <p className={"mb-1"}>Thời gian:
-                                <span
-                                    className={"float-right text-green-600"}>{`${billDetails?.startTime} ${billDetails?.showDate}`}</span>
+                                {
+                                    billDetails?.showDate ?
+                                        <span
+                                            className={"float-right text-green-600"}>{`${billDetails?.startTime} 
+                                    ${DateUtils.formatDate(new Date(billDetails?.showDate))}`}
+                                    </span> :
+                                        <>undefined</>
+                                }
                             </p>
                             <p className={"mb-1"}>Số lượng ghế
                                 <span
@@ -209,7 +221,7 @@ const BillDetail = () => {
                     <div className={"text-gray-300"}>
                         <p className={"mb-1"}>Giá vé xem phim
                             <span
-                                className={"float-right text-white"}>{billDetails?.ticketTotalPrice}</span>
+                                className={"float-right text-white"}>{NumberUtils.formatCurrency(Number(billDetails?.ticketTotalPrice))}</span>
                         </p>
 
                         {/* Giá topping */}
@@ -246,7 +258,7 @@ const BillDetail = () => {
                     </div>
                 </Card>
 
-                {/* Thanh toán lại */}
+                 {/*Thanh toán lại */}
                 <section>
                     {paymentStatus(Number(billDetails?.exportStatus))}
                 </section>
