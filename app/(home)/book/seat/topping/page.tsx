@@ -35,24 +35,26 @@ const Topping = () => {
             setData(toppingofbranch)
             await update({
                 ...session?.user,
-            })
+                topping: topping
+
+        })
         }
         const cost = topping.length > 0 ? topping.map((s: any) => s.sum).reduce((a: number, b: number) => a + b) : sum
         setSum(cost)
         init();
-    }, [branchId, sum]);
+    }, [sum,topping]);
 
     const onChange = (value: any, id: number, price: number, name: string) => {
         const newData = {toppinngOfBranchId: id, name: name, quantity: value,
             priceWhenBuy: price, sum: Number(value) * Number(price)};
         if (value === 0) {
-            setTopping(prevData => prevData.filter(data => data.id !== id));
+            setTopping(prevData => prevData.filter(data => data.toppinngOfBranchId !== id));
         } else {
-            const isIdExist = topping.some(data => data.id === id);
+            const isIdExist = topping.some(data => data.toppinngOfBranchId === id);
             if (!isIdExist) {
                 setTopping(prevData => [...prevData, newData]);
             } else {
-                setTopping(prevData => prevData.map(data => data.id === id ? newData : data));
+                setTopping(prevData => prevData.map(data => data.toppinngOfBranchId === id ? newData : data));
             }
         }
     }
