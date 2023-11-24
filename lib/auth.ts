@@ -24,7 +24,8 @@ export const authconfig: NextAuthOptions = {
                             id: cus.id,
                             name: cus.name,
                             email: cus.email,
-                            image: "https://png.pngtree.com/png-clipart/20200701/original/pngtree-black-default-avatar-png-image_5407174.jpg",
+                            image: !cus.avatar ? "https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/default.png" :
+                                `https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/${cus.avatar}`
                         };
                     }
                 } catch (error: any) {
