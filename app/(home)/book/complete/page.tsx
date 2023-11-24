@@ -40,12 +40,12 @@ const BookComplete = () => {
 
     useEffect(() => {
         const init = async () => {
-            if (billId != null) {
+            if (billId != null && customerId) {
                 if (paymentMethod === 3) {
                     if (vnpayToken.vnp_token) {
-                        if (vnp_command?.search("pay+and+create+token"))
+                        if (vnp_command?.search("pay_and_create_token"))
                             await vnpayAPI.paymentAndTokenCreated(vnpayToken, Number.parseInt(billId));
-                        else if (vnp_command?.search("token+pay"))
+                        else if (vnp_command?.search("token_pay"))
                             await vnpayAPI.paymentByTokenStage(vnpayToken, Number.parseInt(billId));
 
                     } else {
@@ -71,7 +71,7 @@ const BookComplete = () => {
         }
 
         init();
-    }, []);
+    }, [customerId]);
 
     return (
         <Result
