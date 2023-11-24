@@ -96,7 +96,7 @@ const Home = () => {
                 name: ''
             });
             setData(ResultSearch);
-        } catch (e: any) {
+    } catch (e: any) {
             errorNotification(checkError(e.response.data.message, e.response.data.param) || "")
         }
     }
@@ -132,8 +132,8 @@ const Home = () => {
                                     })}
                                 </div>
                                 <div className="buttons">
-                                    <button id="prev"><FaAngleLeft size={40} id="prev"/></button>
-                                    <button id="next"><FaAngleRight size={40} id="next"/></button>
+                                    <button ><FaAngleLeft size={40} id="prev"/></button>
+                                    <button><FaAngleRight size={40} id="next"/></button>
                                 </div>
                             </div>
                         </>

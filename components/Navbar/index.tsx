@@ -34,7 +34,7 @@ const Navbar = () => {
             <p
                 className="p-1 font-bold text-lg"
             >
-                <Link href="#" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">
+                <Link href="/theater" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">
                     Rạp
                 </Link>
             </p>
