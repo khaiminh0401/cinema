@@ -16,7 +16,8 @@ const paymentAndCreateToken = async (vnpayToken: VnpayToken, billId: string, pay
 }
 
 const paymentByToken = async (vnpayToken: VnpayToken, billId: string, paymentMethod: string) => {
-    return (await fetchAPI.post("/vnpay/pay-by-token", vnpayToken)).data as string;
+    return (await fetchAPI.post("/vnpay/pay-by-token", vnpayToken,
+        {params: {billId, paymentMethod}})).data as string;
 }
 
 const createToken = async (vnpayToken: VnpayToken) => {
