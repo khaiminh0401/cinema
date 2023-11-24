@@ -35,7 +35,7 @@ const CropperModal = ({...props}: CropperModalProps) => {
             formData.append('customerId', `${props.userId}`);
             formData.append('multipartFile', file);
 
-            await customerAPI.updateAvatar(formData).then(() => {
+            customerAPI.updateAvatar(formData).then(() => {
                 successNotification("Thay đổi ảnh đại diện thành công!")
             }).catch(() => {
                 errorNotification("Không lưu được ảnh!");

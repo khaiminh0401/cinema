@@ -50,14 +50,17 @@ const Seat = () => {
     const user = session?.user;
 
     const getTotal = async (seat: any) => {
+        const seatFromAPI = await seatAPI.getTotalPrice(parseInt(showTimeId || "1"), seat.name);
+
         if (ArrayUtils.checkExist(seats, seat)) {
             ArrayUtils.remove(seats, seat);
-            ArrayUtils.remove(price, await seatAPI.getTotalPrice(parseInt(showTimeId || "1"), seat.name));
+            ArrayUtils.remove(price, seatFromAPI);
         } else {
             ArrayUtils.add(seats, seat);
-            ArrayUtils.add(price, await seatAPI.getTotalPrice(parseInt(showTimeId || "1"), seat.name));
+            ArrayUtils.add(price, seatFromAPI);
         }
         const totalTemp = {
+            seat_price: seatFromAPI.total,
             cost: price.length > 0 ? price.map((s: any) => s.total).reduce((a: number, b: number) => a + b) : price.total,
             name_seat: seats.length > 0 ? seats.map((s: any) => s.name).reduce((a: string, b: string) => a + ", " + b) : seats.name,
         }
@@ -77,7 +80,7 @@ const Seat = () => {
                     seatDetailsId: seat.seatDetailsId,
                     showtimeId: parseInt(showTimeId),
                     vat: 0.05,
-                    totalPrice: total.cost
+                    totalPrice: total.seat_price
                 };
 
                 tickets.push(ticket);

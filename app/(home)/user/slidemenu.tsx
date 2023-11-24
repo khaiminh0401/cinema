@@ -37,7 +37,7 @@ function getItem(
 const items: MenuItem[] = [
     getItem('Tài khoản của tôi', 'sub1', <FaUser/>, '', [
         getItem('Hồ sơ', '1', <FaClipboard/>, '/user/account/profile'),
-        getItem('Ngân hàng', '2', <FaCreditCard/>, ''),
+        getItem('Ngân hàng', '2', <FaCreditCard/>, '/user/bank-integration'),
         getItem('Đổi mật khẩu', '3', <FaKey/>, '/user/account/password'),
     ]),
 
