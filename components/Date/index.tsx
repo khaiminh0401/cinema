@@ -7,7 +7,7 @@ import { BiArrowToLeft, BiArrowToRight, BiLeftArrowAlt, BiRightArrowAlt } from '
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 let format = (data: any) => {
-  return data.toLocaleDateString('en-US', {
+  return data.toLocaleDateString('vi-VI', {
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
@@ -59,15 +59,15 @@ const WeekDate = (prop: any) => {
     <>
       <div className="grid grid-cols-1 pb-2 border-b-2 border-red-950">
         <div className="flex sm:col-span-3 lg:col-span-12 md:col-span-6 col-span-3 mt-2 mx-auto">
-          <button className="py-1 text-center flex-none" onClick={() => clickDate(format(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000)))}><BiLeftArrowAlt /></button>
+          <button className="py-1 text-center flex-none" onClick={() => clickDate(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000))}><BiLeftArrowAlt /></button>
           <div className="grow mx-2">
             {getWeekDates().map((date, index) => {
               // console.log(currentDatedate);
               const active = format(currentDate) == format(date) ? 'bg-red-950 text-white lg:px-8 md:px-7 sm:px-6 sm:mx-2 py-1 my-2 rounded-lg text-center w-full sm:w-auto' : "bg-white text-black lg:px-8 md:px-7 sm:px-6 sm:mx-2 py-1 my-2 rounded-lg text-center w-full sm:w-auto";
-              return <button key={index} className={active} onClick={() => { clickDate(format(date)) }}>{format(date)}</button>
+              return <button key={index} className={active} onClick={() => { clickDate(date) }}>{format(date)}</button>
             })}
           </div>
-          <button className="py-1 text-center flex-none" onClick={() => clickDate(format(new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000)))}><BiRightArrowAlt /></button>
+          <button className="py-1 text-center flex-none" onClick={() => clickDate(new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000))}><BiRightArrowAlt /></button>
         </div>
       </div>
       <ShowTime prop={showtimeDetail}>
