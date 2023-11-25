@@ -21,12 +21,11 @@ export function CardDefault({...props}: CardProps) {
 
               style={{background: 'black'}}
         >
-            <p>
+            <div>
                 <div className="text-center h-28">
-                    <Link href={"/movie-details?id=" + props.data.id}
-                          className="text-sm block text-white hover:text-red-600 h-14  font-semibold">
+                    <label className="text-sm block text-white hover:text-red-600 h-14  font-semibold">
                         {props.data.name}
-                    </Link>
+                    </label>
                     <div className="text-white flex justify-evenly mt-2 h-9">
                         <p
                             className="flex items-center font-normal md:text-base text-xs "
@@ -41,7 +40,7 @@ export function CardDefault({...props}: CardProps) {
                         </p>
                     </div>
                 </div>
-            </p>
+            </div>
 
         </Card>
     );

@@ -17,6 +17,7 @@ import {FaAngleLeft, FaAngleRight} from "react-icons/fa";
 import "./index.css";
 import {BiSolidSearch} from "react-icons/bi";
 import Loading from "@/components/Loading";
+import next from "next";
 
 const {Search} = Input;
 type SelectedType = {
@@ -42,19 +43,20 @@ const Home = () => {
             name: "Phim đang chiếu"
         }
     ];
+    const next = () => {
+        let list = $(".main");
+        $("#slide").append(list[0]);
+    }
+    const prev = () => {
+        let list = $(".main");
+        $("#slide").prepend(list[list.length - 1]);
+    }
     useEffect(() => {
+
         if (cookie.statusId == undefined) {
             handleCookie('1');
         } else {
             const init = async () => {
-                $("#next").click(() => {
-                    let list = $(".main");
-                    $("#slide").append(list[0]);
-                })
-                $("#prev").click(() => {
-                    let list = $(".main");
-                    $("#slide").prepend(list[list.length - 1]);
-                })
                 const movie = await movieAPI.findByStatus(cookie.statusId);
                 setData(movie);
                 const mv = await movieAPI.findByStatus('1');
@@ -74,36 +76,36 @@ const Home = () => {
     }
     const onSearch: SearchProps['onSearch'] = async (value) => {
         try {
-            const ResultSearch = await homeAPI.searchMovie({
+            const resultSearch = await homeAPI.searchMovie({
                 branch: '',
                 country: 0,
                 movieType: '',
                 status: cookie.statusId,
                 name: value
             });
-            setData(ResultSearch);
+            setData(resultSearch);
         } catch (e: any) {
             errorNotification(checkError(e.response.data.message, e.response.data.param) || "")
         }
     }
     const onSubmit: SubmitHandler<MovieFilter> = async (data) => {
         try {
-            const ResultSearch = await homeAPI.searchMovie({
+            const resultSearch = await homeAPI.searchMovie({
                 branch: data.branch,
                 country: data.country,
                 movieType: data.movieType,
                 status: data.status,
                 name: ''
             });
-            setData(ResultSearch);
-    } catch (e: any) {
-            errorNotification(checkError(e.response.data.message, e.response.data.param) || "")
+            setData(resultSearch);
+        } catch (e: any) {
+                errorNotification(checkError(e.response.data.message, e.response.data.param) || "")
         }
     }
     return (
         <>
             {data == undefined ? <Loading data={data}/> :
-                (<div key={1}>
+                (<div>
                     {(moviesNowShowing?.length != 0) &&
                         <>
                             <div className="lll hidden lg:block">
@@ -116,7 +118,7 @@ const Home = () => {
                                                     <div className="font-bold text-lg mx-4 ">{m.name}</div>
                                                     <div className="mb-4 m-4 text-white">{m.describe}</div>
                                                     <Link
-                                                        key={m.id}
+                                                        key={`now_${m.id}`}
                                                         className={`font-bold hover:text-red-900 m-4`}
                                                         id={`nowShowing_${i}`}
                                                         href={{
@@ -132,14 +134,14 @@ const Home = () => {
                                     })}
                                 </div>
                                 <div className="buttons">
-                                    <button ><FaAngleLeft size={40} id="prev"/></button>
-                                    <button><FaAngleRight size={40} id="next"/></button>
+                                    <button onClick={()=>next()} ><FaAngleLeft size={40} /></button>
+                                    <button onClick={()=>prev()} ><FaAngleRight size={40} /></button>
                                 </div>
                             </div>
                         </>
                     }
                     <div className="search justify-evenly md:flex my-4 mb-6 p-3 ">
-                        <form action="" onSubmit={handleSubmit(onSubmit)} className="md:flex items-center">
+                        <form onSubmit={handleSubmit(onSubmit)} className="md:flex items-center">
                             <div className=" mr-8 ">
                                 <label htmlFor="" className="opacity-50 font-bold">Quốc Gia</label>
                                 <hr className="opacity-50"/>
@@ -216,17 +218,16 @@ const Home = () => {
                                 <div className="flex flex-row justify-center text-center">
                                     {statusOfMovie.map((status, i) => {
                                         return (<div key={i} className="p-4 mt-3">
-                                            <Link
+                                            <button
                                                 className={`lg:text-3xl text-lg font-bold ${status.id == cookie.statusId ? "text-red-900" : "text-white"}`}
                                                 id={`type_${i}`}
-                                                href={{}}
                                                 onClick={(event) => {
                                                     handleCookie(status.id + "", event);
                                                 }}
 
                                             >
                                                 {status.name}
-                                            </Link>
+                                            </button>
                                         </div>)
                                     })}
                                 </div>
