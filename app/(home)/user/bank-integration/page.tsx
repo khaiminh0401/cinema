@@ -1,70 +1,71 @@
 'use client'
 
-import {Button, Card} from "antd";
+import {Button, Card, Modal, Radio, RadioChangeEvent} from "antd";
 import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import VnpayIcon from "@/common/Icon/VnpayIcon";
 import {RiBankCardFill, RiDeleteBin6Line} from "react-icons/ri";
 import {tokenVnpayAPI} from "@/util/API/TokenVnpay";
 import {useSession} from "next-auth/react";
-import {useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import {vnpayAPI} from "@/util/API/Vnpay";
 import {FaCcPaypal} from "react-icons/fa6";
 
 const BankIntegration = () => {
+    const router = useRouter();
     const [tokenVnpay, setTokenVnpay] = useState<TokenVnpay>();
+    const [tokenCreated, setTokenCreated] = useState();
     const searchParams = useSearchParams();
     const vnp_token = searchParams.get('vnp_token')
     const {data: session} = useSession();
     const customerId = session?.user.id;
 
     useEffect(() => {
-        const init = async () => {
-            try {
-                const tokenVnpayFromAPI = await tokenVnpayAPI.findByCustomerId(customerId);
-                setTokenVnpay(tokenVnpayFromAPI);
-            } catch (error: any) {
-                console.error("Bad request error:", error);
-                setTokenVnpay(undefined);
-            }
-
-            if (vnp_token) {
-                const vnpayToken: VnpayToken = {
-                    vnp_amount: parseInt(searchParams.get('vnp_amount') as string),
-                    vnp_app_user_id: customerId,
-                    vnp_bank_code: searchParams.get('vnp_bank_code') as string,
-                    vnp_bank_tran_no: searchParams.get('vnp_bank_tran_no') as string,
-                    vnp_card_number: searchParams.get('vnp_card_number') as string,
-                    vnp_card_type: searchParams.get('vnp_card_type') as string,
-                    vnp_command: searchParams.get('vnp_command') as string,
-                    vnp_curr_code: searchParams.get('vnp_curr_code') as string,
-                    vnp_pay_date: searchParams.get('vnp_pay_date') as string,
-                    vnp_response_code: searchParams.get('vnp_response_code') as string,
-                    vnp_tmn_code: searchParams.get('vnp_tmn_code') as string,
-                    vnp_token: vnp_token,
-                    vnp_transaction_no: searchParams.get('vnp_transaction_no') as string,
-                    vnp_transaction_status: searchParams.get('vnp_transaction_status') as string,
-                    vnp_txn_desc: 'pay',
-                    vnp_txn_ref: searchParams.get('vnp_txn_ref') as string,
-                    vnp_secure_hash: searchParams.get('vnp_secure_hash') as string,
+        if (customerId != undefined) {
+            const init = async () => {
+                try {
+                    const tokenVnpayFromAPI = await tokenVnpayAPI.findByCustomerId(customerId);
+                    setTokenVnpay(tokenVnpayFromAPI);
+                } catch (error: any) {
+                    console.error("Bad request error:", error);
+                    setTokenVnpay(undefined);
                 }
 
-                await vnpayAPI.saveToken(vnpayToken);
+                if (vnp_token) {
+                    const vnpayToken: VnpayToken = {
+                        vnp_app_user_id: Number(searchParams.get('vnp_app_user_id') as string),
+                        vnp_bank_code: searchParams.get('vnp_bank_code') as string,
+                        vnp_card_number: searchParams.get('vnp_card_number') as string,
+                        vnp_card_type: searchParams.get('vnp_card_type') as string,
+                        vnp_pay_date: searchParams.get('vnp_pay_date') as string,
+                        vnp_response_code: searchParams.get('vnp_response_code') as string,
+                        vnp_token: vnp_token
+                    }
+
+                    try {
+                        const tokenCreatedFromAPI = await vnpayAPI.saveToken(vnpayToken);
+                        setTokenCreated(tokenCreatedFromAPI);
+                    } catch (error: any) {
+                        console.log(error)
+                    }
+                }
             }
+
+            init()
         }
+    }, [customerId, tokenCreated])
 
-        init()
-    }, [])
+    const createTokenVNPay = async (cardType: string) => {
+        if (customerId) {
+            const vnpayToken: VnpayToken = {
+                vnp_app_user_id: customerId,
+                vnp_card_type: cardType,
+                vnp_txn_desc: 'create token',
+            }
 
-    const createTokenVNPay = async () => {
-        const vnpayToken: VnpayToken = {
-            vnp_app_user_id: customerId,
-            vnp_card_type: searchParams.get('vnp_card_type') as string,
-            vnp_bank_code: searchParams.get('vnp_bank_code') as string,
-            vnp_txn_desc: 'create token',
+            const createTokenFromAPI = await vnpayAPI.createToken(vnpayToken);
+            router.push(createTokenFromAPI);
         }
-
-        await vnpayAPI.createToken(vnpayToken);
     }
 
     const removeToken = async () => {
@@ -76,14 +77,61 @@ const BankIntegration = () => {
 
         await vnpayAPI.removeToken(vnpayToken);
     }
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [cardType, setCardType] = useState("01");
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const handleOk = () => {
+        setIsModalOpen(false);
+        createTokenVNPay(cardType);
+    };
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+
+    const changeCardType = (e: RadioChangeEvent) => {
+        setCardType(e.target.value);
+    };
 
     return (
         <>
+            <Modal
+                title="Tạo liên kết ngân hàng thông qua ví VNPay"
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                okText={"Tạo"}
+                cancelText={"Hủy"}
+            >
+                <p>Chọn loại thẻ phủ hợp</p>
+                <Radio.Group
+                    onChange={changeCardType}
+                    value={cardType}
+                >
+                    <Radio className={"text-black"} value={"01"}>Nội địa</Radio>
+                    <Radio className={"text-black"} value={"02"}>VISA</Radio>
+                </Radio.Group>
+            </Modal>
+
             <div className={"grid grid-cols-3 justify-center"}>
                 <span className={"col-span-2 mt-3 mb-2 font-semibold"}>Thẻ của tôi</span>
                 <span className={"col-span-1 flex justify-end"}>
-                    {!tokenVnpay?.vnp_app_user_id ? <button onClick={createTokenVNPay}><VnpayIcon/></button> : <></>}
-                    <FaCcPaypal className="my-auto mr-2"/>
+                    {
+                        !tokenVnpay?.vnp_app_user_id ?
+                            <button onClick={showModal}>
+                                <span className={"flex align-items"}>
+                                    <VnpayIcon color={'#ffffff'}/>
+                                    <span className={"text-red-600 font-semibold"}>VN</span>
+                                    <span className={"text-blue-600 font-semibold"}>Pay</span>
+                                </span>
+                            </button> :
+                            <></>
+                    }
+                    <FaCcPaypal className="ms-7 my-auto mr-2"/>
                 </span>
             </div>
             {
@@ -117,7 +165,7 @@ const BankIntegration = () => {
                                     <p>Loại thẻ: {tokenVnpay?.vnp_card_type == "01" ? 'Nội địa' : 'VISA'}</p>
                                     <p>Ngày tạo liên kết: {tokenVnpay?.vnp_create_date}</p>
                                     <span className={"float-right flex align-items"}>
-                                <VnpayIcon/>
+                                <VnpayIcon color={'#ffffff'}/>
                                 <span className={"text-red-600 font-semibold"}>VN</span>
                                 <span className={"text-blue-600 font-semibold"}>Pay</span>
                             </span>
