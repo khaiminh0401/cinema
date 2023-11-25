@@ -6,7 +6,7 @@ import SelectOption from "@/components/Select";
 import {homeAPI} from "@/util/API/Home";
 import {movieAPI} from "@/util/API/Movie";
 import {errorNotification} from "@/util/Notification";
-import {Input} from 'antd';
+import {Input, Pagination} from 'antd';
 import {SearchProps} from "antd/es/input";
 import $ from "jquery";
 import Link from "next/link";
@@ -17,7 +17,6 @@ import {FaAngleLeft, FaAngleRight} from "react-icons/fa";
 import "./index.css";
 import {BiSolidSearch} from "react-icons/bi";
 import Loading from "@/components/Loading";
-import next from "next";
 
 const {Search} = Input;
 type SelectedType = {
@@ -27,12 +26,16 @@ type SelectedType = {
 }
 
 const Home = () => {
-
+    const itemsPerPage = 12;
+    const [currentPage, setCurrentPage] = useState(1);
     const [data, setData] = useState<movie[]>();
     const [dataSelect, setSelect] = useState<SelectedType | undefined>();
     const [moviesNowShowing, setMoviesNowShowing] = useState<movie[]>();
     const [cookie, setCookie] = useCookies(["statusId"]);
     const {register, setValue, handleSubmit} = useForm<MovieFilter>();
+    const handlePageChange = (page: any, pageSize: any) => {
+        setCurrentPage(page);
+    };
     const statusOfMovie = [
         {
             id: 0,
@@ -52,14 +55,13 @@ const Home = () => {
         $("#slide").prepend(list[list.length - 1]);
     }
     useEffect(() => {
-
         if (cookie.statusId == undefined) {
             handleCookie('1');
         } else {
             const init = async () => {
-                const movie = await movieAPI.findByStatus(cookie.statusId);
+                const movie = await movieAPI.findByStatus(cookie.statusId, itemsPerPage, currentPage);
                 setData(movie);
-                const mv = await movieAPI.findByStatus('1');
+                const mv = await movieAPI.findByStatus('1', '' , '');
                 setMoviesNowShowing(mv);
                 const selected = await homeAPI.findAll();
                 setSelect(selected);
@@ -68,11 +70,12 @@ const Home = () => {
             init()
         }
 
-    }, [cookie.statusId])
+    }, [cookie.statusId, currentPage])
     const handleCookie = (value: string, event?: any) => {
         if (event != undefined) event.preventDefault();
         setCookie("statusId", value);
         setValue("status", value);
+        setCurrentPage(1)
     }
     const onSearch: SearchProps['onSearch'] = async (value) => {
         try {
@@ -99,7 +102,7 @@ const Home = () => {
             });
             setData(resultSearch);
         } catch (e: any) {
-                errorNotification(checkError(e.response.data.message, e.response.data.param) || "")
+            errorNotification(checkError(e.response.data.message, e.response.data.param) || "")
         }
     }
     return (
@@ -134,8 +137,8 @@ const Home = () => {
                                     })}
                                 </div>
                                 <div className="buttons">
-                                    <button onClick={()=>next()} ><FaAngleLeft size={40} /></button>
-                                    <button onClick={()=>prev()} ><FaAngleRight size={40} /></button>
+                                    <button onClick={() => next()}><FaAngleLeft size={40}/></button>
+                                    <button onClick={() => prev()}><FaAngleRight size={40}/></button>
                                 </div>
                             </div>
                         </>
@@ -252,6 +255,12 @@ const Home = () => {
                             )
                         })}
                     </div>
+                    <Pagination className="text-center pt-2" responsive
+                                current={currentPage}
+                                pageSize={itemsPerPage}
+                                total={moviesNowShowing?.length}
+                                onChange={handlePageChange}
+                    />
                 </div>)
             }
         </>
