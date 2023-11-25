@@ -59,8 +59,8 @@ const Home = () => {
                 setData(movie);
                 const mv = await movieAPI.findByStatus('1');
                 setMoviesNowShowing(mv);
-                const Selected = await homeAPI.findAll();
-                setSelect(Selected);
+                const selected = await homeAPI.findAll();
+                setSelect(selected);
                 register("status", {value: cookie.statusId})
             }
             init()
