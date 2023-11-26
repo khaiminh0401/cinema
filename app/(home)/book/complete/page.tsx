@@ -18,6 +18,7 @@ const BookComplete = () => {
     const router = useRouter();
     const {data: session, update} = useSession();
     const customerId = session?.user.id;
+    const paymentMethodHasBeenPaid = ["Tiền mặt", "Paypal", "Ví VNPay"]
 
     const vnpayToken: VnpayToken = {
         vnp_amount: parseInt(searchParams.get('vnp_amount') as string),
@@ -42,16 +43,16 @@ const BookComplete = () => {
     useEffect(() => {
         const init = async () => {
             if (!customerId) return;
-
+            
             const tokenVnpayByCustomer = await tokenVnpayAPI.findByCustomerId(customerId);
-            if (tokenVnpayByCustomer) return;
+            if (!tokenVnpayByCustomer) return;
 
             if (billId != null) {
                 if (paymentMethod === 3) {
                     if (vnpayToken.vnp_token) {
-                        if (vnp_command?.search("pay+and+create+token"))
+                        if (vnp_command?.includes("pay_and_create_token"))
                             await vnpayAPI.paymentAndTokenCreated(vnpayToken, Number.parseInt(billId));
-                        else if (vnp_command?.search("token+pay"))
+                        else if (vnp_command?.includes("token_pay"))
                             await vnpayAPI.paymentByTokenStage(vnpayToken, Number.parseInt(billId));
 
                     } else {
@@ -80,18 +81,23 @@ const BookComplete = () => {
     }, [customerId]);
 
     return (
-        <Result
-            status="success"
-            title="Thanh toán thành công"
-            subTitle={<Link href={`/review?id=${billId}`} className="text-white">Hoàn tất đơn hàng</Link>}
-            icon={<QR value="https://dev"/>}
-            extra={[
-                <Button type="primary" key="console">
-                    Đi tới hóa đơn
-                </Button>,
-                <Button onClick={() => router.push("/")} key="buy">Trở về trang chủ</Button>,
-            ]}
-        />
+        <>
+            <h1 className={"mt-7 text-center text-xl font-extrabold"}>
+                Bạn đã thanh toán thành công thông qua {paymentMethodHasBeenPaid[paymentMethod - 1]}
+            </h1>
+            <Result
+                status="success"
+                title="Thanh toán thành công"
+                subTitle={<Link href={`/review?id=${billId}`} className="text-white">Hoàn tất đơn hàng</Link>}
+                icon={<QR value="https://dev"/>}
+                extra={[
+                    <Button onClick={() => router.push("/user/booked-ticket")} type="primary" key="console">
+                        Đi tới hóa đơn
+                    </Button>,
+                    <Button onClick={() => router.push("/")} key="buy">Trở về trang chủ</Button>,
+                ]}
+            />
+        </>
     )
 }
 export default BookComplete;
