@@ -67,17 +67,17 @@ const Register = () => {
                             <div>
                                 <label className="block mb-2 text-sm text-gray-200">Họ và Tên</label>
                                 <Input type="text" register={register("name", Validation.name)} className="block w-full px-5 py-3 mt-2  text-gray-700 border rounded-lg placeholder-gray-600  border-gray-700 focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                                <div className="text-red-600 mt-1 text-sm h-5">{errors.name?.message}</div>
+                                <div className="text-red-600 mt-1 text-sm h-5">{errors.name?.message ? errors.name?.message : "(*)"}</div>
                             </div>
                             <div>
                                 <label className="block mb-2 text-sm text-gray-200">Số Điện Thoại</label>
                                 <Input type="text" register={register("phone", Validation.phone)} className="block w-full px-5 py-3 mt-2 text-gray-700 border rounded-lg placeholder-gray-600  border-gray-700 focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                                <div className="text-red-600 mt-1 text-sm h-5">{errors.phone?.message}</div>
+                                <div className="text-red-600 mt-1 text-sm h-5">{errors.phone?.message ? errors.phone?.message : "(*)"}</div>
                             </div>
                             <div>
                                 <label className="block mb-2 text-sm text-gray-200">Email</label>
                                 <Input type="text" register={register("email", Validation.email)} className="block w-full px-5 py-3 mt-2 text-gray-700 border rounded-lg placeholder-gray-600  border-gray-700 focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                                <div className="text-red-600 mt-1 text-sm h-5">{errors.email?.message}</div>
+                                <div className="text-red-600 mt-1 text-sm h-5">{errors.email?.message ? errors.email?.message : "(*)"}</div>
                             </div>
                             <div>
                                 <label className="block mb-2 text-sm text-gray-200">Giới Tính</label>
@@ -95,17 +95,17 @@ const Register = () => {
                                         </div>
                                     </li>
                                 </ul>
-                                <div className="text-red-600 mt-1 text-sm h-5">{errors.gender?.message}</div>
+                                <div className="text-red-600 mt-1 text-sm h-5">{errors.gender?.message ? errors.gender?.message : "(*)"}</div>
                             </div>
                             <div>
                                 <label className="block mb-2 text-sm text-gray-200">Mật Khẩu</label>
                                 <Input type="password" register={register("password", Validation.password)} className="block w-full px-5 py-3 mt-2 text-gray-700 border rounded-lg placeholder-gray-600  border-gray-700 focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                                <div className="text-red-600 mt-1 text-sm h-5">{errors.password?.message}</div>
+                                <div className="text-red-600 mt-1 text-sm h-5">{errors.password?.message ? errors.password?.message : "(*)"}</div>
                             </div>
                             <div>
                                 <label className="block mb-2 text-sm text-gray-200">Xác Nhận Mật Khẩu</label>
                                 <Input type="password" register={register("repassword", Validation.password)} className="block w-full px-5 py-3 mt-2 text-gray-700 border rounded-lg placeholder-gray-600  border-gray-700 focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-                                <div className="text-red-600 mt-1 text-sm h-5">{errors.repassword?.message}</div>
+                                <div className="text-red-600 mt-1 text-sm h-5">{errors.repassword?.message ? errors.repassword?.message : "(*)"}</div>
                             </div>
                             <button className="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-gray-800  uppercase transition-colors duration-300 transform bg-gray-200 rounded-lg hover:bg-red-700 focus:outline-none hover:text-white  focus:ring focus:ring-blue-300 focus:ring-opacity-50">
                                 <span>Đăng kí </span>
