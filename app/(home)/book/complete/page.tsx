@@ -7,6 +7,7 @@ import {useEffect, useState} from "react";
 import {vnpayAPI} from "@/util/API/Vnpay";
 import {useSession} from "next-auth/react";
 import {Integer} from "asn1js";
+import {tokenVnpayAPI} from "@/util/API/TokenVnpay";
 
 const BookComplete = () => {
     const [open, setOpen] = useState(false);
@@ -40,12 +41,17 @@ const BookComplete = () => {
 
     useEffect(() => {
         const init = async () => {
-            if (billId != null && customerId) {
+            if (!customerId) return;
+
+            const tokenVnpayByCustomer = await tokenVnpayAPI.findByCustomerId(customerId);
+            if (tokenVnpayByCustomer) return;
+
+            if (billId != null) {
                 if (paymentMethod === 3) {
                     if (vnpayToken.vnp_token) {
-                        if (vnp_command?.search("pay_and_create_token"))
+                        if (vnp_command?.search("pay+and+create+token"))
                             await vnpayAPI.paymentAndTokenCreated(vnpayToken, Number.parseInt(billId));
-                        else if (vnp_command?.search("token_pay"))
+                        else if (vnp_command?.search("token+pay"))
                             await vnpayAPI.paymentByTokenStage(vnpayToken, Number.parseInt(billId));
 
                     } else {
