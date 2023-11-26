@@ -8,6 +8,7 @@ import {vnpayAPI} from "@/util/API/Vnpay";
 import {useSession} from "next-auth/react";
 import {Integer} from "asn1js";
 import {tokenVnpayAPI} from "@/util/API/TokenVnpay";
+import {FaRegCheckCircle} from "react-icons/fa";
 
 const BookComplete = () => {
     const [open, setOpen] = useState(false);
@@ -43,7 +44,7 @@ const BookComplete = () => {
     useEffect(() => {
         const init = async () => {
             if (!customerId) return;
-            
+
             const tokenVnpayByCustomer = await tokenVnpayAPI.findByCustomerId(customerId);
             if (!tokenVnpayByCustomer) return;
 
@@ -85,9 +86,15 @@ const BookComplete = () => {
             <h1 className={"mt-7 text-center text-xl font-extrabold"}>
                 Bạn đã thanh toán thành công thông qua {paymentMethodHasBeenPaid[paymentMethod - 1]}
             </h1>
+            <p className={"mt-2 text-center text-sm"}>(Mã QR kiểm tra đơn hàng tại quầy trước khi vào rạp)</p>
             <Result
                 status="success"
-                title="Thanh toán thành công"
+                title={
+                    <p className={"flex justify-center"}>
+                        Thanh toán thành công
+                        <FaRegCheckCircle className={"text-green-500 my-auto ms-2"}/>
+                    </p>
+                }
                 subTitle={<Link href={`/review?id=${billId}`} className="text-white">Hoàn tất đơn hàng</Link>}
                 icon={<QR value="https://dev"/>}
                 extra={[
