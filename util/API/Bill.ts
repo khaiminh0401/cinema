@@ -16,7 +16,7 @@ const getByMovie = async (id: any) => {
     return (await fetchAPI.get(`/bill/getByMovie?id=${id}`)).data;
 }
 
-const updateExportStatus = async (id: number, exportstatus: boolean) => {
+const updateExportStatus = async (id: number, exportstatus: number) => {
     return (await fetchAPI.get(`/bill/updateExportStatus`, { params: { id, exportstatus } })).data;
 }
 

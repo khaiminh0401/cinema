@@ -89,9 +89,7 @@ const PayPage = () => {
 
     const payment = async (paymentMethod: number) => {
         if (billId != null) {
-            if (paymentMethod === 1)
-                router.push(`/book/complete?billId=${billId}&paymentMethod=${value.payment}`);
-            else if (paymentMethod === 3) {
+            if (paymentMethod === 3) {
                 let urlPaymentByVnpay;
 
                 if (tokenVnpay != undefined) {
@@ -141,26 +139,12 @@ const PayPage = () => {
     };
 
     // PAYPAL
+    let amount = 0
     const item: listOrder[] = []
-    item.push({
-            name: `Vé: ${billDetails?.seats}`,
-            description: "Vé xem phim tại Zuhot Cinema",
-            quantity: '1',
-            unit_amount: {currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.ticketTotalPrice || 0)}
-        },
-        {
-            name: `${billDetails?.toppingName}`,
-            description: "Topping tại Zuhot Cinema",
-            quantity: "1",
-            unit_amount: {currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.toppingTotalPrice || 0)}
-        },
-        {
-            name: "Thuế",
-            description: "Thuế 5% tại Zuhot Cinema",
-            quantity: '1',
-            unit_amount: {currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.ticketVat || 0)}
-        })
-    let amount = price.temp + price.vat + price.topping - price.discount;
+    item.push({ name: `${billDetails?.seats}`, description: "Vé xem phim tại Zuhot Cinema", quantity: "1", unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.ticketTotalPrice || 0) } })
+    billDetails?.toppingName ? item.push({name: `${billDetails?.toppingName}`,description: "Topping tại Zuhot Cinema",quantity: "1",unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.toppingTotalPrice || 0) }}) : null
+    item.push({ name: "Thuế", description: "Thuế 5% tại Zuhot Cinema", quantity: '1', unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.ticketVat || 0) } })
+    item.forEach(value => { amount += Number(value.unit_amount.value) });
     return (
         <>
             <div className="w-1/2 mx-auto my-5">
@@ -191,7 +175,7 @@ const PayPage = () => {
                     <Card bodyStyle={{backgroundColor: "white", color: "black"}}>
                         {billDetails && <div className="grid grid-cols-3 gap-10">
                             <img src={`${constants.URL_IMAGES}${billDetails?.poster}`} className=""
-                                 alt="Photo film"/>
+                                alt="Photo film"/>
                             <div className="col-span-2">
                                 <h3 className="text-lg font-bold">{billDetails.movieName}</h3>
                                 <h3>Xuất
@@ -203,19 +187,15 @@ const PayPage = () => {
                                 <h3>Ghế: {billDetails.seats}</h3>
                                 <span
                                     className="mt-3 inline-flex items-center rounded-md  px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"><Badge
-                                    color={"green"}
-                                    text={<span
-                                        className="text-green-600">{movieStatus[billDetails.movieStatus]}</span>}/>
+                                        color={"green"}
+                                        text={<span
+                                            className="text-green-600">{movieStatus[billDetails.movieStatus]}</span>}/>
                                 </span>
                                 <Card title="Phương thức thanh toán" bordered={false}
-                                      bodyStyle={{backgroundColor: "white", color: "black", border: "none"}}>
+                                    bodyStyle={{backgroundColor: "white", color: "black", border: "none"}}>
                                     <RadioPayment value={value.payment} onChange={handleChangeRadio}
-                                                  component={<SelectWallet value={value.wallet}
-                                                                           setWallet={handleChangeSelect}/>}/>
-                                </Card>
-                                <Card title="Voucher" bordered={false} extra={"0đ"}
-                                      bodyStyle={{backgroundColor: "white", color: "black", boxShadow: "none"}}>
-                                    <RadioDiscount/>
+                                        component={<SelectWallet value={value.wallet}
+                                            setWallet={handleChangeSelect}/>}/>
                                 </Card>
                             </div>
                         </div>}
@@ -225,67 +205,67 @@ const PayPage = () => {
                     <Card title="Thông tin hóa đơn" bodyStyle={{backgroundColor: "white", color: "black"}}>
                         <table className="w-full">
                             <tbody>
-                            <tr>
-                                <td>Tiền vé:</td>
-                                <td className="text-right">{NumberUtils.formatCurrency(price.temp)}</td>
-                            </tr>
-                            <tr>
-                                <td>Thuế (5%):</td>
-                                <td className="text-right">{NumberUtils.formatCurrency(Number(price.vat))}</td>
-                            </tr>
-                            <tr>
-                                <td>Topping:</td>
-                                <td className="text-right">{NumberUtils.formatCurrency(price.topping)}</td>
-                            </tr>
-                            <tr>
-                                <td>Voucher giảm giá:</td>
-                                <td className="text-right">{NumberUtils.formatCurrency(price.discount)}</td>
-                            </tr>
-                            <tr>
-                                <td>Tổng cộng:</td>
-                                <td className="text-right">{NumberUtils.formatCurrency(Number(price.temp + price.topping + price.vat - price.discount))}</td>
-                            </tr>
-                            {
-                                (value.payment === 3 && tokenVnpay == undefined) ?
-                                    <>
-                                        <tr>
-                                            <td className={"text-center"}>
-                                                <Switch
-                                                    className={"bg-gray-800"}
-                                                    checkedChildren={<CheckOutlined/>}
-                                                    unCheckedChildren={<CloseOutlined/>}
-                                                    checked={checkInsertCard}
-                                                    onChange={changeInsertCard}
-                                                />
-                                            </td>
-                                            <td>Bạn muốn lưu liên kết ví?</td>
-                                        </tr>
-                                        <tr className={"text-center"}>
-                                            {
-                                                checkInsertCard ?
-                                                    <td>
-                                                        <Radio.Group
-                                                            onChange={changeCardType}
-                                                            value={cardType}
-                                                        >
-                                                            <Radio className={"text-black"} value={"01"}>Nội địa</Radio>
-                                                            <Radio className={"text-black"} value={"02"}>VISA</Radio>
-                                                        </Radio.Group>
-                                                    </td> :
-                                                    <></>
-                                            }
-                                        </tr>
-                                    </> :
-                                    <></>
-                            }
-                            <tr>
-                                <td colSpan={2} className="p-5">
-                                    {value.payment != 2 ? (
-                                        <button onClick={submit} className="bg-black text-white w-full p-5">Thanh
-                                            toán</button>) : (
-                                        <PaypalButton amount={NumberUtils.ConvertToUSD(amount)} item={item}/>)}
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>Tiền vé:</td>
+                                    <td className="text-right">{NumberUtils.formatCurrency(price.temp)}</td>
+                                </tr>
+                                <tr>
+                                    <td>Thuế (5%):</td>
+                                    <td className="text-right">{NumberUtils.formatCurrency(Number(price.vat))}</td>
+                                </tr>
+                                <tr>
+                                    <td>Topping:</td>
+                                    <td className="text-right">{NumberUtils.formatCurrency(price.topping)}</td>
+                                </tr>
+                                <tr>
+                                    <td>Voucher giảm giá:</td>
+                                    <td className="text-right">{NumberUtils.formatCurrency(price.discount)}</td>
+                                </tr>
+                                <tr>
+                                    <td>Tổng cộng:</td>
+                                    <td className="text-right">{NumberUtils.formatCurrency(Number(price.temp + price.topping + price.vat - price.discount))}</td>
+                                </tr>
+                                {
+                                    (value.payment === 3 && tokenVnpay == undefined) ?
+                                        <>
+                                            <tr>
+                                                <td className={"text-center"}>
+                                                    <Switch
+                                                        className={"bg-gray-800"}
+                                                        checkedChildren={<CheckOutlined/>}
+                                                        unCheckedChildren={<CloseOutlined/>}
+                                                        checked={checkInsertCard}
+                                                        onChange={changeInsertCard}
+                                                    />
+                                                </td>
+                                                <td>Bạn muốn lưu liên kết ví?</td>
+                                            </tr>
+                                            <tr className={"text-center"}>
+                                                {
+                                                    checkInsertCard ?
+                                                        <td>
+                                                            <Radio.Group
+                                                                onChange={changeCardType}
+                                                                value={cardType}
+                                                            >
+                                                                <Radio className={"text-black"} value={"01"}>Nội địa</Radio>
+                                                                <Radio className={"text-black"} value={"02"}>VISA</Radio>
+                                                            </Radio.Group>
+                                                        </td> :
+                                                        <></>
+                                                }
+                                            </tr>
+                                        </> :
+                                        <></>
+                                }
+                                <tr>
+                                    <td colSpan={2} className="p-5">
+                                        {value.payment != 2 ? (
+                                            <button onClick={submit} className="bg-black text-white w-full p-5">Thanh
+                                                toán</button>) : (
+                                            <PaypalButton amount={`${amount.toFixed(2)}`} item={item}/>)}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </Card>
