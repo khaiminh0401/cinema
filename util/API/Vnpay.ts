@@ -29,10 +29,7 @@ const saveToken = async (vnpayToken: VnpayToken) => {
 }
 
 const removeToken = async (vnpayToken: VnpayToken) => {
-    return (await fetchAPI.delete("/vnpay/remove-token",
-        {
-            data: {...vnpayToken}
-        })).data;
+    return (await fetchAPI.post("/vnpay/remove-token", vnpayToken)).data as string;
 }
 
 const paymentAndTokenCreated = async (vnpayToken: VnpayToken, billId: number) => {
@@ -45,6 +42,13 @@ const paymentByTokenStage = async (vnpayToken: VnpayToken, billId: number) => {
         {params: {billId: billId, ...vnpayToken}})).data;
 }
 
+const removedToken = async (id: number) => {
+    return (await fetchAPI.delete("/vnpay/check-token-remove",
+        {
+            params: {id},
+        })).data;
+}
+
 export const vnpayAPI = {
     createVnpayPayment,
     paymentInformation,
@@ -55,4 +59,5 @@ export const vnpayAPI = {
     paymentByToken,
     paymentAndTokenCreated,
     paymentByTokenStage,
+    removedToken
 }
