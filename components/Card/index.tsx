@@ -23,7 +23,7 @@ export function CardDefault({...props}: CardProps) {
         >
             <div>
                 <div className="text-center h-28">
-                    <label className="text-sm block text-white hover:text-red-600 h-14  font-semibold">
+                    <label className="text-sm block text-white hover:text-red-600 h-14  font-semibold hover:cursor-pointer">
                         {props.data.name}
                     </label>
                     <div className="text-white flex justify-evenly mt-2 h-9">

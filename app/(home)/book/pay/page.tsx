@@ -1,9 +1,8 @@
 "use client"
 
-import {Badge, ConfigProvider, Radio, RadioChangeEvent, Switch} from "antd";
+import {Badge, Radio, RadioChangeEvent, Steps, Switch} from "antd";
 import dynamic from "next/dynamic";
 import RadioPayment from "./radio-payment";
-import RadioDiscount from "./radio-discount";
 import React, {Suspense, useEffect, useMemo, useState} from "react";
 import SelectWallet from "./select-wallet";
 import {useSession} from "next-auth/react";
@@ -16,7 +15,6 @@ import {listOrder} from "@/util/Props/PaypalProps";
 import PaypalButton from "./paypal";
 import {billAPI} from "@/util/API/Bill";
 import {CheckOutlined, CloseOutlined} from "@ant-design/icons";
-import {theme} from "@/app/(home)/theme";
 import {tokenVnpayAPI} from "@/util/API/TokenVnpay";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
@@ -24,10 +22,6 @@ const Card = dynamic(() => import("antd").then((s) => s.Card), {
     loading: () => <p className="text-center" style={{width: 300}}>Loading...</p>,
 });
 
-const Steps = dynamic(() => import("antd").then((s) => s.Steps), {
-    ssr: false,
-    loading: () => <p className="text-center" style={{width: 300}}>Loading...</p>,
-});
 
 const movieStatus = ['Sắp công chiếu', 'Đang công chiếu', 'Đã công chiếu']
 
