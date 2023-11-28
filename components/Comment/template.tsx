@@ -37,7 +37,7 @@ const Template = () => {
                                                 <p className="mt-4 text-md text-gray-600" dangerouslySetInnerHTML={{ __html: value.review as string }}></p>
                                                 <div className="flex justify-between items-center">
                                                     <div className="mt-4 flex items-center space-x-4 py-6">
-                                                        <img className="w-12 h-12 rounded-full" src="https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/default.png" alt="" />
+                                                        <img className="w-12 h-12 rounded-full" src={`https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/${value.avatar == null ? "default.png" : value.avatar}`} alt="" />
                                                         <div className="text-black text-sm font-semibold">
                                                             {value.name}
                                                             <p className="font-normal">{value.exportdate + ""}</p></div>
