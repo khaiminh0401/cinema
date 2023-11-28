@@ -18,7 +18,7 @@ const RadioPayment = ({value, onChange, component}: any) => {
         <Radio.Group className="text-black" onChange={onChange} value={value}>
             <Space direction="vertical">
                 <Radio value={2}><span className="flex text-black flex-row"><FaCcPaypal className="my-auto mr-2"/>Ví điện tử Paypal</span></Radio>
-                <Radio value={3}><span className="flex text-black flex-row"><VnpayIcon/> VnPay</span></Radio>
+                <Radio value={3}><span className="flex text-black flex-row"><VnpayIcon color="#000000"/> VnPay</span></Radio>
             </Space>
         </Radio.Group>
     );

@@ -1,3 +1,5 @@
+// @ts-ignore
+
 import {fetchAPI} from "./axios";
 
 const findAll = async () => {
@@ -6,8 +8,8 @@ const findAll = async () => {
 const findById = async (id: String) => {
     return (await fetchAPI.get(`/movie/${id}`)).data as movie;
 }
-const findByStatus = async (status: String) => {
-    return (await fetchAPI.get(`/movie?status=${status}`)).data as movie[];
+const findByStatus = async (status: String, pageSize: any, page: any) => {
+    return (await fetchAPI.get(`/movie?status=${status}&pageSize=${pageSize}&page=${page}`)).data as movie[];
 }
 const findMoviesNowShowing = async () => {
     return (await fetchAPI.get(`/movie/nowshowing`)).data as movie[];

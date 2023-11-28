@@ -1,9 +1,8 @@
 "use client"
 
-import {Badge, ConfigProvider, Radio, RadioChangeEvent, Switch} from "antd";
+import {Badge, Radio, RadioChangeEvent, Steps, Switch} from "antd";
 import dynamic from "next/dynamic";
 import RadioPayment from "./radio-payment";
-import RadioDiscount from "./radio-discount";
 import React, {Suspense, useEffect, useMemo, useState} from "react";
 import SelectWallet from "./select-wallet";
 import {useSession} from "next-auth/react";
@@ -16,7 +15,6 @@ import {listOrder} from "@/util/Props/PaypalProps";
 import PaypalButton from "./paypal";
 import {billAPI} from "@/util/API/Bill";
 import {CheckOutlined, CloseOutlined} from "@ant-design/icons";
-import {theme} from "@/app/(home)/theme";
 import {tokenVnpayAPI} from "@/util/API/TokenVnpay";
 
 const Card = dynamic(() => import("antd").then((s) => s.Card), {
@@ -24,10 +22,6 @@ const Card = dynamic(() => import("antd").then((s) => s.Card), {
     loading: () => <p className="text-center" style={{width: 300}}>Loading...</p>,
 });
 
-const Steps = dynamic(() => import("antd").then((s) => s.Steps), {
-    ssr: false,
-    loading: () => <p className="text-center" style={{width: 300}}>Loading...</p>,
-});
 
 const movieStatus = ['Sắp công chiếu', 'Đang công chiếu', 'Đã công chiếu']
 
@@ -140,26 +134,12 @@ const PayPage = () => {
     };
 
     // PAYPAL
+    let amount = 0
     const item: listOrder[] = []
-    item.push({
-            name: `Vé: ${billDetails?.seats}`,
-            description: "Vé xem phim tại Zuhot Cinema",
-            quantity: '1',
-            unit_amount: {currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.ticketTotalPrice || 0)}
-        },
-        {
-            name: `${billDetails?.toppingName}`,
-            description: "Topping tại Zuhot Cinema",
-            quantity: "1",
-            unit_amount: {currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.toppingTotalPrice || 0)}
-        },
-        {
-            name: "Thuế",
-            description: "Thuế 5% tại Zuhot Cinema",
-            quantity: '1',
-            unit_amount: {currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.ticketVat || 0)}
-        })
-    let amount = price.temp + price.vat + price.topping - price.discount;
+    item.push({ name: `${billDetails?.seats}`, description: "Vé xem phim tại Zuhot Cinema", quantity: "1", unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.ticketTotalPrice || 0) } })
+    billDetails?.toppingName ? item.push({name: `${billDetails?.toppingName}`,description: "Topping tại Zuhot Cinema",quantity: "1",unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.toppingTotalPrice || 0) }}) : null
+    item.push({ name: "Thuế", description: "Thuế 5% tại Zuhot Cinema", quantity: '1', unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.ticketVat || 0) } })
+    item.forEach(value => { amount += Number(value.unit_amount.value) });
     return (
         <>
             <div className="w-1/2 mx-auto my-5">
@@ -190,7 +170,7 @@ const PayPage = () => {
                     <Card bodyStyle={{backgroundColor: "white", color: "black"}}>
                         {billDetails && <div className="grid grid-cols-3 gap-10">
                             <img src={`${constants.URL_IMAGES}${billDetails?.poster}`} className=""
-                                 alt="Photo film"/>
+                                alt="Photo film"/>
                             <div className="col-span-2">
                                 <h3 className="text-lg font-bold">{billDetails.movieName}</h3>
                                 <h3>Xuất
@@ -202,15 +182,15 @@ const PayPage = () => {
                                 <h3>Ghế: {billDetails.seats}</h3>
                                 <span
                                     className="mt-3 inline-flex items-center rounded-md  px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20"><Badge
-                                    color={"green"}
-                                    text={<span
-                                        className="text-green-600">{movieStatus[billDetails.movieStatus]}</span>}/>
+                                        color={"green"}
+                                        text={<span
+                                            className="text-green-600">{movieStatus[billDetails.movieStatus]}</span>}/>
                                 </span>
                                 <Card title="Phương thức thanh toán" bordered={false}
-                                      bodyStyle={{backgroundColor: "white", color: "black", border: "none"}}>
+                                    bodyStyle={{backgroundColor: "white", color: "black", border: "none"}}>
                                     <RadioPayment value={value.payment} onChange={handleChangeRadio}
-                                                  component={<SelectWallet value={value.wallet}
-                                                                           setWallet={handleChangeSelect}/>}/>
+                                        component={<SelectWallet value={value.wallet}
+                                            setWallet={handleChangeSelect}/>}/>
                                 </Card>
                             </div>
                         </div>}
