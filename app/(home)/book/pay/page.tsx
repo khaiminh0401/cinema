@@ -133,12 +133,12 @@ const PayPage = () => {
         setCardType(e.target.value);
     };
 
-    // PAYPAL
+    // PAYPAL    
     let amount = 0
     const item: listOrder[] = []
     item.push({ name: `${billDetails?.seats}`, description: "Vé xem phim tại Zuhot Cinema", quantity: "1", unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.ticketTotalPrice || 0) } })
     billDetails?.toppingName ? item.push({name: `${billDetails?.toppingName}`,description: "Topping tại Zuhot Cinema",quantity: "1",unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.toppingTotalPrice || 0) }}) : null
-    item.push({ name: "Thuế", description: "Thuế 5% tại Zuhot Cinema", quantity: '1', unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD(billDetails?.ticketVat || 0) } })
+    item.push({ name: "Thuế", description: "Thuế 5% tại Zuhot Cinema", quantity: '1', unit_amount: { currency_code: "USD", value: NumberUtils.ConvertToUSD((billDetails?.ticketVat || 0) * (billDetails?.ticketTotalPrice || 0)) } })
     item.forEach(value => { amount += Number(value.unit_amount.value) });
     return (
         <>
@@ -258,7 +258,7 @@ const PayPage = () => {
                                     {value.payment != 2 ? (
                                         <button onClick={submit} className="bg-black text-white w-full p-5">Thanh
                                             toán</button>) : (
-                                        <PaypalButton amount={NumberUtils.ConvertToUSD(amount)} item={item}/>)}
+                                        <PaypalButton amount={amount.toFixed(2)} item={item}/>)}
                                 </td>
                             </tr>
                             </tbody>
