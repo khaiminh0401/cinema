@@ -45,18 +45,15 @@ const BookComplete = () => {
         const init = async () => {
             if (!customerId) return;
 
-            const tokenVnpayByCustomer = await tokenVnpayAPI.findByCustomerId(customerId);
-            if (!tokenVnpayByCustomer) return;
-
             if (billId != null) {
                 if (paymentMethod === 3) {
                     if (vnpayToken.vnp_token) {
-                        if (vnp_command?.includes("pay_and_create_token"))
+                        if (vnp_command?.includes("pay_and_create"))
                             await vnpayAPI.paymentAndTokenCreated(vnpayToken, Number.parseInt(billId));
                         else if (vnp_command?.includes("token_pay"))
                             await vnpayAPI.paymentByTokenStage(vnpayToken, Number.parseInt(billId));
 
-                    } else {
+                    } else if (!vnpayToken.vnp_token) {
                         const vnpayResult: VnpayResultDto = {
                             vnp_Amount: parseInt(searchParams.get('vnp_Amount') as string),
                             vnp_BankCode: searchParams.get('vnp_BankCode') as string,
@@ -78,8 +75,9 @@ const BookComplete = () => {
             }
         }
 
+
         init();
-    }, [customerId]);
+    }, [customerId, vnp_command]);
 
     return (
         <>

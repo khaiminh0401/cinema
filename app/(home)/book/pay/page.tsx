@@ -49,6 +49,7 @@ const PayPage = () => {
             if (customerId != undefined) {
                 try {
                     const tokenVnpayFromAPI = await tokenVnpayAPI.findByCustomerId(customerId);
+                    console.log(tokenVnpayFromAPI)
                     setTokenVnpay(tokenVnpayFromAPI);
                 } catch (error: any) {
                     console.error("Bad request error:", error);
@@ -86,7 +87,7 @@ const PayPage = () => {
             if (paymentMethod === 3) {
                 let urlPaymentByVnpay;
 
-                if (tokenVnpay != undefined) {
+                if (tokenVnpay?.vnp_token !== undefined) {
                     const vnpayToken: VnpayToken = {
                         vnp_amount: billDetails?.totalPrice,
                         vnp_app_user_id: tokenVnpay.vnp_app_user_id,
@@ -199,67 +200,67 @@ const PayPage = () => {
                     <Card title="Thông tin hóa đơn" bodyStyle={{backgroundColor: "white", color: "black"}}>
                         <table className="w-full">
                             <tbody>
-                                <tr>
-                                    <td>Tiền vé:</td>
-                                    <td className="text-right">{NumberUtils.formatCurrency(price.temp)}</td>
-                                </tr>
-                                <tr>
-                                    <td>Thuế (5%):</td>
-                                    <td className="text-right">{NumberUtils.formatCurrency(Number(price.vat))}</td>
-                                </tr>
-                                <tr>
-                                    <td>Topping:</td>
-                                    <td className="text-right">{NumberUtils.formatCurrency(price.topping)}</td>
-                                </tr>
-                                <tr>
-                                    <td>Voucher giảm giá:</td>
-                                    <td className="text-right">{NumberUtils.formatCurrency(price.discount)}</td>
-                                </tr>
-                                <tr>
-                                    <td>Tổng cộng:</td>
-                                    <td className="text-right">{NumberUtils.formatCurrency(Number(price.temp + price.topping + price.vat - price.discount))}</td>
-                                </tr>
-                                {
-                                    (value.payment === 3 && tokenVnpay == undefined) ?
-                                        <>
-                                            <tr>
-                                                <td className={"text-center"}>
-                                                    <Switch
-                                                        className={"bg-gray-800"}
-                                                        checkedChildren={<CheckOutlined/>}
-                                                        unCheckedChildren={<CloseOutlined/>}
-                                                        checked={checkInsertCard}
-                                                        onChange={changeInsertCard}
-                                                    />
-                                                </td>
-                                                <td>Bạn muốn lưu liên kết ví?</td>
-                                            </tr>
-                                            <tr className={"text-center"}>
-                                                {
-                                                    checkInsertCard ?
-                                                        <td>
-                                                            <Radio.Group
-                                                                onChange={changeCardType}
-                                                                value={cardType}
-                                                            >
-                                                                <Radio className={"text-black"} value={"01"}>Nội địa</Radio>
-                                                                <Radio className={"text-black"} value={"02"}>VISA</Radio>
-                                                            </Radio.Group>
-                                                        </td> :
-                                                        <></>
-                                                }
-                                            </tr>
-                                        </> :
-                                        <></>
-                                }
-                                <tr>
-                                    <td colSpan={2} className="p-5">
-                                        {value.payment != 2 ? (
-                                            <button onClick={submit} className="bg-black text-white w-full p-5">Thanh
-                                                toán</button>) : (
-                                            <PaypalButton amount={`${amount.toFixed(2)}`} item={item}/>)}
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>Tiền vé:</td>
+                                <td className="text-right">{NumberUtils.formatCurrency(price.temp)}</td>
+                            </tr>
+                            <tr>
+                                <td>Thuế (5%):</td>
+                                <td className="text-right">{NumberUtils.formatCurrency(Number(price.vat) * Number(price.temp))}</td>
+                            </tr>
+                            <tr>
+                                <td>Topping:</td>
+                                <td className="text-right">{NumberUtils.formatCurrency(price.topping)}</td>
+                            </tr>
+                            <tr>
+                                <td>Voucher giảm giá:</td>
+                                <td className="text-right">{NumberUtils.formatCurrency(price.discount)}</td>
+                            </tr>
+                            <tr>
+                                <td>Tổng cộng:</td>
+                                <td className="text-right">{NumberUtils.formatCurrency(Number(price.temp + price.topping + price.vat * price.temp - price.discount))}</td>
+                            </tr>
+                            {
+                                (value.payment === 3 && tokenVnpay?.vnp_token === undefined) ?
+                                    <>
+                                        <tr>
+                                            <td className={"text-center"}>
+                                                <Switch
+                                                    className={"bg-gray-800"}
+                                                    checkedChildren={<CheckOutlined/>}
+                                                    unCheckedChildren={<CloseOutlined/>}
+                                                    checked={checkInsertCard}
+                                                    onChange={changeInsertCard}
+                                                />
+                                            </td>
+                                            <td>Bạn muốn lưu liên kết ví?</td>
+                                        </tr>
+                                        <tr className={"text-center"}>
+                                            {
+                                                checkInsertCard ?
+                                                    <td>
+                                                        <Radio.Group
+                                                            onChange={changeCardType}
+                                                            value={cardType}
+                                                        >
+                                                            <Radio className={"text-black"} value={"01"}>Nội địa</Radio>
+                                                            <Radio className={"text-black"} value={"02"}>VISA</Radio>
+                                                        </Radio.Group>
+                                                    </td> :
+                                                    <></>
+                                            }
+                                        </tr>
+                                    </> :
+                                    <></>
+                            }
+                            <tr>
+                                <td colSpan={2} className="p-5">
+                                    {value.payment != 2 ? (
+                                        <button onClick={submit} className="bg-black text-white w-full p-5">Thanh
+                                            toán</button>) : (
+                                        <PaypalButton amount={NumberUtils.ConvertToUSD(amount)} item={item}/>)}
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </Card>
