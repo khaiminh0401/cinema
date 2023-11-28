@@ -55,6 +55,7 @@ const PayPage = () => {
             if (customerId != undefined) {
                 try {
                     const tokenVnpayFromAPI = await tokenVnpayAPI.findByCustomerId(customerId);
+                    console.log(tokenVnpayFromAPI)
                     setTokenVnpay(tokenVnpayFromAPI);
                 } catch (error: any) {
                     console.error("Bad request error:", error);
@@ -89,12 +90,10 @@ const PayPage = () => {
 
     const payment = async (paymentMethod: number) => {
         if (billId != null) {
-            if (paymentMethod === 1)
-                router.push(`/book/complete?billId=${billId}&paymentMethod=${value.payment}`);
-            else if (paymentMethod === 3) {
+            if (paymentMethod === 3) {
                 let urlPaymentByVnpay;
 
-                if (tokenVnpay != undefined) {
+                if (tokenVnpay?.vnp_token !== undefined) {
                     const vnpayToken: VnpayToken = {
                         vnp_amount: billDetails?.totalPrice,
                         vnp_app_user_id: tokenVnpay.vnp_app_user_id,
@@ -246,7 +245,7 @@ const PayPage = () => {
                                 <td className="text-right">{NumberUtils.formatCurrency(Number(price.temp + price.topping + price.vat - price.discount))}</td>
                             </tr>
                             {
-                                (value.payment === 3 && tokenVnpay == undefined) ?
+                                (value.payment === 3 && tokenVnpay?.vnp_token === undefined) ?
                                     <>
                                         <tr>
                                             <td className={"text-center"}>
