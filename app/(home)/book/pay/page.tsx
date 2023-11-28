@@ -212,10 +212,6 @@ const PayPage = () => {
                                                   component={<SelectWallet value={value.wallet}
                                                                            setWallet={handleChangeSelect}/>}/>
                                 </Card>
-                                <Card title="Voucher" bordered={false} extra={"0đ"}
-                                      bodyStyle={{backgroundColor: "white", color: "black", boxShadow: "none"}}>
-                                    <RadioDiscount/>
-                                </Card>
                             </div>
                         </div>}
                     </Card>
@@ -230,7 +226,7 @@ const PayPage = () => {
                             </tr>
                             <tr>
                                 <td>Thuế (5%):</td>
-                                <td className="text-right">{NumberUtils.formatCurrency(Number(price.vat))}</td>
+                                <td className="text-right">{NumberUtils.formatCurrency(Number(price.vat) * Number(price.temp))}</td>
                             </tr>
                             <tr>
                                 <td>Topping:</td>
@@ -242,7 +238,7 @@ const PayPage = () => {
                             </tr>
                             <tr>
                                 <td>Tổng cộng:</td>
-                                <td className="text-right">{NumberUtils.formatCurrency(Number(price.temp + price.topping + price.vat - price.discount))}</td>
+                                <td className="text-right">{NumberUtils.formatCurrency(Number(price.temp + price.topping + price.vat * price.temp - price.discount))}</td>
                             </tr>
                             {
                                 (value.payment === 3 && tokenVnpay?.vnp_token === undefined) ?
