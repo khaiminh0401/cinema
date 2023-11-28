@@ -7,6 +7,8 @@ import {useEffect, useState} from "react";
 import {vnpayAPI} from "@/util/API/Vnpay";
 import {useSession} from "next-auth/react";
 import {Integer} from "asn1js";
+import {tokenVnpayAPI} from "@/util/API/TokenVnpay";
+import {FaRegCheckCircle} from "react-icons/fa";
 
 const BookComplete = () => {
     const [open, setOpen] = useState(false);
@@ -17,6 +19,7 @@ const BookComplete = () => {
     const router = useRouter();
     const {data: session, update} = useSession();
     const customerId = session?.user.id;
+    const paymentMethodHasBeenPaid = ["Tiền mặt", "Paypal", "Ví VNPay"]
 
     const vnpayToken: VnpayToken = {
         vnp_amount: parseInt(searchParams.get('vnp_amount') as string),
@@ -40,12 +43,17 @@ const BookComplete = () => {
 
     useEffect(() => {
         const init = async () => {
-            if (billId != null && customerId) {
+            if (!customerId) return;
+
+            const tokenVnpayByCustomer = await tokenVnpayAPI.findByCustomerId(customerId);
+            if (!tokenVnpayByCustomer) return;
+
+            if (billId != null) {
                 if (paymentMethod === 3) {
                     if (vnpayToken.vnp_token) {
-                        if (vnp_command?.search("pay_and_create_token"))
+                        if (vnp_command?.includes("pay_and_create_token"))
                             await vnpayAPI.paymentAndTokenCreated(vnpayToken, Number.parseInt(billId));
-                        else if (vnp_command?.search("token_pay"))
+                        else if (vnp_command?.includes("token_pay"))
                             await vnpayAPI.paymentByTokenStage(vnpayToken, Number.parseInt(billId));
 
                     } else {
@@ -74,18 +82,29 @@ const BookComplete = () => {
     }, [customerId]);
 
     return (
-        <Result
-            status="success"
-            title="Thanh toán thành công"
-            subTitle={<Link href={`/review?id=${billId}`} className="text-white">Hoàn tất đơn hàng</Link>}
-            icon={<QR value="https://dev"/>}
-            extra={[
-                <Button type="primary" key="console">
-                    Đi tới hóa đơn
-                </Button>,
-                <Button onClick={() => router.push("/")} key="buy">Trở về trang chủ</Button>,
-            ]}
-        />
+        <>
+            <h1 className={"mt-7 text-center text-xl font-extrabold"}>
+                Bạn đã thanh toán thành công thông qua {paymentMethodHasBeenPaid[paymentMethod - 1]}
+            </h1>
+            <p className={"mt-2 text-center text-sm"}>(Mã QR kiểm tra đơn hàng tại quầy trước khi vào rạp)</p>
+            <Result
+                status="success"
+                title={
+                    <p className={"flex justify-center"}>
+                        Thanh toán thành công
+                        <FaRegCheckCircle className={"text-green-500 my-auto ms-2"}/>
+                    </p>
+                }
+                subTitle={<Link href={`/review?id=${billId}`} className="text-white">Hoàn tất đơn hàng</Link>}
+                icon={<QR value="https://dev"/>}
+                extra={[
+                    <Button onClick={() => router.push("/user/booked-ticket")} type="primary" key="console">
+                        Đi tới hóa đơn
+                    </Button>,
+                    <Button onClick={() => router.push("/")} key="buy">Trở về trang chủ</Button>,
+                ]}
+            />
+        </>
     )
 }
 export default BookComplete;

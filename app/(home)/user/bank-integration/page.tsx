@@ -10,13 +10,22 @@ import {useSession} from "next-auth/react";
 import {useRouter, useSearchParams} from "next/navigation";
 import {vnpayAPI} from "@/util/API/Vnpay";
 import {FaCcPaypal} from "react-icons/fa6";
+import {constants} from "@/common/constants";
+import {response} from "express";
+import {IoMdAddCircle} from "react-icons/io";
 
 const BankIntegration = () => {
     const router = useRouter();
     const [tokenVnpay, setTokenVnpay] = useState<TokenVnpay>();
     const [tokenCreated, setTokenCreated] = useState();
+    const [tokenRemoved, setTokenRemoved] = useState();
+    const [removeTokenReturnUrl, setRemoveTokenReturnUrl] = useState("");
+    const [isModalCreateOpen, setIsModalCreateOpen] = useState(false);
+    const [isModalRemoveOpen, setIsModalRemoveOpen] = useState(false);
+    const [cardType, setCardType] = useState("01");
     const searchParams = useSearchParams();
     const vnp_token = searchParams.get('vnp_token')
+    const vnp_command = searchParams.get('vnp_command')
     const {data: session} = useSession();
     const customerId = session?.user.id;
 
@@ -42,55 +51,86 @@ const BankIntegration = () => {
                         vnp_token: vnp_token
                     }
 
-                    try {
-                        const tokenCreatedFromAPI = await vnpayAPI.saveToken(vnpayToken);
-                        setTokenCreated(tokenCreatedFromAPI);
-                    } catch (error: any) {
-                        console.log(error)
+                    if (vnp_command?.includes("create")) {
+                        try {
+                            const tokenCreatedFromAPI = await vnpayAPI.saveToken(vnpayToken);
+                            setTokenCreated(tokenCreatedFromAPI);
+                        } catch (error: any) {
+                            console.log(error)
+                        }
+                    } else if (vnp_command?.includes("remove")) {
+                        if (!tokenVnpay?.id) return;
+
+                        try {
+                            const tokenRemovedFromAPI =
+                                await vnpayAPI.removedToken(tokenVnpay.id);
+                            setTokenRemoved(tokenRemovedFromAPI);
+                        } catch (error: any) {
+                            console.log(error)
+                        }
                     }
                 }
             }
 
             init()
         }
-    }, [customerId, tokenCreated])
+    }, [customerId, tokenCreated, tokenRemoved, removeTokenReturnUrl, vnp_command])
 
     const createTokenVNPay = async (cardType: string) => {
-        if (customerId) {
-            const vnpayToken: VnpayToken = {
-                vnp_app_user_id: customerId,
-                vnp_card_type: cardType,
-                vnp_txn_desc: 'create token',
-            }
+        if (!customerId) return;
 
-            const createTokenFromAPI = await vnpayAPI.createToken(vnpayToken);
-            router.push(createTokenFromAPI);
+        const vnpayToken: VnpayToken = {
+            vnp_app_user_id: customerId,
+            vnp_card_type: cardType,
+            vnp_txn_desc: 'create token',
         }
+
+        const createTokenURL = await vnpayAPI.createToken(vnpayToken);
+        router.push(createTokenURL);
     }
 
     const removeToken = async () => {
+        if (!tokenVnpay) return;
+
         const vnpayToken: VnpayToken = {
-            vnp_app_user_id: customerId,
-            vnp_token: vnp_token as string,
+            vnp_app_user_id: tokenVnpay.vnp_app_user_id,
+            vnp_token: tokenVnpay.vnp_token,
             vnp_txn_desc: 'remove token',
         }
 
-        await vnpayAPI.removeToken(vnpayToken);
-    }
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [cardType, setCardType] = useState("01");
+        const removeTokenURL = await vnpayAPI.removeToken(vnpayToken);
+        const returnURL = removeTokenURL.replace(
+            "https://sandbox.vnpayment.vn/token_ui/remove-token.html",
+            `${constants.ROOT_FE}/user/bank-integration`);
 
-    const showModal = () => {
-        setIsModalOpen(true);
+        setRemoveTokenReturnUrl(returnURL);
+        router.push(returnURL);
+    }
+
+    const showModalCreate = () => {
+        setIsModalCreateOpen(true);
     };
 
-    const handleOk = () => {
-        setIsModalOpen(false);
+    const showModalRemove = () => {
+        setIsModalRemoveOpen(true);
+    };
+
+    const handleCreateOk = () => {
+        setIsModalCreateOpen(false);
         createTokenVNPay(cardType);
     };
 
-    const handleCancel = () => {
-        setIsModalOpen(false);
+    const handleCreateCancel = () => {
+        setIsModalCreateOpen(false);
+    };
+
+    const handleRemoveOk = () => {
+        setIsModalRemoveOpen(false);
+        removeToken();
+    };
+
+    const handleRemoveCancel = () => {
+        setIsModalRemoveOpen(false);
     };
 
     const changeCardType = (e: RadioChangeEvent) => {
@@ -100,10 +140,21 @@ const BankIntegration = () => {
     return (
         <>
             <Modal
+                title="Xóa liên kết"
+                open={isModalRemoveOpen}
+                onOk={handleRemoveOk}
+                onCancel={handleRemoveCancel}
+                okText={"Xóa"}
+                cancelText={"Hủy"}
+            >
+                <p>Bạn chắc chắn muốn xóa chứ?</p>
+            </Modal>
+
+            <Modal
                 title="Tạo liên kết ngân hàng thông qua ví VNPay"
-                open={isModalOpen}
-                onOk={handleOk}
-                onCancel={handleCancel}
+                open={isModalCreateOpen}
+                onOk={handleCreateOk}
+                onCancel={handleCreateCancel}
                 okText={"Tạo"}
                 cancelText={"Hủy"}
             >
@@ -118,11 +169,13 @@ const BankIntegration = () => {
             </Modal>
 
             <div className={"grid grid-cols-3 justify-center"}>
-                <span className={"col-span-2 mt-3 mb-2 font-semibold"}>Thẻ của tôi</span>
-                <span className={"col-span-1 flex justify-end"}>
+                <span className={"col-span-1 mt-3 mb-2 font-semibold"}>Thẻ của tôi</span>
+                <span className={"col-span-2 flex justify-end"}>
+                    <IoMdAddCircle className={"my-auto me-1"} />
+                    <p className={"my-auto text-sm font-light me-3"}>Thêm liên kết: </p>
                     {
                         !tokenVnpay?.vnp_app_user_id ?
-                            <button onClick={showModal}>
+                            <button onClick={showModalCreate}>
                                 <span className={"flex align-items"}>
                                     <VnpayIcon color={'#ffffff'}/>
                                     <span className={"text-red-600 font-semibold"}>VN</span>
@@ -131,7 +184,7 @@ const BankIntegration = () => {
                             </button> :
                             <></>
                     }
-                    <FaCcPaypal className="ms-7 my-auto mr-2"/>
+                    <FaCcPaypal className="ms-2 my-auto mr-2"/>
                 </span>
             </div>
             {
@@ -158,7 +211,7 @@ const BankIntegration = () => {
                                         onClick={() => {
                                         }}
                                     >
-                                        <RiDeleteBin6Line onClick={removeToken}/>
+                                        <RiDeleteBin6Line onClick={showModalRemove}/>
                                     </Button>
                                     <p>Ngân hàng: {tokenVnpay?.vnp_bank_code}</p>
                                     <p>Số thẻ: {tokenVnpay?.vnp_card_number}</p>

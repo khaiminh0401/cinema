@@ -103,7 +103,7 @@ const Navbar = () => {
                                                          aria-labelledby="user-menu-button" tabIndex={-1}>
                                                         <div className="px-4 py-3">
                                                     <span
-                                                        className="block text-sm text-gray-900 dark:text-white">{session?.user?.name}</span>
+                                                        className="block text-sm text-gray-900">{session?.user?.name}</span>
                                                             <span
                                                                 className="block text-sm  text-gray-500 truncate dark:text-gray-400">{session?.user?.email}</span>
                                                         </div>
