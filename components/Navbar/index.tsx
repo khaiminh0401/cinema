@@ -22,29 +22,29 @@ const Navbar = () => {
         />
     ) : null
     const navList = (
-        <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 md:flex-row lg:items-center lg:gap-6">
+        <ul className="mb-4 mt-2 flex flex-col gap-2 lg:mb-0 lg:mt-0 md:flex-row lg:items-center lg:gap-6 justify-center">
             <p
                 className="p-1 font-bold text-lg"
             >
-                <Link href="#"
+                <Link href="/"
                       className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80 text-white">
                     Phim
                 </Link>
             </p>
-            <p
-                className="p-1 font-bold text-lg"
-            >
-                <Link href="/theater" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">
-                    Rạp
-                </Link>
-            </p>
-            <p
-                className="p-1 font-bold text-lg"
-            >
-                <Link href="#" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">
-                    Khuyến mãi
-                </Link>
-            </p>
+            {/*<p*/}
+            {/*    className="p-1 font-bold text-lg"*/}
+            {/*>*/}
+            {/*    <Link href="/theater" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">*/}
+            {/*        Rạp*/}
+            {/*    </Link>*/}
+            {/*</p>*/}
+            {/*<p*/}
+            {/*    className="p-1 font-bold text-lg"*/}
+            {/*>*/}
+            {/*    <Link href="#" className="flex items-center hover:text-red-500 focus:text-red-500 focus:opacity-80">*/}
+            {/*        Khuyến mãi*/}
+            {/*    </Link>*/}
+            {/*</p>*/}
             <p
                 className="p-1 font-bold text-lg"
             >

@@ -4,7 +4,8 @@ import {CardDiscount} from "@/components/CardDiscount";
 import Template from "@/components/Comment/template";
 import WeekDate from "@/components/Date";
 import {movieDetailPageAPI} from '@/util/API/MovieDetailPage';
-import {Rate} from "antd";
+import type {TabsProps} from 'antd';
+import {Rate, Tabs} from "antd";
 import Image from 'next/image';
 import Link from "next/link";
 import {useSearchParams} from 'next/navigation';
@@ -12,7 +13,6 @@ import {useEffect, useState} from 'react';
 import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 import '../../globals.css';
-import {movieAPI} from "@/util/API/Movie";
 
 const MovieDetails = () => {
     const [movieDetailPage, setMovieDetailPage] = useState<movieDetailPage>();
@@ -21,19 +21,37 @@ const MovieDetails = () => {
 
     const responsive = {
         desktop: {
-            breakpoint: { max: 3000, min: 1024 },
+            breakpoint: {max: 3000, min: 1024},
             items: 5,
         },
         tablet: {
-            breakpoint: { max: 1024, min: 464 },
+            breakpoint: {max: 1024, min: 464},
             items: 2,
         },
         mobile: {
-            breakpoint: { max: 464, min: 0 },
+            breakpoint: {max: 464, min: 0},
             items: 1,
         },
     };
-
+    const items: TabsProps['items'] = [
+        {
+            key: '1',
+            label: 'NỘI DUNG PHIM',
+            children: <p className="text-justify pt-5 text-sx text-white">
+                {movieDetailPage?.movieDetail.describe}
+            </p>
+        },
+        {
+            key: '2',
+            label: 'TRAILER',
+            children: <div className="flex justify-center">
+                <iframe width="680" height="450" src={`${movieDetailPage?.movieDetail.trailer}`}
+                        title="Trailer movie"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen></iframe>
+            </div>
+        }
+    ];
     useEffect(() => {
         const init = async () => {
             if (movieId != null) {
@@ -55,29 +73,35 @@ const MovieDetails = () => {
                         <div className="grid grid-cols-12 gap-2">
                             <div className="lg:col-span-10 md:col-span-8 sm:col-span-12 col-span-12">
                                 <div className="grid grid-cols-12 gap-6">
-                                    {movieDetailPage && <Image src={`${constants.URL_IMAGES}${movieDetailPage?.movieDetail.poster}`} className="lg:col-span-3 md:col-span-6 sm:col-span-6 col-span-12 w-full h-92 bg-white" width={2560} height={1440} alt="Movie Poster" />}
-                                    <div className="lg:col-span-9 md:col-span-6 sm:col-span-6 col-span-12 w-fit h-full text-lg">
+                                    {movieDetailPage &&
+                                        <Image src={`${constants.URL_IMAGES}${movieDetailPage?.movieDetail.poster}`}
+                                               className="lg:col-span-3 md:col-span-6 sm:col-span-6 col-span-12 w-full h-92 bg-white"
+                                               width={2560} height={1440} alt="Movie Poster"/>}
+                                    <div
+                                        className="lg:col-span-9 md:col-span-6 sm:col-span-6 col-span-12 w-fit h-full text-lg">
                                         <h4 className="mb-3 text-lg text-red-600 font-semibold">{movieDetailPage?.movieDetail.name}</h4>
                                         <p><strong>Thể loại:</strong> {movieDetailPage?.movieDetail.movieTypeName}</p>
                                         <p><strong>Đạo diễn:</strong> {movieDetailPage?.movieDetail.directorsName}</p>
                                         <p><strong>Diễn viên:</strong> {movieDetailPage?.movieDetail.actorsName}</p>
                                         <p><strong>Ngôn ngữ:</strong> {movieDetailPage?.movieDetail.languagesName}</p>
-                                        <p><strong>Thời gian chiếu:</strong> {movieDetailPage?.movieDetail.time} phút</p>
-                                        <p><strong>Quốc gia:</strong> {movieDetailPage?.movieDetail.countryName}</p>
-                                        <p><strong>Năm phát hành:</strong> {movieDetailPage?.movieDetail.yearofmanufacture}</p>
-                                        <Rate value={movieDetailPage?.movieDetail.rate} disabled />
-                                    </div>
-                                    <div className="col-span-12 mb-4">
-                                        <h4 className="mt-4"><span className="border-b-2 border-red-500 text-lg pb-2">NỘI DUNG PHIM</span></h4>
-                                        <p className="text-justify pt-5 text-sx">
-                                            {movieDetailPage?.movieDetail.describe}
+                                        <p><strong>Thời gian chiếu:</strong> {movieDetailPage?.movieDetail.time} phút
                                         </p>
+                                        <p><strong>Quốc gia:</strong> {movieDetailPage?.movieDetail.countryName}</p>
+                                        <p><strong>Năm phát
+                                            hành:</strong> {movieDetailPage?.movieDetail.yearofmanufacture}</p>
+                                        <Rate value={movieDetailPage?.movieDetail.rate} disabled/>
                                     </div>
                                 </div>
                             </div>
-                            <div className="lg:col-span-2 md:col-span-4 sm:col-span-12 col-span-12">
-                                <CardDiscount to="register" valueQR="KHUYENMAI5%" discount="5" />
+                            <div className="lg:col-span-2 md:col-span-4 sm:col-span-12 col-span-12 h-fit">
+                                <CardDiscount to="register" valueQR="KHUYENMAI5%" discount="5"/>
                             </div>
+                        </div>
+                        <div className="col-span-12 mb-4">
+                            <Tabs
+                                size={"large"}
+                                defaultActiveKey="1" items={items}
+                            />
                         </div>
                     </div>
                 </div>
@@ -85,8 +109,9 @@ const MovieDetails = () => {
 
             <div className="mx-10 px-3 mb-5">
                 <div className="text-white">
-                    <h3 className="text-center border-b-2 border-red-900 py-2 text-lg font-semibold">VUI LÒNG CHỌN THÔNG TIN VÉ</h3>
-                    <WeekDate movieId={movieId} />
+                    <h3 className="text-center border-b-2 border-red-900 py-2 text-lg font-semibold">VUI LÒNG CHỌN THÔNG
+                        TIN VÉ</h3>
+                    <WeekDate movieId={movieId}/>
                 </div>
             </div>
             <div className="grid grid-cols-12 gap-2">
@@ -113,7 +138,7 @@ const MovieDetails = () => {
                                             id={`nowShowing_${index}`}
                                             href={{
                                                 pathname: ``,
-                                                query: { id: mv.id }
+                                                query: {id: mv.id}
                                             }}
                                         >
                                             <Image
@@ -134,8 +159,9 @@ const MovieDetails = () => {
             </div>
             <div className="md:mx-10 md:px-3 md:mb-5 grid grid-cols-12 gap-2">
                 <div className="col-span-12">
-                    <h3 className="text-center border-b-2 border-white py-2 text-lg font-semibold uppercase">Đánh giá</h3>
-                    <Template />
+                    <h3 className="text-center border-b-2 border-white py-2 text-lg font-semibold uppercase">Đánh
+                        giá</h3>
+                    <Template/>
                 </div>
             </div>
         </>
