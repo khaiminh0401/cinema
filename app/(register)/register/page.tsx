@@ -59,13 +59,13 @@ const Register = () => {
                 </div>
                 <div className="flex items-center w-full max-w-3xl p-8 mx-auto lg:px-12 lg:w-3/5">
                     <div className="w-full">
-                        <div className="flex justify-start mx-auto mb-10">
+                        <div className="flex justify-start max-sm:justify-center mx-auto mb-10">
                             <Link href="/"><Image src={`${constants.URL_LOGO}`} alt='' width={200} height={200}/></Link>
                         </div>
-                        <h1 className="text-2xl font-semibold tracking-wider  capitalize text-white">
+                        <h1 className="text-2xl font-semibold tracking-wider max-sm:text-center max-sm:text-lg max-md:text-center max-md:text-xl capitalize text-white">
                             Đăng kí tài khoản ngay
                         </h1>
-                        <form className="grid grid-cols-1 gap-6 mt-8 md:grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
+                        <form className="grid max-sm:grid-cols-1 gap-6 mt-8 grid-cols-2" onSubmit={handleSubmit(onSubmit)}>
                             <div>
                                 <label className="block mb-2 text-sm text-gray-200"><span className="text-red-700">* </span>Họ và Tên</label>
                                 <Input type="text" register={register("name", Validation.name)}
@@ -123,8 +123,8 @@ const Register = () => {
                                 <div className="text-red-600 mt-1 text-sm h-5">{errors.repassword?.message}</div>
                             </div>
                             <button
-                                className="flex items-center justify-between w-full px-6 py-3 text-sm tracking-wide text-gray-800  uppercase transition-colors duration-300 transform bg-gray-200 rounded-lg hover:bg-red-700 focus:outline-none hover:text-white  focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                                <span>Đăng kí </span>
+                                className="bg-red-500 sm:col-span-2 flex items-center justify-center w-full px-6 py-3 tracking-wide text-white  uppercase transition-colors duration-300 transform rounded-lg hover:bg-red-700 focus:outline-none hover:text-white  focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                                <span>Đăng kí</span>
                             </button>
                         </form>
                     </div>
