@@ -57,7 +57,7 @@ const Login = () => {
                         <div className="mt-4">
                             <div className="flex justify-between">
                                 <label className="block mb-2 text-sm font-medium text-gray-200" htmlFor="loggingPassword">Mật khẩu</label>
-                                <a href="#" className="text-xs text-gray-300 hover:underline">Quên mật khẩu?</a>
+                                <Link href="/forgot-password" className="text-xs text-gray-300 hover:underline">Quên mật khẩu?</Link>
                             </div>
                             <Input id="loggingPassword" register={register('password', Validation.password)} className="block w-full px-4 py-2  border rounded-lg bg-gray-800 text-gray-300 border-gray-600  focus:ring-opacity-40 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-300" type="password" />
                             <p className='text-sm mt-1 text-red-600 h-5'>{errors.password?.message as string}</p>
