@@ -46,7 +46,8 @@ export const authconfig: NextAuthOptions = {
 
     ],
     pages: {
-        signIn: '/login'
+        signIn: '/login',
+        signOut:"/logout"
     },
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
@@ -67,6 +68,16 @@ export const authconfig: NextAuthOptions = {
                 showtime: token.showtime
             };
             return session;
+        },
+        async signIn({user, account, profile }) {
+            if (account?.provider === "google") {
+                const result = await customerAPI.findByEmail(user.email || "");
+                user.id = String(result.id);
+                user.email = result.email;
+                user.image = !result.avatar ? "https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/default.png" :
+                `https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/${result.avatar}`;
+            }
+            return true;
         },
     },
 
