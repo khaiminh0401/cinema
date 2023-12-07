@@ -63,7 +63,7 @@ const Login = () => {
                             <p className='text-sm mt-1 text-red-600 h-5'>{errors.password?.message as string}</p>
                         </div>
                         <div className="mt-6">
-                            <button className="w-full px-6 py-3 text-sm font-medium tracking-wide uppercase text-gray-700 transition-colors duration-300 transform bg-gray-200 rounded-lg hover:bg-red-700 hover:text-white focus:outline-none focus:ring focus:ring-red-300 focus:ring-opacity-50">
+                            <button className="w-full px-6 py-3 text-sm font-medium tracking-wide uppercase transition-colors duration-300 transform rounded-lg bg-red-700 text-white focus:outline-none focus:ring focus:ring-red-300 focus:ring-opacity-50">
                                 Đăng nhập
                             </button>
                         </div>

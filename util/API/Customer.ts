@@ -5,6 +5,10 @@ const findAll = async () => {
     return (await fetchAPI.get("/customer/getAll")).data as customer[];
 }
 
+const findByEmail = async (email: string) => {
+    return (await fetchAPI.get(`/customer?email=${email}`)).data as customer;
+}
+
 const findId = async (id: number) => {
     return (await fetchAPI.get(`/customer/${id}`)).data as customer;
 }
@@ -59,5 +63,6 @@ export const customerAPI = {
     editProfile,
     updatePassword,
     deleteAvatar,
+    findByEmail
 }
 
