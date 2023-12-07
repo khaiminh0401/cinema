@@ -5,10 +5,6 @@ const findAll = async () => {
     return (await fetchAPI.get("/customer/getAll")).data as customer[];
 }
 
-const findByEmail = async (email: string) => {
-    return (await fetchAPI.get(`/customer?email=${email}`)).data as customer;
-}
-
 const findId = async (id: number) => {
     return (await fetchAPI.get(`/customer/${id}`)).data as customer;
 }
@@ -53,6 +49,22 @@ const deleteAvatar = async (customerId: number, avatar: string) => {
     ).data;
 }
 
+const forgotPassword = async (email: string) => {
+    return (await fetchAPI.get(`/customer/forgot-password?email=${email}`)).data;
+}
+
+const checkToken = async (ForgotPasswordModel: { email: string, userToken: string }) => {
+    return (await fetchAPI.post(`/customer/check-token`, ForgotPasswordModel)).data;
+}
+
+const findByEmail = async (email: string) => {
+    return (await fetchAPI.get(`/customer/findByEmail?email=${email}`)).data;
+}
+
+const changePassword = async (customer: any) => {
+    return (await fetchAPI.post(`/customer/change-password`, customer)).data;
+}
+
 export const customerAPI = {
     registration,
     registrationConfirm,
@@ -63,6 +75,9 @@ export const customerAPI = {
     editProfile,
     updatePassword,
     deleteAvatar,
-    findByEmail
+    forgotPassword,
+    checkToken,
+    findByEmail,
+    changePassword
 }
 
