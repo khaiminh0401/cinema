@@ -11,7 +11,6 @@ import {useState} from "react";
 import {SubmitHandler, useForm} from "react-hook-form";
 import {constants} from "@/common/constants";
 import {useRouter} from "next/navigation";
-import {red} from "@ant-design/colors";
 
 /**
  * Object of Register
