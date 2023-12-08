@@ -1,6 +1,6 @@
-import { Result } from "antd";
-import { useEffect, useState } from "react";
-import { ClipLoader } from "react-spinners";
+import {Result} from "antd";
+import {useEffect, useState} from "react";
+import {RingLoader} from "react-spinners";
 
 const Loading = ({ ...props }: { isLoading?: boolean, message?: string, data?: any }) => {
     const [flag, setFlag] = useState(true);
@@ -17,12 +17,12 @@ const Loading = ({ ...props }: { isLoading?: boolean, message?: string, data?: a
                 <div>
                     {props.isLoading ? (
                         <div className="flex justify-center min-h-screen items-center">
-                            <ClipLoader size={50} color="#ff0000" />
+                            <RingLoader size={50} color="#ff0000" />
                             <p className="p-4 md:text-2xl text-red-500">{props.message}</p>
                         </div>
                     ) : props.data ? null : (
                         <div className="flex justify-center min-h-screen items-center">
-                            <ClipLoader size={50} color="#ff0000" />
+                            <RingLoader size={50} color="#ff0000" />
                             <p className="p-4 md:text-2xl text-red-500">{props.message}</p>
                         </div>
                     )}

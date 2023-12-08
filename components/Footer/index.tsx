@@ -52,10 +52,10 @@ const Footer = () => {
                                 <h2 className="mb-6 text-sm font-semibold uppercasetext-white">Liên hệ</h2>
                                 <ul className="text-gray-500 dark:text-gray-400 font-medium">
                                     <li className="mb-4">
-                                        <span>Email: info@zuhotcinema.com</span>
+                                        <span className="break-words">Email: info@zuhotcinema.com</span>
                                     </li>
                                     <li>
-                                        <span>Facebook: ZuhotCinemaOfficial</span>
+                                        <span className="break-words">Facebook: ZuhotCinemaOfficial</span>
                                     </li>
                                 </ul>
                             </div>
