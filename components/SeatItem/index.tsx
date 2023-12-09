@@ -16,13 +16,13 @@ const SeatItem : React.FC<SeatItem> = ({obj,onClick}) => {
 
     return (
         <button 
-            className={`w-max bg-transparent col-span-1 mx-auto px-2`} 
+            className={`w-max bg-transparent col-span-1 mx-auto px-2`}
             type="button" 
             disabled={obj.booked}
             onClick={handleClick}
-        > 
-            {!choose ? <Item/>: <SeatIcon.ItemChoose/>}
-            <p className="">{obj.name.substring(1)}</p>
+        >
+            <section className={"w-4 md:!w-7 lg:!w-10"}>{!choose ? <Item/>: <SeatIcon.ItemChoose/>}</section>
+            <p className={"text-xs md:!text-sm lg:!text-md"}>{obj.name.substring(1)}</p>
       </button>
     );
 }

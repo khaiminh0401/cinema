@@ -141,24 +141,30 @@ const Seat = () => {
                             className="text-white"
                         />
                     </div>
-                    <div className="grid md:grid-cols-2 gap-5 grid-cols-1">
-                        <div className="col-start-1 col-span-2">
+                    <div className="grid md:grid-cols-7 grid-cols-1">
+                        <div className="col-span-5">
                             <div className="w-full mx-auto my-10 ">
                                 {/* <img src="/assert/seat/screen.png" className="w-1/5 mx-auto" alt="" /> */}
-                                <div className="hidden md:block">
+                                <div className="block">
                                     <h4 className="text-center">Chú thích</h4>
-                                    <div className="flex justify-around gap-40 w-4/5 mx-auto">
+                                    <div className="flex-wrap lg:!flex gap-36 w-4/5 mx-auto">
                                         <div className="flex items-center">
-                                            <SeatIcon.ItemChoose/>
-                                            <span className="p-5">Ghế được chọn</span>
+                                            <section className={"w-4 md:!w-7 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
+                                                <SeatIcon.ItemChoose/>
+                                            </section>
+                                            <span className="p-5">Đã chọn</span>
                                         </div>
                                         <div className="flex items-center">
-                                            <SeatIcon.ItemDefault/>
-                                            <span className="p-5">Ghế chưa chọn</span>
+                                            <section className={"w-4 md:!w-7 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
+                                                <SeatIcon.ItemDefault/>
+                                            </section>
+                                            <span className="p-5">Chưa chọn</span>
                                         </div>
                                         <div className="flex items-center">
-                                            <SeatIcon.ItemHasBooked/>
-                                            <span className="p-5">Ghế đã có người mua</span>
+                                            <section className={"w-4 md:!w-7 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
+                                                <SeatIcon.ItemHasBooked/>
+                                            </section>
+                                            <span className="p-5">Đã bán</span>
                                         </div>
                                     </div>
                                     {/* <div className="flex justify-around gap-40 w-4/5 mx-auto">
@@ -186,14 +192,16 @@ const Seat = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-end-4">
+                        <div className="col-span-2 mx-auto">
                             <Card
                                 title="Thông tin đặt chỗ"
-                                className="book-information-sticky hidden lg:block"
+                                className="book-information-sticky"
                                 headStyle={{textAlign: "center"}}
                                 style={{width: 300}}
                                 cover={<Image src={`${constants.URL_IMAGES}${data.movie.poster}`}
-                                              width={1920} height={1080} alt=""/>}
+                                              width={1920} height={1080} alt=""
+                                              className={"!w-32 lg:!w-full mx-auto"}
+                                />}
                             >
                                 <table className="w-full">
                                     <tbody>
