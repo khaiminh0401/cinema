@@ -122,6 +122,7 @@ const Seat = () => {
             {data ? <>
                     <div className="w-1/2 mx-auto my-10">
                         <Steps
+                            size={"small"}
                             current={0}
                             items={[
                                 {
@@ -143,27 +144,27 @@ const Seat = () => {
                     </div>
                     <div className="grid md:grid-cols-7 grid-cols-1">
                         <div className="col-span-5">
-                            <div className="w-full mx-auto my-10 ">
+                            <div className="w-full mx-auto my-10">
                                 {/* <img src="/assert/seat/screen.png" className="w-1/5 mx-auto" alt="" /> */}
                                 <div className="block">
                                     <h4 className="text-center">Chú thích</h4>
                                     <div className="flex-wrap lg:!flex gap-36 w-4/5 mx-auto">
                                         <div className="flex items-center">
-                                            <section className={"w-4 md:!w-7 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
+                                            <span className={"w-4 md:!w-7 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
                                                 <SeatIcon.ItemChoose/>
-                                            </section>
+                                            </span>
                                             <span className="p-5">Đã chọn</span>
                                         </div>
                                         <div className="flex items-center">
-                                            <section className={"w-4 md:!w-7 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
+                                            <span className={"w-4 md:!w-7 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
                                                 <SeatIcon.ItemDefault/>
-                                            </section>
+                                            </span>
                                             <span className="p-5">Chưa chọn</span>
                                         </div>
                                         <div className="flex items-center">
-                                            <section className={"w-4 md:!w-7 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
+                                            <span className={"w-4 md:!w-7 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
                                                 <SeatIcon.ItemHasBooked/>
-                                            </section>
+                                            </span>
                                             <span className="p-5">Đã bán</span>
                                         </div>
                                     </div>
