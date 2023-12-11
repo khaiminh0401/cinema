@@ -118,12 +118,11 @@ const Seat = () => {
     }, [seats]);
 
     return (
-        <div className="md:mx-28 md:my-14 mx-10">
+        <div className="md:mx-28 md:my-14">
             {data ? <>
                     <div className="w-1/2 mx-auto my-10 max-sm:mx-0 max-sm:w-full">
                         <Steps
                             responsive={false}
-                            size={"small"}
                             current={0}
                             labelPlacement="vertical"
                             items={[
@@ -152,19 +151,19 @@ const Seat = () => {
                                     <h4 className="text-center">Chú thích</h4>
                                     <div className="lg:flex-wrap lg:!flex lg:gap-36 w-4/5 mx-auto max-sm:mx-0 max-sm:w-full max-sm:grid max-sm:grid-cols-2 max-sm:justify-items-center">
                                         <div className="flex items-center">
-                                            <span className={"w-4 md:!w-7 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
+                                            <span className={"w-6 md:!w-8 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
                                                 <SeatIcon.ItemChoose/>
                                             </span>
                                             <span className="p-5">Đã chọn</span>
                                         </div>
                                         <div className="flex items-center">
-                                            <span className={"w-4 md:!w-7 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
+                                            <span className={"w-6 md:!w-8 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
                                                 <SeatIcon.ItemDefault/>
                                             </span>
                                             <span className="p-5">Chưa chọn</span>
                                         </div>
                                         <div className="flex items-center">
-                                            <span className={"w-4 md:!w-7 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
+                                            <span className={"w-6 md:!w-8 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
                                                 <SeatIcon.ItemHasBooked/>
                                             </span>
                                             <span className="p-5">Đã bán</span>
@@ -246,7 +245,9 @@ const Seat = () => {
                         </div>
                     </div>
                 </>
-                : <div className="flex justify-center"><RingLoader color="rgba(255, 78, 0, 1)"/></div>}
+                : <div style={{height: "500px"}}>
+                    <div className="flex justify-center"><RingLoader color="rgba(255, 78, 0, 1)"/></div>
+                </div>}
         </div>
     );
 }

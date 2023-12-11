@@ -1,5 +1,6 @@
 import {useState} from "react";
 import SeatIcon from "@/common/Icon/SeatIcon";
+import {width} from "dom-helpers";
 
 interface SeatItem{
     obj:any,
@@ -21,7 +22,7 @@ const SeatItem : React.FC<SeatItem> = ({obj,onClick}) => {
             disabled={obj.booked}
             onClick={handleClick}
         >
-            <p className={"w-4 md:!w-7 lg:!w-10"}>
+            <p className={"w-6 md:!w-8 lg:!w-10"}>
                 {!choose ? <Item/>: <SeatIcon.ItemChoose/>}
             </p>
             <p className={"text-xs md:!text-sm lg:!text-md"}>{obj.name.substring(1)}</p>

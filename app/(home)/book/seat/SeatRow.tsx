@@ -29,14 +29,14 @@ const SeatRow = ({data, row, className, onClickButton}: SRow) => {
 
     return (
 
-        <div className="flex justify-around gap-3 m-5">
+        <div className="flex justify-around gap-3">
             <div className={`grid ${row.charAt(0) == 'H' ? 'grid-cols-6' : 'grid-cols-12'} grid-rows-1 gap-4 my-5`}>
                 {seats}
             </div>
             <div className="w-20 flex justify-center items-center my-5">
                 <button
-                    className={`bg-blue-600 text-white rounded w-1/3 text-xs md:!w-2/5
-                     lg:!w-1/2 lg:!text-lg ${row.charAt(0) === 'H' && 'bg-pink-600'} 
+                    className={`bg-blue-600 text-white rounded w-1/3 text-xs 
+                     lg:!text-lg ${row.charAt(0) === 'H' && 'bg-pink-600'} 
                      ${row.charAt(0) === 'J' || row.charAt(0) === 'K' ? 'bg-yellow-400':''}`}
                 >
                     {row.charAt(0)}

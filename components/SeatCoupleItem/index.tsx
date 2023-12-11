@@ -20,7 +20,7 @@ const SeatCoupleItem : React.FC<SeatItem> = ({children,state}) => {
             disabled={state}
             onClick={handleClick}
         >
-            <p className={"w-7 md:!w-10 lg:!w-16 mx-auto"}>
+            <p className={"w-10 md:!w-13 lg:!w-16 mx-auto"}>
                 {!choose ? <Item/>: <SeatIcon.ItemCoupleChoose/>}
             </p>
             <p className={"text-xs md:!text-sm lg:!text-md"}>{children}</p>
