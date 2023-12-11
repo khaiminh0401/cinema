@@ -120,10 +120,12 @@ const Seat = () => {
     return (
         <div className="md:mx-28 md:my-14 mx-10">
             {data ? <>
-                    <div className="w-1/2 mx-auto my-10">
+                    <div className="w-1/2 mx-auto my-10 max-sm:mx-0 max-sm:w-full">
                         <Steps
+                            responsive={false}
                             size={"small"}
                             current={0}
+                            labelPlacement="vertical"
                             items={[
                                 {
                                     title: <span className="text-white">Chọn ghế</span>,
@@ -148,7 +150,7 @@ const Seat = () => {
                                 {/* <img src="/assert/seat/screen.png" className="w-1/5 mx-auto" alt="" /> */}
                                 <div className="block">
                                     <h4 className="text-center">Chú thích</h4>
-                                    <div className="flex-wrap lg:!flex gap-36 w-4/5 mx-auto">
+                                    <div className="lg:flex-wrap lg:!flex lg:gap-36 w-4/5 mx-auto max-sm:mx-0 max-sm:w-full max-sm:grid max-sm:grid-cols-2 max-sm:justify-items-center">
                                         <div className="flex items-center">
                                             <span className={"w-4 md:!w-7 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
                                                 <SeatIcon.ItemChoose/>
