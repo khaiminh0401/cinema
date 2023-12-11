@@ -1,5 +1,6 @@
 import {useState} from "react";
 import SeatIcon from "@/common/Icon/SeatIcon";
+import {width} from "dom-helpers";
 
 interface SeatItem{
     obj:any,
@@ -16,13 +17,15 @@ const SeatItem : React.FC<SeatItem> = ({obj,onClick}) => {
 
     return (
         <button 
-            className={`w-max bg-transparent col-span-1 mx-auto px-2`} 
+            className={`w-max bg-transparent col-span-1 mx-auto px-2`}
             type="button" 
             disabled={obj.booked}
             onClick={handleClick}
-        > 
-            {!choose ? <Item/>: <SeatIcon.ItemChoose/>}
-            <p className="">{obj.name.substring(1)}</p>
+        >
+            <p className={"w-6 md:!w-8 lg:!w-10"}>
+                {!choose ? <Item/>: <SeatIcon.ItemChoose/>}
+            </p>
+            <p className={"text-xs md:!text-sm lg:!text-md"}>{obj.name.substring(1)}</p>
       </button>
     );
 }
