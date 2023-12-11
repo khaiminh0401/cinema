@@ -70,7 +70,7 @@ export const authconfig: NextAuthOptions = {
             return session;
         },
         async signIn({user, account, profile }) {
-            if (account?.provider === "google") {
+            if (account?.provider === "google" || account?.provider === "facebook") {
                 const result = await customerAPI.findByEmail(user.email || "");
                 user.id = String(result.id);
                 user.email = result.email;
