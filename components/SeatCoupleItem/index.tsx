@@ -19,9 +19,11 @@ const SeatCoupleItem : React.FC<SeatItem> = ({children,state}) => {
             type="button" 
             disabled={state}
             onClick={handleClick}
-        > 
-            {!choose ? <Item/>: <SeatIcon.ItemCoupleChoose/>}
-            <p>{children}</p>
+        >
+            <p className={"w-10 md:!w-13 lg:!w-16 mx-auto"}>
+                {!choose ? <Item/>: <SeatIcon.ItemCoupleChoose/>}
+            </p>
+            <p className={"text-xs md:!text-sm lg:!text-md"}>{children}</p>
       </button>
     );
 }
