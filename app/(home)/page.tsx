@@ -73,7 +73,6 @@ const Home = () => {
         }
 
     }, [cookie.statusId, currentPage])
-    console.log(session)
     const handleCookie = (value: string, event?: any) => {
         if (event != undefined) event.preventDefault();
         setCookie("statusId", value);
