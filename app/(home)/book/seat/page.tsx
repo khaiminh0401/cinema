@@ -118,11 +118,13 @@ const Seat = () => {
     }, [seats]);
 
     return (
-        <div className="md:mx-28 md:my-14 mx-10">
+        <div className="md:mx-28 md:my-14">
             {data ? <>
-                    <div className="w-1/2 mx-auto my-10">
+                    <div className="w-1/2 mx-auto my-10 max-sm:mx-0 max-sm:w-full">
                         <Steps
+                            responsive={false}
                             current={0}
+                            labelPlacement="vertical"
                             items={[
                                 {
                                     title: <span className="text-white">Chọn ghế</span>,
@@ -141,24 +143,30 @@ const Seat = () => {
                             className="text-white"
                         />
                     </div>
-                    <div className="grid md:grid-cols-2 gap-5 grid-cols-1">
-                        <div className="col-start-1 col-span-2">
-                            <div className="w-full mx-auto my-10 ">
+                    <div className="grid md:grid-cols-7 grid-cols-1">
+                        <div className="col-span-5">
+                            <div className="w-full mx-auto my-10">
                                 {/* <img src="/assert/seat/screen.png" className="w-1/5 mx-auto" alt="" /> */}
-                                <div className="hidden md:block">
+                                <div className="block">
                                     <h4 className="text-center">Chú thích</h4>
-                                    <div className="flex justify-around gap-40 w-4/5 mx-auto">
+                                    <div className="lg:flex-wrap lg:!flex lg:gap-36 w-4/5 mx-auto max-sm:mx-0 max-sm:w-full max-sm:grid max-sm:grid-cols-2 max-sm:justify-items-center">
                                         <div className="flex items-center">
-                                            <SeatIcon.ItemChoose/>
-                                            <span className="p-5">Ghế được chọn</span>
+                                            <span className={"w-6 md:!w-8 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
+                                                <SeatIcon.ItemChoose/>
+                                            </span>
+                                            <span className="p-5">Đã chọn</span>
                                         </div>
                                         <div className="flex items-center">
-                                            <SeatIcon.ItemDefault/>
-                                            <span className="p-5">Ghế chưa chọn</span>
+                                            <span className={"w-6 md:!w-8 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
+                                                <SeatIcon.ItemDefault/>
+                                            </span>
+                                            <span className="p-5">Chưa chọn</span>
                                         </div>
                                         <div className="flex items-center">
-                                            <SeatIcon.ItemHasBooked/>
-                                            <span className="p-5">Ghế đã có người mua</span>
+                                            <span className={"w-6 md:!w-8 lg:!w-10 text-xs md:!text-sm lg:!text-md"}>
+                                                <SeatIcon.ItemHasBooked/>
+                                            </span>
+                                            <span className="p-5">Đã bán</span>
                                         </div>
                                     </div>
                                     {/* <div className="flex justify-around gap-40 w-4/5 mx-auto">
@@ -186,14 +194,16 @@ const Seat = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-end-4">
+                        <div className="col-span-2 mx-auto">
                             <Card
                                 title="Thông tin đặt chỗ"
-                                className="book-information-sticky hidden lg:block"
+                                className="book-information-sticky"
                                 headStyle={{textAlign: "center"}}
                                 style={{width: 300}}
                                 cover={<Image src={`${constants.URL_IMAGES}${data.movie.poster}`}
-                                              width={1920} height={1080} alt=""/>}
+                                              width={1920} height={1080} alt=""
+                                              className={"!w-32 lg:!w-full mx-auto"}
+                                />}
                             >
                                 <table className="w-full">
                                     <tbody>
@@ -235,7 +245,9 @@ const Seat = () => {
                         </div>
                     </div>
                 </>
-                : <div className="flex justify-center"><RingLoader color="rgba(255, 78, 0, 1)"/></div>}
+                : <div style={{height: "500px"}}>
+                    <div className="flex justify-center"><RingLoader color="rgba(255, 78, 0, 1)"/></div>
+                </div>}
         </div>
     );
 }

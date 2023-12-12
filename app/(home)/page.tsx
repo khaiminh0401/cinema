@@ -17,6 +17,7 @@ import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 import "./index.css";
 import { BiSolidSearch } from "react-icons/bi";
 import Loading from "@/components/Loading";
+import {useSession} from "next-auth/react";
 
 const { Search } = Input;
 type SelectedType = {
@@ -26,6 +27,7 @@ type SelectedType = {
 }
 
 const Home = () => {
+    const {data : session} = useSession()
     const itemsPerPage = 12;
     const [currentPage, setCurrentPage] = useState(1);
     const [data, setData] = useState<movie[]>();
@@ -107,7 +109,7 @@ const Home = () => {
     }
     return (
         <>
-            {data == undefined ? <Loading data={data} /> :
+            {data === undefined && !session !== undefined ? <Loading data={data} /> :
                 (<div>
                     {(moviesNowShowing?.length != 0) &&
                         <>
