@@ -125,12 +125,16 @@ const BillDetail = () => {
                             <div className="grid grid-cols-3 gap-x-10">
                                 <div className="">
                                     <div className="text-center">
-                                        <QRCode
-                                            value={"localhost:3000/user/booked-ticket/1"}
-                                            color={"white"}
-                                            size={100}
-                                            bordered={false}
-                                        />
+                                        {
+                                            (billDetails?.qrCode !== null) ?
+                                                <QRCode
+                                                    value={`${billDetails?.qrCode}`}
+                                                    color={"white"}
+                                                    size={150}
+                                                    bordered={false}
+                                                /> :
+                                                <></>
+                                        }
                                     </div>
                                 </div>
                                 <div className="col-span-2">
@@ -152,10 +156,10 @@ const BillDetail = () => {
                         <div className={"text-gray-300"}>
                             <p className={"mb-1"}>Trạng thái
                                 {
-                                    !billDetails?.exportStatus ?
+                                    billDetails?.exportStatus ?
                                         <span
                                             className={"float-right text-green-500"}>{paymentStatus(Number(billDetails?.exportStatus))}</span> :
-                                        <span className={"float-right"}>undefined</span>
+                                        <span className={"float-right"}>undifined</span>
                                 }
                             </p>
                             <p className={"mb-1"}>Địa điểm: <span

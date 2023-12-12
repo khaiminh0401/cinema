@@ -23,5 +23,6 @@ interface billDetails {
     ticketTotalPrice: number,
     ticketTotalPriceAfterVat: number,
     poster: string,
+    qrCode: string,
     tickets: ticketBillDetailsPage[]
 }
