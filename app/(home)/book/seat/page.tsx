@@ -169,20 +169,6 @@ const Seat = () => {
                                             <span className="p-5">Đã bán</span>
                                         </div>
                                     </div>
-                                    {/* <div className="flex justify-around gap-40 w-4/5 mx-auto">
-                                        <div className="flex items-center">
-                                            <SeatIcon.ItemCoupleChoose/>
-                                            <span className="p-5">Ghế đôi được chọn</span>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <SeatIcon.ItemCoupleDefault/>
-                                            <span className="p-5">Ghế đôi chưa chọn</span>
-                                        </div>
-                                        <div className="flex items-center">
-                                            <SeatIcon.ItemCoupleHasBooked/>
-                                            <span className="p-5">Ghế đôi đã có người mua</span>
-                                        </div>
-                                    </div> */}
                                 </div>
                                 <div className="bg-white rounded-2xl text-black mx-auto mt-5 md:w-3/4 w-full">
                                     {
@@ -194,12 +180,11 @@ const Seat = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-span-2 mx-auto">
+                        <div className="col-span-2 lg:mx-auto">
                             <Card
                                 title="Thông tin đặt chỗ"
-                                className="book-information-sticky"
+                                className="book-information-sticky w-[300px] max-sm:w-full"
                                 headStyle={{textAlign: "center"}}
-                                style={{width: 300}}
                                 cover={<Image src={`${constants.URL_IMAGES}${data.movie.poster}`}
                                               width={1920} height={1080} alt=""
                                               className={"!w-32 lg:!w-full mx-auto"}
