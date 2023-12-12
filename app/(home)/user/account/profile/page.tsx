@@ -24,7 +24,7 @@ const Profile = () => {
     }, [customerId]);
 
     return (
-        <div className={"grid grid-cols-1 sm:grid-cols-2 md:grid-cols-7 gap-4"}>
+        <div className={"grid grid-cols-1 max-sm:flex max-sm:flex-col-reverse sm:grid-cols-2 md:grid-cols-7 gap-4"}>
             {/* C1: EditProfile */}
             <div className="col-span-1 sm:col-span-1 md:col-span-5">
                 <div className="p-4">
