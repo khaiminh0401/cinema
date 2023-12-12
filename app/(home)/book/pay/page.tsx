@@ -49,7 +49,6 @@ const PayPage = () => {
                     const tokenVnpayFromAPI = await tokenVnpayAPI.findByCustomerId(customerId);
                     setTokenVnpay(tokenVnpayFromAPI);
                 } catch (error: any) {
-                    console.error("Bad request error:", error);
                     setTokenVnpay(undefined);
                 }
 
@@ -139,9 +138,11 @@ const PayPage = () => {
     item.forEach(value => { amount += Number(value.unit_amount.value) });
     return (
         <>
-            <div className="w-1/2 mx-auto my-5">
+            <div className="w-1/2 mx-auto my-5 max-sm:w-full">
                 <Suspense fallback={<p>loading...</p>}>
                     <Steps
+                        responsive={false}
+                        labelPlacement="vertical"
                         current={0}
                         items={[
                             {
@@ -162,10 +163,10 @@ const PayPage = () => {
                     />
                 </Suspense>
             </div>
-            <div className="w-4/5 mx-auto grid grid-cols-3 gap-5">
-                <div className="col-span-2 grid">
+            <div className="w-4/5 mx-auto max-sm:w-full grid grid-cols-3 gap-5">
+                <div className="col-span-2 grid max-sm:col-span-3">
                     <Card bodyStyle={{backgroundColor: "white", color: "black"}}>
-                        {billDetails && <div className="grid grid-cols-3 gap-10">
+                        {billDetails && <div className="grid grid-cols-3 gap-10 max-sm:gap-4">
                             <img src={`${constants.URL_IMAGES}${billDetails?.poster}`} className=""
                                 alt="Photo film"/>
                             <div className="col-span-2">
@@ -183,17 +184,17 @@ const PayPage = () => {
                                         text={<span
                                             className="text-green-600">{movieStatus[billDetails.movieStatus]}</span>}/>
                                 </span>
-                                <Card title="Phương thức thanh toán" bordered={false}
+                            </div>
+                            <Card title="Phương thức thanh toán" bordered={false} className="col-span-3"
                                     bodyStyle={{backgroundColor: "white", color: "black", border: "none"}}>
                                     <RadioPayment value={value.payment} onChange={handleChangeRadio}
                                         component={<SelectWallet value={value.wallet}
                                             setWallet={handleChangeSelect}/>}/>
-                                </Card>
-                            </div>
+                            </Card>
                         </div>}
                     </Card>
                 </div>
-                <div className="">
+                <div className="max-sm:col-span-3">
                     <Card title="Thông tin hóa đơn" bodyStyle={{backgroundColor: "white", color: "black"}}>
                         <table className="w-full">
                             <tbody>
