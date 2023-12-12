@@ -128,7 +128,7 @@ const Topping = () => {
               data.map((topping, i) => (
                 <div className="flex items-center max-sm:px-0 px-6 py-5" key={i}>
                   <div className="flex w-2/5">
-                    <div className="w-20">
+                    <div className="w-20 bg-white">
                       <Image
                         className="object-fill"
                         src={`${constants.URL_TOPPING}${topping.logo}`}
