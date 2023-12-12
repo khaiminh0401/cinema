@@ -15,13 +15,10 @@ let format = (data: any) => {
 };
 
 const WeekDate = (prop: any) => {
-  // const [dateClick, setCurrentDate] = useState(format(new Date()));
   const pathname = usePathname();
   const search = useSearchParams();
-  console.log(search.toString())
   const router = useRouter();
   const currentDate = new Date(search.get("date") || new Date());
-  // const [currentDate, setCurrentDate] = useState(new Date("2023-09-16"));
   const [showtimeDetail, setShowtimeDetail] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const getWeekDates = () => {
@@ -62,7 +59,6 @@ const WeekDate = (prop: any) => {
           <button className="py-1 text-center flex-none" onClick={() => clickDate(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000))}><BiLeftArrowAlt /></button>
           <div className="grow mx-2">
             {getWeekDates().map((date, index) => {
-              // console.log(currentDatedate);
               const active = format(currentDate) == format(date) ? 'bg-red-950 text-white lg:px-8 md:px-7 sm:px-6 sm:mx-2 py-1 my-2 rounded-lg text-center w-full sm:w-auto' : "bg-white text-black lg:px-8 md:px-7 sm:px-6 sm:mx-2 py-1 my-2 rounded-lg text-center w-full sm:w-auto";
               return <button key={index} className={active} onClick={() => { clickDate(date) }}>{format(date)}</button>
             })}

@@ -56,9 +56,6 @@ const BillDetail = () => {
         }
     }, [session]);
 
-    if (billDetails?.ticketTotalPrice) {
-        console.log(billDetails?.ticketTotalPrice + billDetails?.ticketTotalPrice)
-    }
     const paymentStatus = (status: number) => {
         return STATUS.find(value => value.key == status)?.element
     }
