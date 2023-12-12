@@ -32,7 +32,6 @@ export const authconfig: NextAuthOptions = {
                     throw new Error(checkError(error.response.data.message, error.response.data.param))
                 }
                 return null
-
             }
         }),
         GoogleProvider({
@@ -47,15 +46,22 @@ export const authconfig: NextAuthOptions = {
     ],
     pages: {
         signIn: '/login',
-        signOut:"/logout"
+        signOut: "/logout"
     },
     secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
-        async jwt({user, token, session, trigger}) {
+        async jwt({user, token, session, trigger,account}) {
             if (trigger === "update") {
                 token.seat = session.seat
                 token.topping = session.topping
                 token.showtime = session.showtime
+            }
+            if (account?.provider === "google" || account?.provider === "facebook") {
+                const result = await customerAPI.loginWith3P({
+                    email: user?.email,
+                    name: user?.name
+                })
+                token.sub = result.id
             }
             return {...token, ...user};
         },
@@ -68,16 +74,6 @@ export const authconfig: NextAuthOptions = {
                 showtime: token.showtime
             };
             return session;
-        },
-        async signIn({user, account, profile }) {
-            if (account?.provider === "google") {
-                const result = await customerAPI.findByEmail(user.email || "");
-                user.id = String(result.id);
-                user.email = result.email;
-                user.image = !result.avatar ? "https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/default.png" :
-                `https://zuhot-cinema-images.s3.amazonaws.com/avatar-user/${result.avatar}`;
-            }
-            return true;
         },
     },
 

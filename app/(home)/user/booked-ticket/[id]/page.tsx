@@ -56,9 +56,6 @@ const BillDetail = () => {
         }
     }, [session]);
 
-    if (billDetails?.ticketTotalPrice) {
-        console.log(billDetails?.ticketTotalPrice + billDetails?.ticketTotalPrice)
-    }
     const paymentStatus = (status: number) => {
         return STATUS.find(value => value.key == status)?.element
     }
@@ -128,12 +125,16 @@ const BillDetail = () => {
                             <div className="grid grid-cols-10 gap-x-4">
                                 <div className="col-span-3">
                                     <div className="text-center">
-                                        <QRCode
-                                            value={"localhost:3000/user/booked-ticket/1"}
-                                            color={"white"}
-                                            size={100}
-                                            bordered={false}
-                                        />
+                                        {
+                                            (billDetails?.qrCode !== null) ?
+                                                <QRCode
+                                                    value={`${billDetails?.qrCode}`}
+                                                    color={"white"}
+                                                    size={150}
+                                                    bordered={false}
+                                                /> :
+                                                <></>
+                                        }
                                     </div>
                                 </div>
                                 <div className="col-span-7">
@@ -155,10 +156,10 @@ const BillDetail = () => {
                         <div className={"text-gray-300"}>
                             <p className={"mb-1"}>Trạng thái
                                 {
-                                    !billDetails?.exportStatus ?
+                                    billDetails?.exportStatus ?
                                         <span
                                             className={"float-right text-green-500"}>{paymentStatus(Number(billDetails?.exportStatus))}</span> :
-                                        <span className={"float-right"}>undefined</span>
+                                        <span className={"float-right"}>undifined</span>
                                 }
                             </p>
                             <p className={"mb-1"}>Rạp
@@ -258,7 +259,7 @@ const BillDetail = () => {
                     </div>
                 </Card>
 
-                 {/*Thanh toán lại */}
+                {/*Thanh toán lại */}
                 <section>
                     {paymentStatus(Number(billDetails?.exportStatus))}
                 </section>

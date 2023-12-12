@@ -42,14 +42,11 @@ const PayPage = () => {
             if (billId !== null && customerId !== undefined) {
                 const billDetailsFromAPI = await billAPI.checkout(parseInt(billId), customerId);
                 setBillDetails(billDetailsFromAPI);
-
-                console.log(billDetailsFromAPI)
             }
 
             if (customerId != undefined) {
                 try {
                     const tokenVnpayFromAPI = await tokenVnpayAPI.findByCustomerId(customerId);
-                    console.log(tokenVnpayFromAPI)
                     setTokenVnpay(tokenVnpayFromAPI);
                 } catch (error: any) {
                     console.error("Bad request error:", error);

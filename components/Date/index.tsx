@@ -15,13 +15,10 @@ let format = (data: any) => {
 };
 
 const WeekDate = (prop: any) => {
-  // const [dateClick, setCurrentDate] = useState(format(new Date()));
   const pathname = usePathname();
   const search = useSearchParams();
-  console.log(search.toString())
   const router = useRouter();
   const currentDate = new Date(search.get("date") || new Date());
-  // const [currentDate, setCurrentDate] = useState(new Date("2023-09-16"));
   const [showtimeDetail, setShowtimeDetail] = useState<any>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const getWeekDates = () => {
@@ -59,15 +56,21 @@ const WeekDate = (prop: any) => {
     <>
       <div className="grid grid-cols-1 pb-2 border-b-2 border-red-950">
         <div className="flex sm:col-span-3 lg:col-span-12 md:col-span-6 col-span-3 mt-2 mx-auto">
-          <button className="py-1 text-center flex-none" onClick={() => clickDate(new Date(currentDate.getTime() - 7 * 24 * 60 * 60 * 1000))}><BiLeftArrowAlt /></button>
-          <div className="grow mx-2">
+          {currentDate > new Date() ?
+            <button className="py-1 text-center flex-none" onClick={() => clickDate(new Date(currentDate.getTime() - 1 * 24 * 60 * 60 * 1000))}><BiLeftArrowAlt /></button>
+            : <div></div>}<div className="grow mx-2">
             {getWeekDates().map((date, index) => {
-              // console.log(currentDatedate);
-              const active = format(currentDate) == format(date) ? 'bg-red-950 text-white lg:px-8 md:px-7 sm:px-6 sm:mx-2 py-1 my-2 rounded-lg text-center w-full sm:w-auto' : "bg-white text-black lg:px-8 md:px-7 sm:px-6 sm:mx-2 py-1 my-2 rounded-lg text-center w-full sm:w-auto";
-              return <button key={index} className={active} onClick={() => { clickDate(date) }}>{format(date)}</button>
+              const isPastDate = date < new Date(new Date().getTime() - 1 * 24 * 60 * 60 * 1000);
+              const active = format(currentDate) == format(date) ? 'bg-red-950 text-white lg:px-8 md:px-7 sm:px-6 sm:mx-2 py-1 my-2 rounded-lg text-center w-full sm:w-auto max-sm:px-3' : "bg-white text-black lg:px-8 md:px-7 sm:px-6 sm:mx-2 py-1 my-2 rounded-lg text-center w-full sm:w-auto max-sm:hidden";
+              return <button key={index} className={`${isPastDate == true ? "bg-slate-500 text-white lg:px-8 md:px-7 sm:px-6 sm:mx-2 py-1 my-2 rounded-lg text-center w-full sm:w-auto max-sm:hidden" : active}`} onClick={() => {
+                if (!isPastDate) {
+                  clickDate(date);
+                }
+              }}
+                disabled={isPastDate} >{format(date)}</button>
             })}
           </div>
-          <button className="py-1 text-center flex-none" onClick={() => clickDate(new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000))}><BiRightArrowAlt /></button>
+          <button className="py-1 text-center flex-none" onClick={() => clickDate(new Date(currentDate.getTime() + 1 * 24 * 60 * 60 * 1000))}><BiRightArrowAlt /></button>
         </div>
       </div>
       <ShowTime prop={showtimeDetail}>

@@ -7,7 +7,6 @@ const RadioDiscount = () => {
     const [value, setValue] = useState(2);
 
     const onChange = (e: RadioChangeEvent) => {
-        console.log('radio checked', e.target.value);
         setValue(e.target.value);
     };
     return (
