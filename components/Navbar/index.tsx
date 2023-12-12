@@ -140,7 +140,7 @@ const Navbar = () => {
                         {openNav && (<div className="space-y-1 px-2 pb-3 pt-2">
                             {navList}
                             {!session && (
-                                <div className="md:flex flex-row">
+                                <div className="md:flex flex-row max-sm:grid max-sm:grid-cols-2 max-sm:gap-5">
                                     <button
                                         className="middle center rounded-lg bg-gradient-to-tr from-pink-600 to-red-400 py-2 px-4 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:inline-block">
                                         <Link href="/login">Đăng nhập</Link>
