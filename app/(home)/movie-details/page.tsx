@@ -45,7 +45,7 @@ const MovieDetails = () => {
             key: '2',
             label: 'TRAILER',
             children: <div className="flex justify-center">
-                <iframe width="680" height="450" src={`${movieDetailPage?.movieDetail.trailer}`}
+                <iframe className="max-sm:w-full w-[680px] h-[450px]" src={`${movieDetailPage?.movieDetail.trailer}`}
                         title="Trailer movie"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen></iframe>
@@ -79,7 +79,7 @@ const MovieDetails = () => {
                                                width={2560} height={1440} alt="Movie Poster"/>}
                                     <div
                                         className="lg:col-span-9 md:col-span-6 sm:col-span-6 col-span-12 w-fit h-full text-lg">
-                                        <h4 className="mb-3 text-lg text-red-600 font-semibold">{movieDetailPage?.movieDetail.name}</h4>
+                                        <p className="mb-3 text-4xl text-red-600 font-semibold">{movieDetailPage?.movieDetail.name}</p>
                                         <p><strong>Thể loại:</strong> {movieDetailPage?.movieDetail.movieTypeName}</p>
                                         <p><strong>Đạo diễn:</strong> {movieDetailPage?.movieDetail.directorsName}</p>
                                         <p><strong>Diễn viên:</strong> {movieDetailPage?.movieDetail.actorsName}</p>
