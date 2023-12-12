@@ -58,7 +58,7 @@ const Navbar = () => {
     return (
         <div>
             {session !== undefined && (
-                <nav className="bg-black py-3 mx-auto">
+                <nav className="fixed top-0 z-50 bg-black py-3 mx-auto w-full">
                     <div className="mx-auto max-w-full sm:px-8 lg:px-5">
                         <div className="relative flex h-16 items-center justify-evenly">
                             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
