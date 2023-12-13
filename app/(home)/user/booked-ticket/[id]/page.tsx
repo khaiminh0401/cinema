@@ -82,17 +82,17 @@ const BillDetail = () => {
                 {/* Thông tin phim */}
                 <section className={"bg-neutral-900 rounded p-4 mb-4"}>
                     <h2 className={"font-bold text-xl mb-4 text-white uppercase"}>Thông tin phim</h2>
-                    <div className="grid grid-cols-10 gap-x-4 lg:grid-cols-5">
-                        <div className="col-span-3 lg:col-span-1">
+                    <div className="grid grid-cols-2 gap-x-4 lg:grid-cols-5">
+                        <div className="lg:col-span-1">
                             <Image
                                 src={`${constants.URL_IMAGES}${billDetails?.poster}`}
-                                className={"w-28 h-40"}
+                                className={"w-full h-full"}
                                 alt={`${billDetails?.movieName}`}
-                                width={0}
-                                height={0}
+                                width={28}
+                                height={64}
                             />
                         </div>
-                        <div className="col-span-7 lg:col-span-4">
+                        <div className="lg:col-span-4">
                             <div className={""}>
                                 <h2 className={"font-bold text-xl mb-4"}>{billDetails?.movieName}</h2>
                                 <p className={"text-gray-300"}>Đất nước:
@@ -122,8 +122,8 @@ const BillDetail = () => {
                             bordered={false}
                             className={"w-fit bg-inherit border border-2 border-neutral-800 text-white my-5"}
                         >
-                            <div className="grid grid-cols-10 gap-x-4">
-                                <div className="col-span-3">
+                            <div className="grid grid-cols-3 gap-x-10">
+                                <div className="">
                                     <div className="text-center">
                                         {
                                             (billDetails?.qrCode !== null) ?
@@ -138,7 +138,7 @@ const BillDetail = () => {
                                         }
                                     </div>
                                 </div>
-                                <div className="col-span-7">
+                                <div className="col-span-2">
                                     <div className={"ms-4"}>
                                         <h2 className={"font-bold text-xl mb-4"}>Mã hóa
                                             đơn: {billDetails?.id}</h2>
@@ -163,9 +163,8 @@ const BillDetail = () => {
                                         <span className={"float-right"}>undifined</span>
                                 }
                             </p>
-                            <p className={"mb-1"}>Rạp
-                                <span
-                                    className={"float-right text-white"}>Chi nhánh {billDetails?.branchName} - {billDetails?.branchAddress}</span>
+                            <p className={"mb-1"}>Địa điểm: <span
+                                    className={"text-white text-right break-words"}>{billDetails?.branchName} - {billDetails?.branchAddress}</span>
                             </p>
                             <p className={"mb-1"}>Phòng
                                 <span className={"float-right text-white"}>{billDetails?.roomName}</span>
@@ -259,11 +258,6 @@ const BillDetail = () => {
                         </p>
                     </div>
                 </Card>
-
-                {/*Thanh toán lại */}
-                <section>
-                    {paymentStatus(Number(billDetails?.exportStatus))}
-                </section>
             </div>
         </div>
     );

@@ -56,7 +56,7 @@ const Navbar = () => {
         </ul>
     );
     return (
-        <div>
+        <>
             {session !== undefined && (
                 <nav className="fixed top-0 z-50 bg-black py-3 mx-auto w-full">
                     <div className="mx-auto max-w-full sm:px-8 lg:px-5">
@@ -155,7 +155,7 @@ const Navbar = () => {
                     </div>
                 </nav>
             )}
-        </div>
+        </>
     )
 }
 export default Navbar;

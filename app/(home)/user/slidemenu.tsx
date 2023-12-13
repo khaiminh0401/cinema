@@ -80,7 +80,7 @@ const SlideMenu = () => {
                     type="link"
                     onClick={toggleCollapsed}
                     style={{marginBottom: 16}}
-                    className="text-white">
+                    className="text-white max-sm:hidden">
                     {/* {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />} */}
                     <div className='grid grid-rows-2 grid-flow-col gap-x-4 text-white px-2'>
                         <section className='row-span-2 my-auto'>
