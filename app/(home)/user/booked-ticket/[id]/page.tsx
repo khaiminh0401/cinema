@@ -129,7 +129,8 @@ const BillDetail = () => {
                                             (billDetails?.qrCode !== null) ?
                                                 <QRCode
                                                     value={`${billDetails?.qrCode}`}
-                                                    color={"white"}
+                                                    color={"black"}
+                                                    bgColor={"white"}
                                                     size={150}
                                                     bordered={false}
                                                 /> :
