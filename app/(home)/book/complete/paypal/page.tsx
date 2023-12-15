@@ -1,7 +1,6 @@
 "use client"
 import { billAPI } from "@/util/API/Bill";
 import { paypalAPI } from "@/util/API/Paypal";
-import { successNotification } from "@/util/Notification";
 import { Button, Result } from "antd";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -16,66 +15,64 @@ const BookComplete = () => {
     const customerId = session?.user.id;
     const router = useRouter();
     const [loading, setLoading] = useState(true);
-    const [billDetails, setBillDetails] = useState<billDetails>();
     const [error, setError] = useState<boolean>();
     useEffect(() => {
-        if (customerId != undefined && billId != undefined && loading) {
-            if (billDetails == undefined) {
-                billAPI.getBillDetails(Number(billId), customerId).then(rs => {
-                    setBillDetails(rs)
-                })
-            } else {
+        if (customerId != null && billId != null && loading) {
+            billAPI.getBillDetails(Number(billId), customerId).then(rs => {
                 var PaymentMethodDetails: PaymentDetails = {
                     payMethodId: 'PM5',
                     billId: Number(billId),
                     status: 2,
-                    amout: billDetails?.totalPrice,
+                    amout: rs.totalPrice,
                     customerId: customerId
                 }
                 paypalAPI.createPaymentMethodDetails(PaymentMethodDetails).then(() => {
-                    var sendOrder: sendOrderModel = {
-                        info: {
-                            username: billDetails?.customerName,
-                            email: billDetails?.customerEmail,
-                            phone: billDetails?.customerPhone
-                        },
-                        listTicket: [],
-                        bill: {
-                            id: billDetails?.id,
-                            totalPrice: billDetails?.totalPrice + "",
-                            exportDate: billDetails?.exportDate + "",
-                            customerId: customerId,
-                            qrCode: billDetails?.qrCode
-                        },
-                        paymentMethod: billDetails?.paymentMethod
-                    };
-                    sendOrder.listTicket.push(
-                        {
-                            name: billDetails?.seats,
-                            quantity: billDetails?.seats.split(", ").length,
-                            amount: billDetails?.ticketTotalPrice + ""
-                        }
-                    )
-                    billDetails?.toppingName.length > 0 ? sendOrder.listTicket.push(
-                        {
-                            name: billDetails?.toppingName,
-                            quantity: billDetails?.toppingQuantity,
-                            amount: billDetails?.toppingTotalPrice + ""
-                        }
-                    ) : null
-                    sendOrder.listTicket.push({
-                        name: "Thuế VAT (5%)",
-                        quantity: 1,
-                        amount: billDetails?.ticketVat
+                    billAPI.getBillDetails(Number(billId), customerId).then(rs => {
+                        var sendOrder: sendOrderModel = {
+                            info: {
+                                username: rs.customerName,
+                                email: rs.customerEmail,
+                                phone: rs.customerPhone
+                            },
+                            listTicket: [],
+                            bill: {
+                                id: rs.id,
+                                totalPrice: rs.totalPrice + "",
+                                exportDate: rs.exportDate + "",
+                                customerId: customerId,
+                                qrCode: rs.qrCode
+                            },
+                            paymentMethod: rs.paymentMethod
+                        };
+                        sendOrder.listTicket.push(
+                            {
+                                name: rs.seats,
+                                quantity: rs.seats.split(", ").length,
+                                amount: rs.ticketTotalPrice + ""
+                            }
+                        )
+                        rs.toppingName.length > 0 ? sendOrder.listTicket.push(
+                            {
+                                name: rs.toppingName,
+                                quantity: rs.toppingQuantity,
+                                amount: rs.toppingTotalPrice + ""
+                            }
+                        ) : null
+                        sendOrder.listTicket.push({
+                            name: "Thuế VAT (5%)",
+                            quantity: 1,
+                            amount: rs.ticketVat
+                        })
+                        billAPI.sendOrder(sendOrder).then(() => {
+                            setLoading(false)
+                            setError(false)
+                        }).catch((e) => { setError(true); setLoading(false) })
                     })
-                    billAPI.sendOrder(sendOrder).then(() => {
-                        setLoading(false)
-                        setError(false)
-                    }).catch((e) => { setError(true); setLoading(false) })
                 }).catch((e) => { setError(true); setLoading(false) })
-            }
+            })
+
         }
-    }, [customerId, billId, billDetails])
+    }, [customerId, billId])
 
     return (
         <>
