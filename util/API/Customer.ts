@@ -64,7 +64,9 @@ const findByEmail = async (email: string) => {
 const changePassword = async (customer: any) => {
     return (await fetchAPI.post(`/customer/change-password`, customer)).data;
 }
-
+const loginWith3P = async (inputs: Object) => {
+    return (await fetchAPI.post("/customer/loginWith3P", inputs)).data;
+}
 export const customerAPI = {
     registration,
     registrationConfirm,
@@ -78,6 +80,7 @@ export const customerAPI = {
     forgotPassword,
     checkToken,
     findByEmail,
-    changePassword
+    changePassword,
+    loginWith3P
 }
 

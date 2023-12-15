@@ -56,7 +56,6 @@ const BankIntegration = () => {
                             const tokenCreatedFromAPI = await vnpayAPI.saveToken(vnpayToken);
                             setTokenCreated(tokenCreatedFromAPI);
                         } catch (error: any) {
-                            console.log(error)
                         }
                     } else if (vnp_command?.includes("remove")) {
                         if (!tokenVnpay?.id) return;
@@ -66,7 +65,6 @@ const BankIntegration = () => {
                                 await vnpayAPI.removedToken(tokenVnpay.id);
                             setTokenRemoved(tokenRemovedFromAPI);
                         } catch (error: any) {
-                            console.log(error)
                         }
                     }
                 }

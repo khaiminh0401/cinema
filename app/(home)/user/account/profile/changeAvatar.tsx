@@ -62,7 +62,7 @@ const ChangeAvatar = ({...props}: ChangeAvatarProps) => {
     };
 
     return (
-        <section className={"flex justify-center items-center md:block"}>
+        <section className={"flex justify-center max-sm:gap-7 items-center md:block"}>
             <CropperModal
                 modalOpen={modalOpen}
                 src={src || ''}
@@ -84,7 +84,7 @@ const ChangeAvatar = ({...props}: ChangeAvatarProps) => {
                 />
 
                 <Button
-                    className="border-0 bottom-0 bg-neutral-900 text-white left-36 absolute w-50 h-50 rounded-full"
+                    className="border-0 max-sm:left-0 bottom-0 bg-neutral-900 text-white left-36 absolute w-50 h-50 rounded-full"
                     onClick={() => showDeleteConfirm({
                         customerId: props.customerId,
                         avatar: props.avatar,

@@ -14,16 +14,16 @@ const Loading = ({ ...props }: { isLoading?: boolean, message?: string, data?: a
     return (
         <>
             {flag ?
-                <div>
+                <div className="w-full">
                     {props.isLoading ? (
-                        <div className="flex justify-center min-h-screen items-center">
+                        <div className="flex justify-center min-h-screen items-center w-full">
                             <RingLoader size={50} color="#ff0000" />
-                            <p className="p-4 md:text-2xl text-red-500">{props.message}</p>
+                            {/* <p className="p-4 md:text-2xl text-red-500">{props.message}</p> */}
                         </div>
                     ) : props.data ? null : (
-                        <div className="flex justify-center min-h-screen items-center">
+                        <div className="flex justify-center min-h-screen items-center w-full">
                             <RingLoader size={50} color="#ff0000" />
-                            <p className="p-4 md:text-2xl text-red-500">{props.message}</p>
+                            {/* <p className="p-4 md:text-2xl text-red-500">{props.message}</p> */}
                         </div>
                     )}
                 </div>
