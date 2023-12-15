@@ -88,8 +88,8 @@ const BillDetail = () => {
                                 src={`${constants.URL_IMAGES}${billDetails?.poster}`}
                                 className={"w-full h-full"}
                                 alt={`${billDetails?.movieName}`}
-                                width={28}
-                                height={64}
+                                width={1920}
+                                height={1080}
                             />
                         </div>
                         <div className="lg:col-span-4">
