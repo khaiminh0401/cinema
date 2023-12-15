@@ -17,15 +17,14 @@ const BookComplete = () => {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
     const [billDetails, setBillDetails] = useState<billDetails>();
-    const [error, setError] = useState(false);
+    const [error, setError] = useState<boolean>();
     useEffect(() => {
         if (customerId != undefined && billId != undefined && loading) {
             if (billDetails == undefined) {
                 billAPI.getBillDetails(Number(billId), customerId).then(rs => {
                     setBillDetails(rs)
                 })
-            }
-            if (billDetails != undefined) {
+            } else {
                 var PaymentMethodDetails: PaymentDetails = {
                     payMethodId: 'PM5',
                     billId: Number(billId),
@@ -70,34 +69,35 @@ const BookComplete = () => {
                         amount: billDetails?.ticketVat
                     })
                     billAPI.sendOrder(sendOrder).then(() => {
-                        successNotification("Thanh toán thành công !")
                         setLoading(false)
+                        setError(false)
                     }).catch((e) => { setError(true); setLoading(false) })
                 }).catch((e) => { setError(true); setLoading(false) })
             }
         }
     }, [customerId, billId, billDetails])
-    
+
     return (
         <>
-            {loading ? (
+            {loading && (
                 <div className="flex justify-center min-h-screen items-center">
                     <RingLoader size={50} color="#ff0000" />
                 </div>
-            ) :
-                error ? <Result status={"error"}
-                    title="Thanh toán thất bại"
-                    extra={[
-                        <Button onClick={() => router.push("/")} key="buy">Trở về trang chủ</Button>,
-                    ]}
-                /> : (<Result
-                    status="success"
-                    title="Thanh toán thành công"
-                    subTitle={<Link href={`/review?id=${billId}`} className="text-white">Hoàn tất đơn hàng</Link>}
-                    extra={[
-                        <Button onClick={() => router.push("/")} key="buy">Trở về trang chủ</Button>,
-                    ]}
-                />)}
+            )}
+            {error && <Result status={"error"}
+                title="Thanh toán thất bại"
+                extra={[
+                    <Button onClick={() => router.push("/")} key="buy">Trở về trang chủ</Button>,
+                ]}
+            />}
+            {error == false && <Result
+                status="success"
+                title="Thanh toán thành công"
+                subTitle={<Link href={`/review?id=${billId}`} className="text-white">Hoàn tất đơn hàng</Link>}
+                extra={[
+                    <Button onClick={() => router.push("/")} key="buy">Trở về trang chủ</Button>,
+                ]}
+            />}
         </>
     )
 }
