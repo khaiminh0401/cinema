@@ -20,9 +20,11 @@ interface billDetails {
     seats: string,
     toppingName: string,
     toppingTotalPrice: number,
+    toppingQuantity: number,
     ticketTotalPrice: number,
     ticketTotalPriceAfterVat: number,
     poster: string,
     qrCode: string,
+    ticketVat: string,
     tickets: ticketBillDetailsPage[]
 }

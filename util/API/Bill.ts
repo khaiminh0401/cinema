@@ -36,6 +36,10 @@ const getReviewByMovieId = async (id: any, pageSize: any, page: any) => {
     return (await fetchAPI.get(`/bill/getReviewByMovieId/${id}?pageSize=${pageSize}&page=${page}`)).data as reviewType;
 }
 
+const sendOrder = async (sendOrderModel: sendOrderModel) => {
+    return (await fetchAPI.post("/send-order", sendOrderModel)).data
+}
+
 export const billAPI = {
     getReviewByMovieId,
     getBillHistory,
@@ -45,5 +49,6 @@ export const billAPI = {
     checkout,
     updateRateAndReview,
     getByMovie,
-    updateExportStatus
+    updateExportStatus,
+    sendOrder
 }
