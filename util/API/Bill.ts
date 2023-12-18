@@ -1,7 +1,7 @@
 import { fetchAPI } from "./axios";
 
-const getBillHistory = async (customerId: number) => {
-    return (await fetchAPI.get(`/bill?customerId=${customerId}`)).data as billHistory[];
+const getBillHistory = async (customerId: number, pageSize: number, page: number) => {
+    return (await fetchAPI.get(`/bill?customerId=${customerId}&pageSize=${pageSize}&page=${page}`)).data as billHistories;
 }
 
 const getBillDetails = async (billId: number, customerId: number) => {
