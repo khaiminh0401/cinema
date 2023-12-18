@@ -145,7 +145,7 @@ const Topping = () => {
                     </div>
                   </div>
                   <div className="flex justify-center w-2/5">
-                  <InputNumber min={0} defaultValue={0} onChange={(v) => onChange(v, topping.toppingofbranchid, topping.price, topping.name)}/>
+                  <InputNumber min={0} disabled={topping.quantity == 0} defaultValue={0} onChange={(v) => onChange(v, topping.toppingofbranchid, topping.price, topping.name)}/>
                   </div>
                   <span className="text-center w-2/5 font-semibold text-sm">
                     {NumberUtils.formatCurrency(topping.price)}
