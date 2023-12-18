@@ -1,6 +1,6 @@
 "use client"
 import QR from "@/components/QR";
-import {Button, Result, Modal} from "antd";
+import {Button, Result, Modal, QRCode} from "antd";
 import Link from "next/link";
 import {useRouter, useSearchParams} from "next/navigation";
 import {useEffect, useState} from "react";
@@ -23,6 +23,7 @@ const BookComplete = () => {
     const {data: session, update} = useSession();
     const customerId = session?.user.id;
     const paymentMethodHasBeenPaid = ["Tiền mặt", "Paypal", "Ví VNPay"]
+    const [qrCode, setQrCode] = useState<string>();
 
     const vnpayToken: VnpayToken = {
         vnp_amount: parseInt(searchParams.get('vnp_amount') as string),
@@ -127,8 +128,14 @@ const BookComplete = () => {
             })
             billAPI.sendOrder(sendOrder).then(() =>
                 successNotification("Kiểm đơn hàng qua email"));
+
+            setQrCode(sendOrder.bill.qrCode);
         })
     }
+
+    useEffect(() => {
+
+    }, []);
 
     return (
         <>
@@ -145,7 +152,14 @@ const BookComplete = () => {
                     </p>
                 }
                 subTitle={<Link href={`/review?id=${billId}`} className="text-white">Hoàn tất đơn hàng</Link>}
-                icon={<QR value="https://dev"/>}
+                icon={<span className={"flex justify-center"}>
+                    <QRCode value={`${qrCode}`}
+                            color={"black"}
+                            bgColor={"white"}
+                            size={175}
+                            className={""}
+                    />
+                </span>}
                 extra={[
                     <Button onClick={() => router.push("/user/booked-ticket")} type="primary" key="console">
                         Đi tới hóa đơn
