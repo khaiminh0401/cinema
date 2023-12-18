@@ -1,14 +1,10 @@
 'use client'
 
 import React, {useEffect, useState} from 'react';
-import {Card, Form} from 'antd';
-import Slidemenu from "../slidemenu";
+import {Card, Form, Pagination} from 'antd';
 import Link from "next/link";
-import Input from "@components/Input/page";
-import {Validation} from "@/common/validation/page/registration";
 import {billAPI} from "@/util/API/Bill";
 import {useSession} from "next-auth/react";
-import Login from "@/app/(login)/login/page";
 import {DateUtils} from "@/util/DateUtils";
 
 const STATUS = [
@@ -26,35 +22,43 @@ const STATUS = [
     },
     {
         key: 3,
-        element: <span className={"text-yellow-600"}>Thanh toán hết hạn</span>
+        element: <span className={"white"}>Thanh toán hết hạn</span>
     },
 ]
 
+const TEXT_COLOR_BY_STATUS: string[] = ["red", "green", "yellow", "white"]
+
 const BookedTicket = () => {
-    const [billHistories, setBillHistories] = useState<billHistory[]>();
+    const [currentPage, setCurrentPage] = useState(1);
+    const [billHistories, setBillHistories] = useState<billHistories>();
     let content: JSX.Element;
     const {data: session} = useSession();
     const customerId = Number(session?.user.id);
+    const itemsPerPage = 4;
 
     useEffect(() => {
         if (session) {
             const init = async () => {
-                const bh = await billAPI.getBillHistory(customerId);
+                const bh = await billAPI.getBillHistory(customerId, itemsPerPage, currentPage);
                 setBillHistories(bh);
             }
 
             init();
         }
-    }, [session])
+    }, [session, currentPage])
 
     const paymentStatus = (status: number) => {
         return STATUS.find(value => value.key == status)?.element
     }
 
+    const handlePageChange = (page: any, pageSize: any) => {
+        setCurrentPage(page);
+    };
+
     return (
         <div className="p-4">
             {
-                billHistories?.map((billHistory, index) => {
+                billHistories?.bills.map((billHistory, index) => {
                     return (
                         <Card
                             bordered={false}
@@ -62,10 +66,17 @@ const BookedTicket = () => {
                             key={index}
                         >
                             <div className="grid grid-cols-10 gap-2">
-                                <div className="col-span-3 border-r-4 border-r-red-600 pe-1">
+                                <div
+                                    className={`col-span-3 border-r-4 pe-1
+                                        border-r-${TEXT_COLOR_BY_STATUS[billHistory.exportStatus]}-600`}
+                                >
                                     <div className="text-center">
                                         <p>Thời gian chiếu</p>
-                                        <p className={"text-red-600 font-semibold"}>{`${billHistory.startTime}`}</p>
+                                        <p
+                                            className={`font-semibold text-${TEXT_COLOR_BY_STATUS[billHistory.exportStatus]}-600`}
+                                        >
+                                            {`${billHistory.startTime}`}
+                                        </p>
                                         <p>{DateUtils.formatDate(new Date(billHistory.showDate))}</p>
                                         <p className={"font-semibold"}>
                                             {paymentStatus(billHistory.exportStatus)}
@@ -75,8 +86,13 @@ const BookedTicket = () => {
                                 <div className="col-span-7">
                                     <div className={"ms-4"}>
                                         <p>
-                                                        <span>Mã hóa đơn: <span
-                                                            className={"text-red-600"}>{billHistory.id}</span></span>
+                                                        <span>Mã hóa đơn:
+                                                            <span
+                                                                className={`text-${TEXT_COLOR_BY_STATUS[billHistory.exportStatus]}-600`}
+                                                            >
+                                                                {billHistory.id}
+                                                            </span>
+                                                        </span>
                                             <span>, Phim: {billHistory.movieName}</span>
                                         </p>
                                         <p>Rạp: Chi nhánh {`${billHistory.branchName}`}</p>
@@ -97,6 +113,15 @@ const BookedTicket = () => {
                         </Card>
                     );
                 })
+            }
+            {billHistories != undefined && billHistories.total_bill_count > itemsPerPage &&
+                <Pagination className="text-center pt-2" responsive
+                            current={currentPage}
+                            pageSize={itemsPerPage}
+                            total={billHistories.total_bill_count}
+                            showSizeChanger={false}
+                            onChange={handlePageChange}
+                />
             }
         </div>
     );
