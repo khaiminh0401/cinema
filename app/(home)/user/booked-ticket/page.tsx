@@ -22,7 +22,7 @@ const STATUS = [
     },
     {
         key: 3,
-        element: <span className={"white"}>Thanh toán hết hạn</span>
+        element: <span className={"text-white"}>Thanh toán hết hạn</span>
     },
 ]
 
