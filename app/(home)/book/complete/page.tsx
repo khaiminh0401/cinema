@@ -9,6 +9,9 @@ import {useSession} from "next-auth/react";
 import {Integer} from "asn1js";
 import {tokenVnpayAPI} from "@/util/API/TokenVnpay";
 import {FaRegCheckCircle} from "react-icons/fa";
+import {billAPI} from "@/util/API/Bill";
+import {response} from "express";
+import {successNotification} from "@/util/Notification";
 
 const BookComplete = () => {
     const [open, setOpen] = useState(false);
@@ -49,9 +52,13 @@ const BookComplete = () => {
                 if (paymentMethod === 3) {
                     if (vnpayToken.vnp_token) {
                         if (vnp_command?.includes("pay_and_create"))
-                            await vnpayAPI.paymentAndTokenCreated(vnpayToken, Number.parseInt(billId));
+                            vnpayAPI.paymentAndTokenCreated(vnpayToken, Number.parseInt(billId)).then(() => {
+                                sendEmail();
+                            });
                         else if (vnp_command?.includes("token_pay"))
-                            await vnpayAPI.paymentByTokenStage(vnpayToken, Number.parseInt(billId));
+                            vnpayAPI.paymentByTokenStage(vnpayToken, Number.parseInt(billId)).then(() => {
+                                sendEmail();
+                            });
 
                     } else if (!vnpayToken.vnp_token) {
                         const vnpayResult: VnpayResultDto = {
@@ -69,7 +76,9 @@ const BookComplete = () => {
                             vnp_SecureHash: searchParams.get('vnp_SecureHash') as string
                         }
 
-                        await vnpayAPI.paymentInformation(vnpayResult, Number.parseInt(billId));
+                        vnpayAPI.paymentInformation(vnpayResult, Number.parseInt(billId)).then(() => {
+                            sendEmail();
+                        });
                     }
                 }
             }
@@ -78,6 +87,48 @@ const BookComplete = () => {
 
         init();
     }, [customerId, vnp_command]);
+
+    const sendEmail = () => {
+        billAPI.getBillDetails(Number(billId), customerId).then(rs => {
+            var sendOrder: sendOrderModel = {
+                info: {
+                    username: rs.customerName,
+                    email: rs.customerEmail,
+                    phone: rs.customerPhone
+                },
+                listTicket: [],
+                bill: {
+                    id: rs.id,
+                    totalPrice: rs.totalPrice + "",
+                    exportDate: rs.exportDate + "",
+                    customerId: customerId,
+                    qrCode: rs.qrCode
+                },
+                paymentMethod: rs.paymentMethod
+            };
+            sendOrder.listTicket.push(
+                {
+                    name: rs.seats,
+                    quantity: rs.seats.split(", ").length,
+                    amount: rs.ticketTotalPrice + ""
+                }
+            )
+            rs.toppingName.length > 0 ? sendOrder.listTicket.push(
+                {
+                    name: rs.toppingName,
+                    quantity: rs.toppingQuantity,
+                    amount: rs.toppingTotalPrice + ""
+                }
+            ) : null
+            sendOrder.listTicket.push({
+                name: "Thuế VAT (5%)",
+                quantity: 1,
+                amount: rs.ticketVat
+            })
+            billAPI.sendOrder(sendOrder).then(() =>
+                successNotification("Kiểm đơn hàng qua email"));
+        })
+    }
 
     return (
         <>
