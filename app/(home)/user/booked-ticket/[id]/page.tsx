@@ -121,11 +121,10 @@ const BillDetail = () => {
                                 bordered={false}
                                 className={"w-fit bg-inherit border-2 border-neutral-800 text-white my-5"}
                             >
-                                <div className="grid grid-cols-3 gap-x-10">
-
+                                <div className="grid grid-cols-1 md:grid-cols-5 gap-x-10">
                                     {
                                         (billDetails.qrCode !== null) ?
-                                            <div className="text-center">
+                                            <div className="col-span-1 mb-3 md:col-span-2 flex justify-center md:!mb-0">
                                                 <QRCode
                                                     value={`${billDetails.qrCode}`}
                                                     color={"black"}
@@ -137,7 +136,7 @@ const BillDetail = () => {
                                             :
                                             <></>
                                     }
-                                    <div className="col-span-2">
+                                    <div className="md:col-span-3">
                                         <div className={"ms-4"}>
                                             <h2 className={"font-bold text-xl mb-4"}>Mã hóa
                                                 đơn: {billDetails.id}</h2>
