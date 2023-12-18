@@ -54,12 +54,10 @@ const BookComplete = () => {
                         if (vnp_command?.includes("pay_and_create"))
                             vnpayAPI.paymentAndTokenCreated(vnpayToken, Number.parseInt(billId)).then(() => {
                                 sendEmail();
-                                successNotification("Kiểm đơn hàng qua email")
                             });
                         else if (vnp_command?.includes("token_pay"))
                             vnpayAPI.paymentByTokenStage(vnpayToken, Number.parseInt(billId)).then(() => {
                                 sendEmail();
-                                successNotification("Kiểm đơn hàng qua email")
                             });
 
                     } else if (!vnpayToken.vnp_token) {
@@ -80,7 +78,6 @@ const BookComplete = () => {
 
                         vnpayAPI.paymentInformation(vnpayResult, Number.parseInt(billId)).then(() => {
                             sendEmail();
-                            successNotification("Kiểm đơn hàng qua email")
                         });
                     }
                 }
@@ -128,11 +125,8 @@ const BookComplete = () => {
                 quantity: 1,
                 amount: rs.ticketVat
             })
-            // billAPI.sendOrder(sendOrder).then(() => {
-            //     setLoading(false)
-            //     setError(false)
-            // }).catch((e) => { setError(true); setLoading(false) })
-            billAPI.sendOrder(sendOrder);
+            billAPI.sendOrder(sendOrder).then(() =>
+                successNotification("Kiểm đơn hàng qua email"));
         })
     }
 
