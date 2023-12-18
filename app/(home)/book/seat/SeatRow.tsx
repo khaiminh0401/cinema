@@ -13,17 +13,17 @@ const SeatRow = ({data, row, className, onClickButton}: SRow) => {
         return <SeatItem onClick={onClickButton} key={i} obj={x}/>
     });
     if (row.charAt(0) == 'H') {
-        seats = data.reduce((total: any, currentValue: any, currentIndex: any, arr: any) => {
-            if (currentIndex % 2 != 0 && currentIndex > 0) {
-                total.push({
-                    booked: currentValue.booked,
-                    name: `${arr[currentIndex - 1].name.substring(1)}  -    ${currentValue.name.substring(1)}`
-                })
-            }
-            return total;
-        }, []).map((x: any, i: number) => {
-            return <SeatCoupleItem key={i} state={x.booked}>{x.name}</SeatCoupleItem>;
-        })
+        // seats = data.reduce((total: any, currentValue: any, currentIndex: any, arr: any) => {
+        //     if (currentIndex % 2 != 0 && currentIndex > 0) {
+        //         total.push({
+        //             booked: currentValue.booked,
+        //             name: `${arr[currentIndex - 1].name.substring(1)}  -    ${currentValue.name.substring(1)}`
+        //         })
+        //     }
+        //     return total;
+        // }, []).map((x: any, i: number) => {
+            return <></>;
+        // })
     }
 
 
