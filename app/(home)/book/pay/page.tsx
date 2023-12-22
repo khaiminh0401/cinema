@@ -87,7 +87,7 @@ const PayPage = () => {
                     const vnpayToken: VnpayToken = {
                         vnp_amount: billDetails?.totalPrice,
                         vnp_app_user_id: tokenVnpay.vnp_app_user_id,
-                        vnp_txn_desc: "pay_by_token",
+                        vnp_txn_desc: "pay by token",
                         vnp_token: tokenVnpay.vnp_token
                     }
 
@@ -98,7 +98,7 @@ const PayPage = () => {
                             vnp_amount: billDetails?.totalPrice,
                             vnp_app_user_id: customerId,
                             vnp_card_type: cardType,
-                            vnp_txn_desc: "pay_and_create_token"
+                            vnp_txn_desc: "pay and create token"
                         }
 
                         urlPaymentByVnpay = await vnpayAPI.paymentAndCreateToken(vnpayToken, billId.toString(), value.payment.toString());
